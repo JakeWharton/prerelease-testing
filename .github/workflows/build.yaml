@@ -31,14 +31,41 @@ jobs:
           toml set --toml-path burst/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd burst
           git diff --patch
-      - run: ./gradlew publishToMavenLocal
+      - run: ./gradlew check publishToMavenLocal
         working-directory: burst
+
+  okio:
+    runs-on: macos-latest
+    needs:
+      # TODO Inject Burst version below.
+      - burst
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: square/okio
+          path: okio
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path okio/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          cd okio
+          git diff --patch
+      - run: ./gradlew check publishToMavenLocal
+        working-directory: okio
 
   final-status:
     if: always()
     runs-on: ubuntu-latest
     needs:
-      - burst
+      # TODO Eliminate the need to maintain leafs, and just check ALL other jobs.
+      - okio
     steps:
       - name: Check
         run: |

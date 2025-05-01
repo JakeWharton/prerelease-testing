@@ -1,0 +1,6 @@
+[versions]
+kotlin = "2.1.21-RC2"
+
+# These coordinates are othewise unused, but allow Renovate to understand the associated versions.
+[libraries]
+kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", versions.ref = "kotlin" }

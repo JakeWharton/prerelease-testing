@@ -1,0 +1,32 @@
+name: build
+
+on:
+  pull_request: {}
+  workflow_dispatch: {}
+  push:
+    branches:
+      - 'trunk'
+
+jobs:
+  burst:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: cashapp/burst
+          path: burst
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path burst/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          cd burst
+          git diff --patch
+      - run: ./gradlew publishToMavenLocal
+        working-directory: burst

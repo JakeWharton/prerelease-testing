@@ -60,12 +60,36 @@ jobs:
       - run: ./gradlew check publishToMavenLocal
         working-directory: okio
 
+  turbine:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: cashapp/turbine
+          path: turbine
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path turbine/gradle/libs.versions.toml plugins.kotlin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          cd turbine
+          git diff --patch
+      - run: ./gradlew check publishToMavenLocal
+        working-directory: turbine
+
   final-status:
     if: always()
     runs-on: ubuntu-latest
     needs:
-      # TODO Eliminate the need to maintain leafs, and just check ALL other jobs.
+      - burst
       - okio
+      - turbine
     steps:
       - name: Check
         run: |

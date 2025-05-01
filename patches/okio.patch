@@ -1,0 +1,20 @@
+diff --git a/build.gradle.kts b/build.gradle.kts
+index c2f98c80..2e8b21b9 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -40,6 +40,7 @@ buildscript {
+     mavenCentral()
+     gradlePluginPortal()
+     google()
++    mavenLocal()
+   }
+ }
+ 
+@@ -56,6 +57,7 @@ allprojects {
+   repositories {
+     mavenCentral()
+     google()
++    mavenLocal()
+   }
+ 
+   tasks.withType<DokkaTask>().configureEach {

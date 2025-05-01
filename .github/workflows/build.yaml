@@ -30,3 +30,17 @@ jobs:
           git diff --patch
       - run: ./gradlew publishToMavenLocal
         working-directory: burst
+
+  final-status:
+    if: always()
+    runs-on: ubuntu-latest
+    needs:
+      - burst
+    steps:
+      - name: Check
+        run: |
+          results=$(tr -d '\n' <<< '${{ toJSON(needs.*.result) }}')
+          if ! grep -q -v -E '(failure|cancelled)' <<< "$results"; then
+            echo "One or more required jobs failed"
+            exit 1
+          fi

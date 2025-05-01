@@ -7,6 +7,9 @@ on:
     branches:
       - 'trunk'
 
+env:
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -Dkotlin.incremental=false -Dorg.gradle.daemon=false -Dorg.gradle.vfs.watch=false -Dorg.gradle.logging.stacktrace=full"
+
 jobs:
   burst:
     runs-on: macos-latest

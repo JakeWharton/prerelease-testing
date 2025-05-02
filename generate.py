@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-      - run: python3 generate-workflow.py
+      - run: python3 generate.py
       - run: git diff --exit-code
 
 ''')
@@ -92,7 +92,7 @@ jobs:
 			version = config['version']
 			if 'regex' in version:
 				# perl -ne '/VERSION_NAME=(.+)/ and print "version=$1",$/' gradle.properties
-				f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + version['file'] + ' > "$GITHUB_OUTPUT"\n')
+				f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
 			else:
 				raise Exception("Unknown version strategy")
 			f.write('\n')

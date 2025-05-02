@@ -45,6 +45,7 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "square/retrofit": versions.retrofit
+    "square/okhttp": versions.okhttp
 
 "square/okio":
   external_dependencies:
@@ -55,9 +56,21 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"square/okhttp":
+  compile_only: true # Build is all kinds of messed up.
+  external_dependencies:
+    kotlin: versions.org-jetbrains-kotlin
+  internal_dependencies:
+    "square/okio": versions.com-squareup-okio
+  version:
+    file: build.gradle.kts
+    regex: "version = (.*)"
+
 "square/retrofit":
   external_dependencies:
     kotlin: versions.kotlin
+  internal_dependencies:
+    "square/okhttp": versions.okhttp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

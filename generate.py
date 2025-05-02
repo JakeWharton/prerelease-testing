@@ -1,4 +1,3 @@
-import os.path
 import yaml
 
 if __name__ == '__main__':
@@ -40,10 +39,12 @@ jobs:
 			f.write('  ' + safe_project + ''':
     runs-on: macos-latest
 ''')
+
 			if 'version' in config:
 				f.write('''    outputs:
       version: ${{ steps.version.outputs.version }}
 ''')
+
 			f.write('''    needs:
       - workflow-up-to-date
 ''')
@@ -51,6 +52,7 @@ jobs:
 				for dep in config['internal_dependencies']:
 					safe_dep = dep.replace('/', '-')
 					f.write('      - ' + safe_dep + '\n')
+
 			f.write('''    steps:
       - uses: actions/checkout@v4
         with:
@@ -67,10 +69,12 @@ jobs:
         run: |
           pip install -q toml-cli
 ''')
+
 			if 'external_dependencies' in config:
 				for dep, key in config['external_dependencies'].items():
 					f.write('''          toml set --toml-path ''' + safe_project + '''/gradle/libs.versions.toml ''' + key + ''' $(toml get --toml-path this/libs.versions.toml versions.''' + dep + ''')
 ''')
+
 			if 'internal_dependencies' in config:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = dep.replace('/', '-')
@@ -80,6 +84,7 @@ jobs:
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
 ''')
+
 			if 'internal_dependencies' in config:
 				for dep in config['internal_dependencies']:
 					safe_dep = dep.replace('/', '-')
@@ -88,12 +93,18 @@ jobs:
           name: ''' + safe_dep + '''-snapshot
           path: ~/.m2/repository
 ''')
+
+			published = True
 			if 'version' in config:
 				f.write('      - run: ./gradlew build publishToMavenLocal\n')
+			elif 'compile_only' in config and config['compile_only']:
+				f.write('      - run: ./gradlew publishToMavenLocal\n')
 			else:
+				published = False
 				f.write('      - run: ./gradlew build\n')
 			f.write('        working-directory: ' + safe_project + '\n')
-			if 'version' in config:
+
+			if published:
 				f.write('''      - uses: actions/upload-artifact@v4
         with:
           name: ''' + safe_project + '''-snapshot
@@ -106,7 +117,8 @@ jobs:
 					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
 				else:
 					raise Exception("Unknown version strategy")
-				f.write('\n')
+
+			f.write('\n')
 
 		f.write('''  final-status:
     runs-on: ubuntu-latest

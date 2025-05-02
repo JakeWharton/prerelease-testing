@@ -51,7 +51,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)\n/ and print "version=$1",$/' cashapp-burst/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-burst/gradle.properties >> "$GITHUB_OUTPUT"
 
   cashapp-turbine:
     runs-on: macos-latest
@@ -85,7 +85,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)\n/ and print "version=$1",$/' cashapp-turbine/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-turbine/gradle.properties >> "$GITHUB_OUTPUT"
 
   square-okio:
     runs-on: macos-latest
@@ -126,7 +126,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)\n/ and print "version=$1",$/' square-okio/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-okio/gradle.properties >> "$GITHUB_OUTPUT"
 
   final-status:
     runs-on: ubuntu-latest

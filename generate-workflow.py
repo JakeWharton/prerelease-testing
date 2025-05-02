@@ -70,7 +70,7 @@ jobs:
 			f.write('          cd ' + safe_project + '\n')
 			patch = 'patches/' + project + '.patch'
 			if os.path.exists(patch):
-				f.write('          git apply ' + patch + '\n')
+				f.write('          git apply ../this/' + patch + '\n')
 			f.write('          git diff --patch\n')
 			f.write('''      - run: ./gradlew check publishToMavenLocal
         working-directory: ''' + safe_project + '\n')

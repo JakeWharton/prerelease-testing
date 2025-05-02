@@ -47,7 +47,7 @@ jobs:
         working-directory: cashapp-burst
       - uses: actions/upload-artifact@v4
         with:
-          name: cashapp-burst-maven-local
+          name: cashapp-burst-snapshot
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
@@ -81,7 +81,7 @@ jobs:
         working-directory: cashapp-turbine
       - uses: actions/upload-artifact@v4
         with:
-          name: cashapp-turbine-maven-local
+          name: cashapp-turbine-snapshot
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
@@ -116,13 +116,13 @@ jobs:
           git diff --patch
       - uses: actions/download-artifact@v4
         with:
-          name: cashapp-burst-maven-local
+          name: cashapp-burst-snapshot
           path: ~/.m2/repository
       - run: ./gradlew build publishToMavenLocal
         working-directory: square-okio
       - uses: actions/upload-artifact@v4
         with:
-          name: square-okio-maven-local
+          name: square-okio-snapshot
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version

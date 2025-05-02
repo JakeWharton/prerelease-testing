@@ -77,14 +77,14 @@ jobs:
 					safe_dep = dep.replace('/', '-')
 					f.write('''      - uses: actions/download-artifact@v4
         with:
-          name: ''' + safe_dep + '''-maven-local
+          name: ''' + safe_dep + '''-snapshot
           path: ~/.m2/repository
 ''')
 			f.write('''      - run: ./gradlew build publishToMavenLocal
         working-directory: ''' + safe_project + '\n')
 			f.write('''      - uses: actions/upload-artifact@v4
         with:
-          name: ''' + safe_project + '''-maven-local
+          name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version

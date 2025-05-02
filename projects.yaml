@@ -5,6 +5,13 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"cashapp/molecule":
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "cashapp/turbine":
   external_dependencies:
     kotlin: plugins.kotlin.version
@@ -17,6 +24,13 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "cashapp/burst": libraries.burst-gradle-plugin.version
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"square/retrofit":
+  external_dependencies:
+    kotlin: versions.kotlin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

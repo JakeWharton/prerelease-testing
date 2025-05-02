@@ -1,0 +1,22 @@
+"cashapp/burst":
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"cashapp/turbine":
+  external_dependencies:
+    kotlin: plugins.kotlin.version
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"square/okio":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "cashapp/burst": libraries.burst-gradle-plugin.version
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"

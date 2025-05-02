@@ -114,12 +114,12 @@ jobs:
           cd square-okio
           git apply ../this/patches/square/okio.patch
           git diff --patch
-      - run: ./gradlew check publishToMavenLocal
-        working-directory: square-okio
       - uses: actions/download-artifact@v4
         with:
           name: cashapp-burst-maven-local
           path: ~/.m2/repository
+      - run: ./gradlew check publishToMavenLocal
+        working-directory: square-okio
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-maven-local

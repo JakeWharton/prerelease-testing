@@ -72,8 +72,6 @@ jobs:
 			if os.path.exists(patch):
 				f.write('          git apply ../this/' + patch + '\n')
 			f.write('          git diff --patch\n')
-			f.write('''      - run: ./gradlew check publishToMavenLocal
-        working-directory: ''' + safe_project + '\n')
 			if 'internal_dependencies' in config:
 				for dep in config['internal_dependencies']:
 					safe_dep = dep.replace('/', '-')
@@ -82,6 +80,8 @@ jobs:
           name: ''' + safe_dep + '''-maven-local
           path: ~/.m2/repository
 ''')
+			f.write('''      - run: ./gradlew check publishToMavenLocal
+        working-directory: ''' + safe_project + '\n')
 			f.write('''      - uses: actions/upload-artifact@v4
         with:
           name: ''' + safe_project + '''-maven-local

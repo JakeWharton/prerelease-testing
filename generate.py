@@ -29,6 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - run: pip install -r requirements.txt
       - run: python3 generate.py
       - run: git diff --exit-code
 
@@ -104,6 +105,7 @@ jobs:
 		f.write('''  final-status:
     runs-on: ubuntu-latest
     needs:
+      - workflow-up-to-date
 ''')
 		for project in projects.keys():
 			safe_project = project.replace('/', '-')

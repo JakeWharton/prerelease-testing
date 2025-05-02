@@ -80,7 +80,7 @@ jobs:
           name: ''' + safe_dep + '''-maven-local
           path: ~/.m2/repository
 ''')
-			f.write('''      - run: ./gradlew check publishToMavenLocal
+			f.write('''      - run: ./gradlew build publishToMavenLocal
         working-directory: ''' + safe_project + '\n')
 			f.write('''      - uses: actions/upload-artifact@v4
         with:

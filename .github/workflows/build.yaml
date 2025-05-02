@@ -43,7 +43,7 @@ jobs:
           toml set --toml-path cashapp-burst/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd cashapp-burst
           git diff --patch
-      - run: ./gradlew check publishToMavenLocal
+      - run: ./gradlew build publishToMavenLocal
         working-directory: cashapp-burst
       - uses: actions/upload-artifact@v4
         with:
@@ -77,7 +77,7 @@ jobs:
           toml set --toml-path cashapp-turbine/gradle/libs.versions.toml plugins.kotlin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd cashapp-turbine
           git diff --patch
-      - run: ./gradlew check publishToMavenLocal
+      - run: ./gradlew build publishToMavenLocal
         working-directory: cashapp-turbine
       - uses: actions/upload-artifact@v4
         with:
@@ -118,7 +118,7 @@ jobs:
         with:
           name: cashapp-burst-maven-local
           path: ~/.m2/repository
-      - run: ./gradlew check publishToMavenLocal
+      - run: ./gradlew build publishToMavenLocal
         working-directory: square-okio
       - uses: actions/upload-artifact@v4
         with:

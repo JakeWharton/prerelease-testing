@@ -112,7 +112,7 @@ jobs:
           toml set --toml-path square-okio/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path square-okio/gradle/libs.versions.toml libraries.burst-gradle-plugin.version "${{ needs.cashapp-burst.outputs.version }}"
           cd square-okio
-          git apply patches/square/okio.patch
+          git apply ../this/patches/square/okio.patch
           git diff --patch
       - run: ./gradlew check publishToMavenLocal
         working-directory: square-okio

@@ -14,6 +14,9 @@ on:
   push:
     branches:
       - 'trunk'
+  schedule:
+    # 9:23 AM EST
+    - cron: "23 5 * * *"
 
 env:
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -Dkotlin.incremental=false -Dorg.gradle.daemon=false -Dorg.gradle.vfs.watch=false -Dorg.gradle.logging.stacktrace=full"
@@ -91,7 +94,6 @@ jobs:
 ''')
 			version = config['version']
 			if 'regex' in version:
-				# perl -ne '/VERSION_NAME=(.+)/ and print "version=$1",$/' gradle.properties
 				f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
 			else:
 				raise Exception("Unknown version strategy")

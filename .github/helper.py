@@ -180,7 +180,7 @@ jobs:
 			f.write('      - name: "Build ' + project + '''"
         run: |
           cd ''' + safe_project + '''
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew ''')
 			if 'pre_build' in config:

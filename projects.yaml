@@ -5,7 +5,22 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"cashapp/licensee":
+  compile_only: true # Test golden files hard code versions.
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "cashapp/molecule":
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"cashapp/paraphrase":
   external_dependencies:
     kotlin: versions.kotlin
   version:

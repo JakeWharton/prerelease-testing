@@ -171,6 +171,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
+      - square-okio
     steps:
       - uses: actions/checkout@v4
         with:
@@ -187,9 +188,14 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.kotlinPlugin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.okio.version "${{ needs.square-okio.outputs.version }}"
           cd JakeWharton-diffuse
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
+      - uses: actions/download-artifact@v4
+        with:
+          name: square-okio-snapshot
+          path: ~/.m2/repository
       - run: ./gradlew build publishToMavenLocal
         working-directory: JakeWharton-diffuse
       - uses: actions/upload-artifact@v4

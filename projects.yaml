@@ -29,6 +29,8 @@
 "JakeWharton/diffuse":
   external_dependencies:
     kotlin: libraries.kotlinPlugin.version
+  internal_dependencies:
+    "square/okio": libraries.okio.version
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

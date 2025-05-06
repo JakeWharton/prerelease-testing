@@ -2,6 +2,6 @@
 
 Automatically testing the latest versions of Kotlin and upstream dependencies on various projects.
 
-Projects:
+Included projects:
 
-![](projects.svg)
+![](.github/projects.svg)

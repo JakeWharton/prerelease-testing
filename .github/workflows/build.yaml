@@ -51,8 +51,7 @@ jobs:
           cd cashapp-burst
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - working-directory: cashapp-burst
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p cashapp-burst build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-burst-snapshot
@@ -86,8 +85,7 @@ jobs:
           cd cashapp-molecule
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - working-directory: cashapp-molecule
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p cashapp-molecule build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-molecule-snapshot
@@ -121,8 +119,7 @@ jobs:
           cd cashapp-turbine
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - working-directory: cashapp-turbine
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p cashapp-turbine build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-turbine-snapshot
@@ -156,8 +153,7 @@ jobs:
           cd JakeWharton-cite
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - working-directory: JakeWharton-cite
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p JakeWharton-cite build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-cite-snapshot
@@ -197,8 +193,7 @@ jobs:
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
-      - working-directory: JakeWharton-diffuse
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p JakeWharton-diffuse build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-diffuse-snapshot
@@ -232,8 +227,7 @@ jobs:
           cd JakeWharton-finalization-hook
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - working-directory: JakeWharton-finalization-hook
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p JakeWharton-finalization-hook build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -277,8 +271,7 @@ jobs:
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
-      - working-directory: JakeWharton-SaveArchived4Pocket
-        run: ./gradlew build
+      - run: this/gradlew -p JakeWharton-SaveArchived4Pocket build
 
   square-okio:
     runs-on: macos-latest
@@ -311,8 +304,7 @@ jobs:
         with:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
-      - working-directory: square-okio
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p square-okio build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-snapshot
@@ -352,8 +344,7 @@ jobs:
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
-      - working-directory: square-okhttp
-        run: ./gradlew publishToMavenLocal
+      - run: this/gradlew -p square-okhttp publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okhttp-snapshot
@@ -393,8 +384,7 @@ jobs:
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
-      - working-directory: square-retrofit
-        run: ./gradlew build publishToMavenLocal
+      - run: this/gradlew -p square-retrofit build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-retrofit-snapshot

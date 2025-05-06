@@ -94,17 +94,15 @@ jobs:
           path: ~/.m2/repository
 ''')
 
-			published = True
-			if 'version' in config:
-				f.write('      - run: ./gradlew build publishToMavenLocal\n')
-			elif 'compile_only' in config and config['compile_only']:
-				f.write('      - run: ./gradlew publishToMavenLocal\n')
+			f.write('      - working-directory: ' + safe_project + '\n')
+			if 'version' not in config:
+				f.write('        run: ./gradlew build\n')
 			else:
-				published = False
-				f.write('      - run: ./gradlew build\n')
-			f.write('        working-directory: ' + safe_project + '\n')
+				if 'compile_only' in config and config['compile_only']:
+					f.write('        run: ./gradlew publishToMavenLocal\n')
+				else:
+					f.write('        run: ./gradlew build publishToMavenLocal\n')
 
-			if published:
 				f.write('''      - uses: actions/upload-artifact@v4
         with:
           name: ''' + safe_project + '''-snapshot
@@ -121,6 +119,7 @@ jobs:
 			f.write('\n')
 
 		f.write('''  final-status:
+    if: always()
     runs-on: ubuntu-latest
     needs:
       - workflow-up-to-date

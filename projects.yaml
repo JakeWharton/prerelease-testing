@@ -19,6 +19,20 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/cite":
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"JakeWharton/finalization-hook":
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "square/okio":
   external_dependencies:
     kotlin: versions.kotlin

@@ -7,7 +7,7 @@ if __name__ == '__main__':
 		projects = yaml.safe_load(y)
 
 	with tempfile.NamedTemporaryFile(mode = 'w', delete = False) as f:
-		f.write('direction: up\n\n')
+		f.write('direction: right\n\n')
 
 		for project, config in projects.items():
 			f.write(project + '\n')

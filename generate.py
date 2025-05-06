@@ -39,9 +39,12 @@ jobs:
 			safe_project = project.replace('/', '-')
 			f.write('  ' + safe_project + ''':
     runs-on: macos-latest
-    outputs:
+''')
+			if 'version' in config:
+				f.write('''    outputs:
       version: ${{ steps.version.outputs.version }}
-    needs:
+''')
+			f.write('''    needs:
       - workflow-up-to-date
 ''')
 			if 'internal_dependencies' in config:
@@ -73,11 +76,10 @@ jobs:
 					safe_dep = dep.replace('/', '-')
 					f.write('''          toml set --toml-path ''' + safe_project + '''/gradle/libs.versions.toml ''' + key + ''' "${{ needs.''' + safe_dep + '''.outputs.version }}"
 ''')
-			f.write('          cd ' + safe_project + '\n')
-			patch = 'patches/' + project + '.patch'
-			if os.path.exists(patch):
-				f.write('          git apply ../this/' + patch + '\n')
-			f.write('          git diff --patch\n')
+			f.write('          cd ' + safe_project + '''
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+''')
 			if 'internal_dependencies' in config:
 				for dep in config['internal_dependencies']:
 					safe_dep = dep.replace('/', '-')
@@ -86,21 +88,25 @@ jobs:
           name: ''' + safe_dep + '''-snapshot
           path: ~/.m2/repository
 ''')
-			f.write('''      - run: ./gradlew build publishToMavenLocal
-        working-directory: ''' + safe_project + '\n')
-			f.write('''      - uses: actions/upload-artifact@v4
+			if 'version' in config:
+				f.write('      - run: ./gradlew build publishToMavenLocal\n')
+			else:
+				f.write('      - run: ./gradlew build\n')
+			f.write('        working-directory: ' + safe_project + '\n')
+			if 'version' in config:
+				f.write('''      - uses: actions/upload-artifact@v4
         with:
           name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
 ''')
-			version = config['version']
-			if 'regex' in version:
-				f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
-			else:
-				raise Exception("Unknown version strategy")
-			f.write('\n')
+				version = config['version']
+				if 'regex' in version:
+					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
+				else:
+					raise Exception("Unknown version strategy")
+				f.write('\n')
 
 		f.write('''  final-status:
     runs-on: ubuntu-latest

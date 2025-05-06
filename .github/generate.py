@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
 		f.close()
 
-		subprocess.run(['d2', '--layout=elk', f.name, 'projects.svg'])
+		subprocess.run(['d2', '--layout=elk', f.name, '.github/projects.svg'])
 
 	with open('.github/workflows/build.yaml', 'w') as f:
 		f.write('''name: build

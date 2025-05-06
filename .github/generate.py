@@ -1,8 +1,24 @@
+import subprocess
+import tempfile
 import yaml
 
 if __name__ == '__main__':
 	with open('projects.yaml', 'r') as y:
 		projects = yaml.safe_load(y)
+
+	with tempfile.NamedTemporaryFile(mode = 'w', delete = False) as f:
+		f.write('direction: up\n\n')
+
+		for project, config in projects.items():
+			f.write(project + '\n')
+
+			if 'internal_dependencies' in config:
+				for dep in config['internal_dependencies'].keys():
+					f.write(project + ' -> ' + dep + '\n')
+
+		f.close()
+
+		subprocess.run(['d2', '--layout=elk', f.name, 'projects.svg'])
 
 	with open('.github/workflows/build.yaml', 'w') as f:
 		f.write('''name: build
@@ -22,14 +38,15 @@ env:
 
 jobs:
   workflow-up-to-date:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - run: pip install -r requirements.txt
-      - run: python3 generate.py
+      - run: brew update && brew install d2
+      - run: pip install -r .github/requirements.txt
+      - run: python3 .github/generate.py
       - run: git diff --exit-code
 
 ''')

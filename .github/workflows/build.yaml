@@ -127,6 +127,74 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-turbine/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-cite:
+    runs-on: macos-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/cite
+          path: JakeWharton-cite
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path JakeWharton-cite/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          cd JakeWharton-cite
+          git diff --patch
+      - run: ./gradlew build publishToMavenLocal
+        working-directory: JakeWharton-cite
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-cite-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties >> "$GITHUB_OUTPUT"
+
+  JakeWharton-finalization-hook:
+    runs-on: macos-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/finalization-hook
+          path: JakeWharton-finalization-hook
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path JakeWharton-finalization-hook/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          cd JakeWharton-finalization-hook
+          git diff --patch
+      - run: ./gradlew build publishToMavenLocal
+        working-directory: JakeWharton-finalization-hook
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-finalization-hook-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties >> "$GITHUB_OUTPUT"
+
   square-okio:
     runs-on: macos-latest
     outputs:
@@ -209,6 +277,8 @@ jobs:
       - cashapp-burst
       - cashapp-molecule
       - cashapp-turbine
+      - JakeWharton-cite
+      - JakeWharton-finalization-hook
       - square-okio
       - square-retrofit
     steps:

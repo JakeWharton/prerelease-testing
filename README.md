@@ -1,6 +1,6 @@
 # Prerelease Testing
 
-Automatically testing the latest versions of Kotlin and upstream dependencies on various projects.
+Automatically test projects against the latest versions of Kotlin, Gradle, and each other.
 
 Included projects:
 

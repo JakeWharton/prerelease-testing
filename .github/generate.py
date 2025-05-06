@@ -111,14 +111,14 @@ jobs:
           path: ~/.m2/repository
 ''')
 
-			f.write('      - working-directory: ' + safe_project + '\n')
+			f.write('      - run: this/gradlew -p ' + safe_project + ' ')
 			if 'version' not in config:
-				f.write('        run: ./gradlew build\n')
+				f.write('build\n')
 			else:
 				if 'compile_only' in config and config['compile_only']:
-					f.write('        run: ./gradlew publishToMavenLocal\n')
+					f.write('publishToMavenLocal\n')
 				else:
-					f.write('        run: ./gradlew build publishToMavenLocal\n')
+					f.write('build publishToMavenLocal\n')
 
 				f.write('''      - uses: actions/upload-artifact@v4
         with:

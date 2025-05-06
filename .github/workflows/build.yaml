@@ -48,6 +48,7 @@ jobs:
           pip install -q toml-cli
           toml set --toml-path cashapp-burst/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd cashapp-burst
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - run: ./gradlew build publishToMavenLocal
         working-directory: cashapp-burst
@@ -82,6 +83,7 @@ jobs:
           pip install -q toml-cli
           toml set --toml-path cashapp-molecule/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd cashapp-molecule
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - run: ./gradlew build publishToMavenLocal
         working-directory: cashapp-molecule
@@ -116,6 +118,7 @@ jobs:
           pip install -q toml-cli
           toml set --toml-path cashapp-turbine/gradle/libs.versions.toml plugins.kotlin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd cashapp-turbine
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - run: ./gradlew build publishToMavenLocal
         working-directory: cashapp-turbine
@@ -150,6 +153,7 @@ jobs:
           pip install -q toml-cli
           toml set --toml-path JakeWharton-cite/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd JakeWharton-cite
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - run: ./gradlew build publishToMavenLocal
         working-directory: JakeWharton-cite
@@ -160,6 +164,41 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties >> "$GITHUB_OUTPUT"
+
+  JakeWharton-diffuse:
+    runs-on: macos-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/diffuse
+          path: JakeWharton-diffuse
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.kotlinPlugin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          cd JakeWharton-diffuse
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+      - run: ./gradlew build publishToMavenLocal
+        working-directory: JakeWharton-diffuse
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-diffuse-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-diffuse/gradle.properties >> "$GITHUB_OUTPUT"
 
   JakeWharton-finalization-hook:
     runs-on: macos-latest
@@ -184,6 +223,7 @@ jobs:
           pip install -q toml-cli
           toml set --toml-path JakeWharton-finalization-hook/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd JakeWharton-finalization-hook
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - run: ./gradlew build publishToMavenLocal
         working-directory: JakeWharton-finalization-hook
@@ -195,6 +235,37 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-SaveArchived4Pocket:
+    runs-on: macos-latest
+    needs:
+      - workflow-up-to-date
+      - square-retrofit
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/SaveArchived4Pocket
+          path: JakeWharton-SaveArchived4Pocket
+      - name: Patch versions
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.retrofit "${{ needs.square-retrofit.outputs.version }}"
+          cd JakeWharton-SaveArchived4Pocket
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+      - uses: actions/download-artifact@v4
+        with:
+          name: square-retrofit-snapshot
+          path: ~/.m2/repository
+      - run: ./gradlew build
+        working-directory: JakeWharton-SaveArchived4Pocket
   square-okio:
     runs-on: macos-latest
     outputs:
@@ -220,7 +291,7 @@ jobs:
           toml set --toml-path square-okio/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path square-okio/gradle/libs.versions.toml libraries.burst-gradle-plugin.version "${{ needs.cashapp-burst.outputs.version }}"
           cd square-okio
-          git apply ../this/patches/square/okio.patch
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - uses: actions/download-artifact@v4
         with:
@@ -259,6 +330,7 @@ jobs:
           pip install -q toml-cli
           toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           cd square-retrofit
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
       - run: ./gradlew build publishToMavenLocal
         working-directory: square-retrofit
@@ -278,7 +350,9 @@ jobs:
       - cashapp-molecule
       - cashapp-turbine
       - JakeWharton-cite
+      - JakeWharton-diffuse
       - JakeWharton-finalization-hook
+      - JakeWharton-SaveArchived4Pocket
       - square-okio
       - square-retrofit
     steps:

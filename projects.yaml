@@ -26,12 +26,25 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/diffuse":
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin.version
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/finalization-hook":
   external_dependencies:
     kotlin: versions.kotlin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
+
+"JakeWharton/SaveArchived4Pocket":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "square/retrofit": versions.retrofit
 
 "square/okio":
   external_dependencies:

@@ -9,6 +9,7 @@
   compile_only: true # Test golden files hard code versions.
   external_dependencies:
     kotlin: versions.kotlin
+    agp: versions.agp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -16,6 +17,7 @@
 "cashapp/molecule":
   external_dependencies:
     kotlin: versions.kotlin
+    agp: libraries.android-plugin.version
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -23,6 +25,7 @@
 "cashapp/paraphrase":
   external_dependencies:
     kotlin: versions.kotlin
+    agp: versions.agp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -67,6 +70,7 @@
 "square/okio":
   external_dependencies:
     kotlin: versions.kotlin
+    agp: libraries.android-gradle-plugin.version
   internal_dependencies:
     "cashapp/burst": libraries.burst-gradle-plugin.version
   version:
@@ -86,6 +90,7 @@
 "square/retrofit":
   external_dependencies:
     kotlin: versions.kotlin
+    agp: libraries.androidPlugin.version
   internal_dependencies:
     "square/okhttp": versions.okhttp
   version:

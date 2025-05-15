@@ -82,6 +82,7 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-licensee/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path cashapp-licensee/gradle/libs.versions.toml versions.agp $(toml get --toml-path this/libs.versions.toml versions.agp)
           cd cashapp-licensee
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
@@ -116,6 +117,7 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-molecule/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path cashapp-molecule/gradle/libs.versions.toml libraries.android-plugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
           cd cashapp-molecule
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
@@ -150,6 +152,7 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-paraphrase/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path cashapp-paraphrase/gradle/libs.versions.toml versions.agp $(toml get --toml-path this/libs.versions.toml versions.agp)
           cd cashapp-paraphrase
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
@@ -364,6 +367,7 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path square-okio/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path square-okio/gradle/libs.versions.toml libraries.android-gradle-plugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
           toml set --toml-path square-okio/gradle/libs.versions.toml libraries.burst-gradle-plugin.version "${{ needs.cashapp-burst.outputs.version }}"
           cd square-okio
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
@@ -444,6 +448,7 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path square-retrofit/gradle/libs.versions.toml libraries.androidPlugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
           toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
           cd square-retrofit
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"

@@ -54,7 +54,7 @@ jobs:
           cd cashapp-burst
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-burst-snapshot
@@ -130,7 +130,7 @@ jobs:
           cd cashapp-molecule
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-molecule-snapshot
@@ -205,7 +205,7 @@ jobs:
           cd cashapp-turbine
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-turbine-snapshot
@@ -242,7 +242,7 @@ jobs:
           cd JakeWharton-cite
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-cite-snapshot
@@ -422,7 +422,7 @@ jobs:
           cd square-okio
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-snapshot

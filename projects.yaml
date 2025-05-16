@@ -1,4 +1,5 @@
 "cashapp/burst":
+  kmp_with_js: true
   external_dependencies:
     kotlin: versions.kotlin
   version:
@@ -15,6 +16,7 @@
     regex: "VERSION_NAME=(.*)"
 
 "cashapp/molecule":
+  kmp_with_js: true
   external_dependencies:
     kotlin: versions.kotlin
     agp: libraries.android-plugin.version
@@ -31,6 +33,7 @@
     regex: "VERSION_NAME=(.*)"
 
 "cashapp/turbine":
+  kmp_with_js: true
   external_dependencies:
     kotlin: plugins.kotlin.version
   version:
@@ -38,6 +41,7 @@
     regex: "VERSION_NAME=(.*)"
 
 "JakeWharton/cite":
+  kmp_with_js: true
   external_dependencies:
     kotlin: versions.kotlin
   version:
@@ -68,6 +72,7 @@
     "square/okhttp": versions.okhttp
 
 "square/okio":
+  kmp_with_js: true
   external_dependencies:
     kotlin: versions.kotlin
     agp: libraries.android-gradle-plugin.version

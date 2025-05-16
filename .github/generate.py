@@ -113,6 +113,8 @@ jobs:
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew ''')
+			if 'kmp_with_js' in config and config['kmp_with_js'] == True:
+				f.write('kotlinUpgradeYarnLock ')
 			if 'version' not in config:
 				f.write('build\n')
 			else:

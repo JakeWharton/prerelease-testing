@@ -55,6 +55,7 @@ jobs:
 			safe_project = project.replace('/', '-')
 			f.write('  ' + safe_project + ''':
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
 ''')
 
 			if 'version' in config:
@@ -82,7 +83,7 @@ jobs:
         with:
           repository: ''' + project + '''
           path: ''' + safe_project + '''
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
 ''')
@@ -95,23 +96,23 @@ jobs:
 			if 'internal_dependencies' in config:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = dep.replace('/', '-')
-					f.write('''          toml set --toml-path ''' + safe_project + '''/gradle/libs.versions.toml ''' + key + ''' "${{ needs.''' + safe_dep + '''.outputs.version }}"
-''')
-			f.write('          cd ' + safe_project + '''
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-''')
-
-			if 'internal_dependencies' in config:
-				for dep in config['internal_dependencies']:
-					safe_dep = dep.replace('/', '-')
-					f.write('''      - uses: actions/download-artifact@v4
+					f.write('      - name: "Download internal dependency ' + dep + '''"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
         with:
           name: ''' + safe_dep + '''-snapshot
           path: ~/.m2/repository
+      - name: "Patch internal dependency ''' + dep + '''"
+        run: toml set --toml-path ''' + safe_project + '''/gradle/libs.versions.toml ''' + key + ''' "${{ needs.''' + safe_dep + '''.outputs.version }}"
+        if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
 ''')
 
-			f.write('      - run: this/gradlew -p ' + safe_project + ' ')
+			f.write('''      - name: "Build ''' + project + '''"
+        run: |
+          cd ''' + safe_project + '''
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew ''')
 			if 'version' not in config:
 				f.write('build\n')
 			else:
@@ -136,7 +137,7 @@ jobs:
 			f.write('\n')
 
 		f.write('''  final-status:
-    if: always()
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     needs:
       - workflow-up-to-date

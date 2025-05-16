@@ -335,6 +335,43 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-kmp-missing-targets:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: this
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/kmp-missing-targets
+          path: JakeWharton-kmp-missing-targets
+      - name: Patch external dependencies
+        run: |
+          pip install -q toml-cli
+          toml set --toml-path JakeWharton-kmp-missing-targets/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+      - name: "Build JakeWharton/kmp-missing-targets"
+        run: |
+          cd JakeWharton-kmp-missing-targets
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-kmp-missing-targets-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-kmp-missing-targets/gradle.properties >> "$GITHUB_OUTPUT"
+
   JakeWharton-SaveArchived4Pocket:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -539,6 +576,7 @@ jobs:
       - JakeWharton-cite
       - JakeWharton-diffuse
       - JakeWharton-finalization-hook
+      - JakeWharton-kmp-missing-targets
       - JakeWharton-SaveArchived4Pocket
       - square-okio
       - square-okhttp

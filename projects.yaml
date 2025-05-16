@@ -64,6 +64,14 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/kmp-missing-targets":
+  compile_only: true # Test golden files hard code versions.
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/SaveArchived4Pocket":
   external_dependencies:
     kotlin: versions.kotlin

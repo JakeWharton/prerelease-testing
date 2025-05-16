@@ -28,6 +28,7 @@ jobs:
 
   cashapp-burst:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -44,14 +45,16 @@ jobs:
         with:
           repository: cashapp/burst
           path: cashapp-burst
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-burst/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+      - name: "Build cashapp/burst"
+        run: |
           cd cashapp-burst
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p cashapp-burst build publishToMavenLocal
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-burst-snapshot
@@ -62,6 +65,7 @@ jobs:
 
   cashapp-licensee:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -78,15 +82,17 @@ jobs:
         with:
           repository: cashapp/licensee
           path: cashapp-licensee
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-licensee/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path cashapp-licensee/gradle/libs.versions.toml versions.agp $(toml get --toml-path this/libs.versions.toml versions.agp)
+      - name: "Build cashapp/licensee"
+        run: |
           cd cashapp-licensee
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p cashapp-licensee publishToMavenLocal
+          ../this/gradlew publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-licensee-snapshot
@@ -97,6 +103,7 @@ jobs:
 
   cashapp-molecule:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -113,15 +120,17 @@ jobs:
         with:
           repository: cashapp/molecule
           path: cashapp-molecule
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-molecule/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path cashapp-molecule/gradle/libs.versions.toml libraries.android-plugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
+      - name: "Build cashapp/molecule"
+        run: |
           cd cashapp-molecule
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p cashapp-molecule build publishToMavenLocal
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-molecule-snapshot
@@ -132,6 +141,7 @@ jobs:
 
   cashapp-paraphrase:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -148,15 +158,17 @@ jobs:
         with:
           repository: cashapp/paraphrase
           path: cashapp-paraphrase
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-paraphrase/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path cashapp-paraphrase/gradle/libs.versions.toml versions.agp $(toml get --toml-path this/libs.versions.toml versions.agp)
+      - name: "Build cashapp/paraphrase"
+        run: |
           cd cashapp-paraphrase
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p cashapp-paraphrase build publishToMavenLocal
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-paraphrase-snapshot
@@ -167,6 +179,7 @@ jobs:
 
   cashapp-turbine:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -183,14 +196,16 @@ jobs:
         with:
           repository: cashapp/turbine
           path: cashapp-turbine
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path cashapp-turbine/gradle/libs.versions.toml plugins.kotlin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+      - name: "Build cashapp/turbine"
+        run: |
           cd cashapp-turbine
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p cashapp-turbine build publishToMavenLocal
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-turbine-snapshot
@@ -201,6 +216,7 @@ jobs:
 
   JakeWharton-cite:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -217,14 +233,16 @@ jobs:
         with:
           repository: JakeWharton/cite
           path: JakeWharton-cite
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path JakeWharton-cite/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+      - name: "Build JakeWharton/cite"
+        run: |
           cd JakeWharton-cite
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p JakeWharton-cite build publishToMavenLocal
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-cite-snapshot
@@ -235,6 +253,7 @@ jobs:
 
   JakeWharton-diffuse:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -252,19 +271,25 @@ jobs:
         with:
           repository: JakeWharton/diffuse
           path: JakeWharton-diffuse
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.kotlinPlugin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.okio.version "${{ needs.square-okio.outputs.version }}"
-          cd JakeWharton-diffuse
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-      - uses: actions/download-artifact@v4
+      - name: "Download internal dependency square/okio"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-okio.result == 'success' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
-      - run: this/gradlew -p JakeWharton-diffuse build publishToMavenLocal
+      - name: "Patch internal dependency square/okio"
+        run: toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.okio.version "${{ needs.square-okio.outputs.version }}"
+        if: ${{ needs.square-okio.result == 'success' }}
+      - name: "Build JakeWharton/diffuse"
+        run: |
+          cd JakeWharton-diffuse
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-diffuse-snapshot
@@ -275,6 +300,7 @@ jobs:
 
   JakeWharton-finalization-hook:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -291,14 +317,16 @@ jobs:
         with:
           repository: JakeWharton/finalization-hook
           path: JakeWharton-finalization-hook
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path JakeWharton-finalization-hook/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+      - name: "Build JakeWharton/finalization-hook"
+        run: |
           cd JakeWharton-finalization-hook
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-      - run: this/gradlew -p JakeWharton-finalization-hook build publishToMavenLocal
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -309,6 +337,7 @@ jobs:
 
   JakeWharton-SaveArchived4Pocket:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     needs:
       - workflow-up-to-date
       - square-retrofit
@@ -325,27 +354,38 @@ jobs:
         with:
           repository: JakeWharton/SaveArchived4Pocket
           path: JakeWharton-SaveArchived4Pocket
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.retrofit "${{ needs.square-retrofit.outputs.version }}"
-          toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
-          cd JakeWharton-SaveArchived4Pocket
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-      - uses: actions/download-artifact@v4
+      - name: "Download internal dependency square/retrofit"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-retrofit.result == 'success' }}
         with:
           name: square-retrofit-snapshot
           path: ~/.m2/repository
-      - uses: actions/download-artifact@v4
+      - name: "Patch internal dependency square/retrofit"
+        run: toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.retrofit "${{ needs.square-retrofit.outputs.version }}"
+        if: ${{ needs.square-retrofit.result == 'success' }}
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
-      - run: this/gradlew -p JakeWharton-SaveArchived4Pocket build
+      - name: "Patch internal dependency square/okhttp"
+        run: toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
+        if: ${{ needs.square-okhttp.result == 'success' }}
+      - name: "Build JakeWharton/SaveArchived4Pocket"
+        run: |
+          cd JakeWharton-SaveArchived4Pocket
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build
 
   square-okio:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -363,20 +403,26 @@ jobs:
         with:
           repository: square/okio
           path: square-okio
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path square-okio/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path square-okio/gradle/libs.versions.toml libraries.android-gradle-plugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
-          toml set --toml-path square-okio/gradle/libs.versions.toml libraries.burst-gradle-plugin.version "${{ needs.cashapp-burst.outputs.version }}"
-          cd square-okio
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-      - uses: actions/download-artifact@v4
+      - name: "Download internal dependency cashapp/burst"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.cashapp-burst.result == 'success' }}
         with:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
-      - run: this/gradlew -p square-okio build publishToMavenLocal
+      - name: "Patch internal dependency cashapp/burst"
+        run: toml set --toml-path square-okio/gradle/libs.versions.toml libraries.burst-gradle-plugin.version "${{ needs.cashapp-burst.outputs.version }}"
+        if: ${{ needs.cashapp-burst.result == 'success' }}
+      - name: "Build square/okio"
+        run: |
+          cd square-okio
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-snapshot
@@ -387,6 +433,7 @@ jobs:
 
   square-okhttp:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -404,19 +451,25 @@ jobs:
         with:
           repository: square/okhttp
           path: square-okhttp
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.org-jetbrains-kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.com-squareup-okio "${{ needs.square-okio.outputs.version }}"
-          cd square-okhttp
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-      - uses: actions/download-artifact@v4
+      - name: "Download internal dependency square/okio"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-okio.result == 'success' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
-      - run: this/gradlew -p square-okhttp publishToMavenLocal
+      - name: "Patch internal dependency square/okio"
+        run: toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.com-squareup-okio "${{ needs.square-okio.outputs.version }}"
+        if: ${{ needs.square-okio.result == 'success' }}
+      - name: "Build square/okhttp"
+        run: |
+          cd square-okhttp
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okhttp-snapshot
@@ -427,6 +480,7 @@ jobs:
 
   square-retrofit:
     runs-on: macos-latest
+    if: ${{ !cancelled() }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     needs:
@@ -444,20 +498,26 @@ jobs:
         with:
           repository: square/retrofit
           path: square-retrofit
-      - name: Patch versions
+      - name: Patch external dependencies
         run: |
           pip install -q toml-cli
           toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
           toml set --toml-path square-retrofit/gradle/libs.versions.toml libraries.androidPlugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
-          toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
-          cd square-retrofit
-          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-      - uses: actions/download-artifact@v4
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
-      - run: this/gradlew -p square-retrofit build publishToMavenLocal
+      - name: "Patch internal dependency square/okhttp"
+        run: toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
+        if: ${{ needs.square-okhttp.result == 'success' }}
+      - name: "Build square/retrofit"
+        run: |
+          cd square-retrofit
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-retrofit-snapshot
@@ -467,7 +527,7 @@ jobs:
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-retrofit/gradle.properties >> "$GITHUB_OUTPUT"
 
   final-status:
-    if: always()
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     needs:
       - workflow-up-to-date

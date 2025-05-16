@@ -72,17 +72,20 @@ jobs:
 					f.write('      - ' + safe_dep + '\n')
 
 			f.write('''    steps:
-      - uses: actions/checkout@v4
+      - name: Checkout this repository
+        uses: actions/checkout@v4
         with:
           path: this
+      - name: "Checkout ''' + project + ''' repository"
+        uses: actions/checkout@v4
+        with:
+          repository: ''' + project + '''
+          path: ''' + safe_project + '''
       - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
-      - uses: actions/checkout@v4
-        with:
-          repository: ''' + project + '''
-          path: ''' + safe_project + '''
+      - uses: gradle/actions/setup-gradle@v4
       - name: Patch external dependencies
         run: |
           pip install -q toml-cli

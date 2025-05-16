@@ -1,6 +1,6 @@
 [versions]
 agp = "8.10.0"
-kotlin = "2.1.21-RC2"
+kotlin = "2.2.0-RC"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]

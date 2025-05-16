@@ -9,6 +9,8 @@
 	separateMinorPatch: true,
 	separateMultipleMajor: true,
 	separateMultipleMinor: true,
+	prConcurrentLimit: 0,
+	prHourlyLimit: 0,
 	ignorePresets: [
 		// Ensure we get the latest version and are not pinned to old versions.
 		'workarounds:javaLTSVersions',

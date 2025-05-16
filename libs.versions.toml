@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.0"
+agp = "8.11.0-alpha10"
 kotlin = "2.1.21"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.

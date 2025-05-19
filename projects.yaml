@@ -1,8 +1,9 @@
 "cashapp/burst":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    agp: libraries.android-gradlePlugin
     kotlin: versions.kotlin
-    # TODO ksp: libraries.google-ksp
+    ksp: libraries.google-ksp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -10,8 +11,8 @@
 "cashapp/licensee":
   compile_only: true # Test golden files hard code versions.
   external_dependencies:
-    kotlin: versions.kotlin
     agp: versions.agp
+    kotlin: versions.kotlin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -19,16 +20,16 @@
 "cashapp/molecule":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    agp: libraries.android-plugin
     kotlin: versions.kotlin
-    agp: libraries.android-plugin.version
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
 "cashapp/paraphrase":
   external_dependencies:
-    kotlin: versions.kotlin
     agp: versions.agp
+    kotlin: versions.kotlin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -36,7 +37,7 @@
 "cashapp/turbine":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
-    kotlin: plugins.kotlin.version
+    kotlin: plugins.kotlin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -44,6 +45,7 @@
 "JakeWharton/cite":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    agp: libraries.android-gradlePlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -51,9 +53,10 @@
 
 "JakeWharton/diffuse":
   external_dependencies:
-    kotlin: libraries.kotlinPlugin.version
+    agp: libraries.apkSigner
+    kotlin: libraries.kotlinPlugin
   internal_dependencies:
-    "square/okio": libraries.okio.version
+    "square/okio": libraries.okio
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -68,6 +71,7 @@
 "JakeWharton/kmp-missing-targets":
   compile_only: true # Test golden files hard code versions.
   external_dependencies:
+    agp: libraries.android-gradlePlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -75,6 +79,7 @@
 
 "JakeWharton/SaveArchived4Pocket":
   external_dependencies:
+    agp: libraries.androidGradlePlugin
     kotlin: versions.kotlin
   internal_dependencies:
     "square/retrofit": versions.retrofit
@@ -84,9 +89,9 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     kotlin: versions.kotlin
-    agp: libraries.android-gradle-plugin.version
+    agp: libraries.android-gradle-plugin
   internal_dependencies:
-    "cashapp/burst": libraries.burst-gradle-plugin.version
+    "cashapp/burst": libraries.burst-gradle-plugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -104,8 +109,8 @@
 
 "square/retrofit":
   external_dependencies:
+    agp: libraries.androidPlugin
     kotlin: versions.kotlin
-    agp: libraries.androidPlugin.version
   internal_dependencies:
     "square/okhttp": versions.okhttp
   version:

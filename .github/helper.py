@@ -1,8 +1,68 @@
+#!/usr/bin/env python3
+
 import subprocess
+import sys
 import tempfile
+import tomlkit
 import yaml
 
-if __name__ == '__main__':
+def main():
+	if len(sys.argv) <= 1:
+		print('Argument required')
+		exit(1)
+	match sys.argv[1]:
+		case 'generate':
+			generate()
+		case 'patch-toml':
+			if len(sys.argv) != 6:
+				print('Incorrect arguments for patch-toml')
+			patch_toml(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+		case _:
+			print('Unknown command:', sys.argv[1])
+			exit(1)
+
+
+def patch_toml(project_dir: str, toml_key: str, version_type: str, version_arg: str):
+	match version_type:
+		case 'key':
+			this_toml_path = 'this/libs.versions.toml'
+			with open(this_toml_path, 'r') as f:
+				this_toml = tomlkit.parse(f.read())
+			version = this_toml['versions'][version_arg]
+		case 'value':
+			version = version_arg
+		case _:
+			print("Unknown version type:", version_type)
+			exit(1)
+
+	project_toml_path = project_dir + '/gradle/libs.versions.toml'
+	with open(project_toml_path, 'r') as f:
+		project_toml = tomlkit.parse(f.read())
+
+	if toml_key.startswith('versions.'):
+		toml_versions_key = toml_key.removeprefix('versions.')
+		project_toml['versions'][toml_versions_key] = version
+	elif toml_key.startswith('plugins.'):
+		toml_plugins_key = toml_key.removeprefix('plugins.')
+		project_toml['plugins'][toml_plugins_key]['version'] = version
+	elif toml_key.startswith('libraries.'):
+		toml_libraries_key = toml_key.removeprefix('libraries.')
+		project_toml_library = project_toml['libraries'][toml_libraries_key]
+		if isinstance(project_toml_library, str):
+			coordinates = project_toml_library.rpartition(':')[0]
+			new_triple = coordinates + ':' + version
+			project_toml['libraries'][toml_libraries_key] = new_triple
+		else:
+			project_toml_library['version'] = version
+	else:
+		print('Unknown TOML key prefix:', toml_key)
+		exit(1)
+
+	with open(project_toml_path, 'w') as f:
+		f.write(tomlkit.dumps(project_toml))
+
+
+def generate():
 	with open('projects.yaml', 'r') as y:
 		projects = yaml.safe_load(y)
 
@@ -46,7 +106,7 @@ jobs:
           python-version: '3.13'
       - run: brew update && brew install d2
       - run: pip install -r .github/requirements.txt
-      - run: python3 .github/generate.py
+      - run: .github/helper.py generate
       - run: git diff --exit-code
 
 ''')
@@ -88,15 +148,17 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
+          pip install -r this/.github/requirements.txt
 ''')
 
 			if 'external_dependencies' in config:
 				for dep, key in config['external_dependencies'].items():
-					f.write('''          toml set --toml-path ''' + safe_project + '''/gradle/libs.versions.toml ''' + key + ''' $(toml get --toml-path this/libs.versions.toml versions.''' + dep + ''')
-''')
+					f.write('          this/.github/helper.py patch-toml ' + safe_project + ' ' + key + ' key ' + dep + '\n')
 
 			if 'internal_dependencies' in config:
 				for dep, key in config['internal_dependencies'].items():
@@ -108,7 +170,7 @@ jobs:
           name: ''' + safe_dep + '''-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency ''' + dep + '''"
-        run: toml set --toml-path ''' + safe_project + '''/gradle/libs.versions.toml ''' + key + ''' "${{ needs.''' + safe_dep + '''.outputs.version }}"
+        run: this/.github/helper.py patch-toml ''' + safe_project + ' ' + key + ''' value ${{ needs.''' + safe_dep + '''.outputs.version }}
         if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
 ''')
 
@@ -166,3 +228,7 @@ jobs:
             exit 1
           fi
 ''')
+
+
+if __name__ == '__main__':
+	main()

@@ -34,8 +34,8 @@
 	packageRules: [
 		{
 			matchPackageNames: [
-				'com.google.devtools.ksp{/,}**',
-				'org.jetbrains.kotlin:kotlin{/,}**',
+				'com.google.devtools.ksp:**',
+				'org.jetbrains.kotlin:kotlin-**',
 			],
 		},
 	],

@@ -116,15 +116,20 @@ jobs:
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew ''')
-			if 'kmp_with_js' in config and config['kmp_with_js'] == True:
-				f.write('kotlinUpgradeYarnLock ')
+			if 'pre_build' in config:
+				f.write(config['pre_build'] + ' ')
 			if 'version' not in config:
-				f.write('build\n')
+				f.write('build')
+				if 'post_build' in config:
+					f.write(' ' + config['post_build'])
+				f.write('\n')
 			else:
 				if 'compile_only' in config and config['compile_only']:
 					f.write('publishToMavenLocal\n')
 				else:
 					f.write('build publishToMavenLocal\n')
+				if 'post_build' in config:
+					f.write(' ' + config['post_build'])
 
 				f.write('''      - uses: actions/upload-artifact@v4
         with:

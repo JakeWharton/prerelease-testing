@@ -2,6 +2,7 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     kotlin: versions.kotlin
+    # TODO ksp: libraries.google-ksp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -94,6 +95,7 @@
   compile_only: true # Build is all kinds of messed up.
   external_dependencies:
     kotlin: versions.org-jetbrains-kotlin
+    ksp: versions.ksp
   internal_dependencies:
     "square/okio": versions.com-squareup-okio
   version:

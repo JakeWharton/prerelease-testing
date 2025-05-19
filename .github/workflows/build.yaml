@@ -528,6 +528,7 @@ jobs:
         run: |
           pip install -q toml-cli
           toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.org-jetbrains-kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.ksp $(toml get --toml-path this/libs.versions.toml versions.ksp)
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-okio.result == 'success' }}

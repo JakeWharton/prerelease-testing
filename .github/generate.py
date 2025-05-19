@@ -80,8 +80,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ''' + project + '''
-          path: ''' + safe_project + '''
-      - uses: actions/setup-java@v4
+          path: ''' + safe_project + '\n')
+			if 'ref' in config:
+				f.write('          ref: ' + config['ref'] + '\n')
+			f.write('''      - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version

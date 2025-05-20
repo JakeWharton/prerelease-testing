@@ -8,6 +8,16 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"cashapp/copper":
+  external_dependencies:
+    agp: libraries.android-gradlePlugin
+    kotlin: libraries.kotlin-gradlePlugin
+  internal_dependencies:
+    "cashapp/turbine": libraries.turbine
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "cashapp/licensee":
   compile_only: true # Test golden files hard code versions.
   external_dependencies:

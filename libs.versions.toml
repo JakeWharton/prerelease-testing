@@ -1,7 +1,7 @@
 [versions]
 agp = "8.11.0-alpha10"
 kotlin = "2.1.21"
-ksp = "2.1.21-2.0.1"
+ksp = "2.2.0-RC-2.0.1"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]

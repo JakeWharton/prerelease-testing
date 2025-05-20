@@ -23,7 +23,7 @@ jobs:
           python-version: '3.13'
       - run: brew update && brew install d2
       - run: pip install -r .github/requirements.txt
-      - run: python3 .github/generate.py
+      - run: .github/helper.py generate
       - run: git diff --exit-code
 
   cashapp-burst:
@@ -48,10 +48,15 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path cashapp-burst/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-burst libraries.google-ksp key ksp
       - name: "Build cashapp/burst"
         run: |
           cd cashapp-burst
@@ -88,11 +93,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path cashapp-licensee/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path cashapp-licensee/gradle/libs.versions.toml versions.agp $(toml get --toml-path this/libs.versions.toml versions.agp)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
+          this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
       - name: "Build cashapp/licensee"
         run: |
           cd cashapp-licensee
@@ -129,11 +137,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path cashapp-molecule/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path cashapp-molecule/gradle/libs.versions.toml libraries.android-plugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-molecule libraries.android-plugin key agp
+          this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
       - name: "Build cashapp/molecule"
         run: |
           cd cashapp-molecule
@@ -170,11 +181,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path cashapp-paraphrase/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path cashapp-paraphrase/gradle/libs.versions.toml versions.agp $(toml get --toml-path this/libs.versions.toml versions.agp)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-paraphrase versions.agp key agp
+          this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
       - name: "Build cashapp/paraphrase"
         run: |
           cd cashapp-paraphrase
@@ -211,10 +225,13 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path cashapp-turbine/gradle/libs.versions.toml plugins.kotlin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-turbine plugins.kotlin key kotlin
       - name: "Build cashapp/turbine"
         run: |
           cd cashapp-turbine
@@ -251,10 +268,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path JakeWharton-cite/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-cite libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-cite versions.kotlin key kotlin
       - name: "Build JakeWharton/cite"
         run: |
           cd JakeWharton-cite
@@ -292,10 +313,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.kotlinPlugin.version $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-diffuse libraries.apkSigner key agp
+          this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-okio.result == 'success' }}
@@ -303,7 +328,7 @@ jobs:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
-        run: toml set --toml-path JakeWharton-diffuse/gradle/libs.versions.toml libraries.okio.version "${{ needs.square-okio.outputs.version }}"
+        run: this/.github/helper.py patch-toml JakeWharton-diffuse libraries.okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
       - name: "Build JakeWharton/diffuse"
         run: |
@@ -341,10 +366,13 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path JakeWharton-finalization-hook/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-finalization-hook versions.kotlin key kotlin
       - name: "Build JakeWharton/finalization-hook"
         run: |
           cd JakeWharton-finalization-hook
@@ -381,10 +409,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path JakeWharton-kmp-missing-targets/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets versions.kotlin key kotlin
       - name: "Build JakeWharton/kmp-missing-targets"
         run: |
           cd JakeWharton-kmp-missing-targets
@@ -421,10 +453,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket libraries.androidGradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.kotlin key kotlin
       - name: "Download internal dependency square/retrofit"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-retrofit.result == 'success' }}
@@ -432,7 +468,7 @@ jobs:
           name: square-retrofit-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/retrofit"
-        run: toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.retrofit "${{ needs.square-retrofit.outputs.version }}"
+        run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.retrofit value ${{ needs.square-retrofit.outputs.version }}
         if: ${{ needs.square-retrofit.result == 'success' }}
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v4
@@ -441,7 +477,7 @@ jobs:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
-        run: toml set --toml-path JakeWharton-SaveArchived4Pocket/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
+        run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Build JakeWharton/SaveArchived4Pocket"
         run: |
@@ -473,11 +509,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path square-okio/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path square-okio/gradle/libs.versions.toml libraries.android-gradle-plugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-okio libraries.android-gradle-plugin key agp
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v4
         if: ${{ needs.cashapp-burst.result == 'success' }}
@@ -485,7 +524,7 @@ jobs:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/burst"
-        run: toml set --toml-path square-okio/gradle/libs.versions.toml libraries.burst-gradle-plugin.version "${{ needs.cashapp-burst.outputs.version }}"
+        run: this/.github/helper.py patch-toml square-okio libraries.burst-gradle-plugin value ${{ needs.cashapp-burst.outputs.version }}
         if: ${{ needs.cashapp-burst.result == 'success' }}
       - name: "Build square/okio"
         run: |
@@ -524,11 +563,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.org-jetbrains-kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.ksp $(toml get --toml-path this/libs.versions.toml versions.ksp)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
+          this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-okio.result == 'success' }}
@@ -536,7 +578,7 @@ jobs:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
-        run: toml set --toml-path square-okhttp/gradle/libs.versions.toml versions.com-squareup-okio "${{ needs.square-okio.outputs.version }}"
+        run: this/.github/helper.py patch-toml square-okhttp versions.com-squareup-okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
       - name: "Build square/okhttp"
         run: |
@@ -575,11 +617,14 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
       - name: Patch external dependencies
         run: |
-          pip install -q toml-cli
-          toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.kotlin $(toml get --toml-path this/libs.versions.toml versions.kotlin)
-          toml set --toml-path square-retrofit/gradle/libs.versions.toml libraries.androidPlugin.version $(toml get --toml-path this/libs.versions.toml versions.agp)
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-retrofit libraries.androidPlugin key agp
+          this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-okhttp.result == 'success' }}
@@ -587,7 +632,7 @@ jobs:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
-        run: toml set --toml-path square-retrofit/gradle/libs.versions.toml versions.okhttp "${{ needs.square-okhttp.outputs.version }}"
+        run: this/.github/helper.py patch-toml square-retrofit versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Build square/retrofit"
         run: |

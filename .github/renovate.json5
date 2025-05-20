@@ -33,6 +33,7 @@
 	],
 	packageRules: [
 		{
+			groupName: 'Kotlin and KSP',
 			matchPackageNames: [
 				'com.google.devtools.ksp:symbol-processing-gradle-plugin',
 				'org.jetbrains.kotlin:kotlin-gradle-plugin',

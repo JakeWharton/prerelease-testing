@@ -132,6 +132,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
+      - square-kotlinpoet
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
@@ -155,6 +156,15 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
+      - name: "Download internal dependency square/kotlinpoet"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/kotlinpoet"
+        run: this/.github/helper.py patch-toml cashapp-licensee libraries.kotlinpoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Build cashapp/licensee"
         run: |
           cd cashapp-licensee
@@ -220,6 +230,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
+      - square-kotlinpoet
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
@@ -243,6 +254,15 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-paraphrase versions.agp key agp
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
+      - name: "Download internal dependency square/kotlinpoet"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/kotlinpoet"
+        run: this/.github/helper.py patch-toml cashapp-paraphrase libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Build cashapp/paraphrase"
         run: |
           cd cashapp-paraphrase
@@ -266,6 +286,7 @@ jobs:
       - workflow-up-to-date
       - cashapp-burst
       - cashapp-turbine
+      - square-kotlinpoet
       - square-okio
       - square-okhttp
     steps:
@@ -310,6 +331,15 @@ jobs:
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.result == 'success' }}
+      - name: "Download internal dependency square/kotlinpoet"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/kotlinpoet"
+        run: this/.github/helper.py patch-toml cashapp-redwood libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-okio.result == 'success' }}
@@ -625,6 +655,50 @@ jobs:
           git diff --patch
           ../this/gradlew build
 
+  square-kotlinpoet:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout square/kotlinpoet repository"
+        uses: actions/checkout@v4
+        with:
+          repository: square/kotlinpoet
+          path: square-kotlinpoet
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-kotlinpoet versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-kotlinpoet versions.ksp key ksp
+      - name: "Build square/kotlinpoet"
+        run: |
+          cd square-kotlinpoet
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-kotlinpoet/gradle.properties >> "$GITHUB_OUTPUT"
+
   square-okio:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -804,6 +878,7 @@ jobs:
       - JakeWharton-finalization-hook
       - JakeWharton-kmp-missing-targets
       - JakeWharton-SaveArchived4Pocket
+      - square-kotlinpoet
       - square-okio
       - square-okhttp
       - square-retrofit

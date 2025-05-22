@@ -690,7 +690,7 @@ jobs:
           cd square-kotlinpoet
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-kotlinpoet-snapshot

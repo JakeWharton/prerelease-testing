@@ -117,6 +117,7 @@
     "square/okhttp": versions.okhttp
 
 "square/kotlinpoet":
+  pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     kotlin: versions.kotlin
     ksp: versions.ksp

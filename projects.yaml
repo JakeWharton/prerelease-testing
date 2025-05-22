@@ -99,6 +99,12 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/hardcover-data-sync":
+  external_dependencies:
+    kotlin: libraries.kotlin-gradlePlugin
+  internal_dependencies:
+    "square/okhttp": versions.okhttp
+
 "JakeWharton/kmp-missing-targets":
   compile_only: true # Test golden files hard code versions.
   external_dependencies:

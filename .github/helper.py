@@ -67,7 +67,7 @@ def generate():
 		projects = yaml.safe_load(y)
 
 	with tempfile.NamedTemporaryFile(mode = 'w', delete = False) as f:
-		f.write('direction: right\n\n')
+		f.write('direction: left\n\n')
 
 		for project, config in projects.items():
 			f.write(project + '\n')
@@ -189,11 +189,12 @@ jobs:
 				f.write('\n')
 			else:
 				if 'compile_only' in config and config['compile_only']:
-					f.write('publishToMavenLocal\n')
+					f.write('publishToMavenLocal')
 				else:
-					f.write('build publishToMavenLocal\n')
+					f.write('build publishToMavenLocal')
 				if 'post_build' in config:
 					f.write(' ' + config['post_build'])
+				f.write('\n')
 
 				f.write('''      - uses: actions/upload-artifact@v4
         with:

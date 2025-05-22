@@ -44,6 +44,22 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"cashapp/redwood":
+  pre_build: kotlinUpgradeYarnLock
+  post_build: -x :redwood-treehouse-host:check
+  external_dependencies:
+    kotlin: versions.kotlin
+    ksp: versions.ksp
+    agp: libraries.androidGradlePlugin
+  internal_dependencies:
+    "cashapp/burst": versions.burst
+    "cashapp/turbine": libraries.turbine
+    "square/okio": versions.okio
+    "square/okhttp": libraries.okhttp
+  version:
+    file: build-support/src/main/kotlin/app/cash/redwood/buildsupport/RedwoodBuildPlugin.kt
+    regex: "REDWOOD_VERSION = \"(.*)\""
+
 "cashapp/turbine":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:

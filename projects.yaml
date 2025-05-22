@@ -23,6 +23,8 @@
   external_dependencies:
     agp: versions.agp
     kotlin: versions.kotlin
+  internal_dependencies:
+    "square/kotlinpoet": libraries.kotlinpoet
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -40,6 +42,8 @@
   external_dependencies:
     agp: versions.agp
     kotlin: versions.kotlin
+  internal_dependencies:
+    "square/kotlinpoet": libraries.kotlinPoet
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -54,6 +58,7 @@
   internal_dependencies:
     "cashapp/burst": versions.burst
     "cashapp/turbine": libraries.turbine
+    "square/kotlinpoet": libraries.kotlinPoet
     "square/okio": versions.okio
     "square/okhttp": libraries.okhttp
   version:
@@ -110,6 +115,14 @@
   internal_dependencies:
     "square/retrofit": versions.retrofit
     "square/okhttp": versions.okhttp
+
+"square/kotlinpoet":
+  external_dependencies:
+    kotlin: versions.kotlin
+    ksp: versions.ksp
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
 
 "square/okio":
   pre_build: kotlinUpgradeYarnLock

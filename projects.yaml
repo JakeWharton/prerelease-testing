@@ -122,6 +122,25 @@
     "square/retrofit": versions.retrofit
     "square/okhttp": versions.okhttp
 
+"sqldelight/Grammar-Kit-Composer":
+  external_dependencies:
+    kotlin: plugins.kotlinJvm
+  internal_dependencies:
+    "square/kotlinpoet": libraries.kotlinPoet
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+# TODO https://github.com/sqldelight/sql-psi/issues/678
+#"sqldelight/sql-psi":
+#  external_dependencies:
+#    kotlin: versions.kotlin
+#  internal_dependencies:
+#    "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
+#  version:
+#    file: gradle.properties
+#    regex: "VERSION_NAME=(.*)"
+
 "square/kotlinpoet":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:

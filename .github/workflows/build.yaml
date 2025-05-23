@@ -186,6 +186,9 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
+      - cashapp-turbine
+      - square-okhttp
+      - square-retrofit
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
@@ -209,6 +212,33 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-molecule libraries.android-plugin key agp
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
+      - name: "Download internal dependency cashapp/turbine"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        with:
+          name: cashapp-turbine-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency cashapp/turbine"
+        run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
+        if: ${{ needs.cashapp-turbine.result == 'success' }}
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-okhttp.result == 'success' }}
+        with:
+          name: square-okhttp-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okhttp"
+        run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-okhttp value ${{ needs.square-okhttp.outputs.version }}
+        if: ${{ needs.square-okhttp.result == 'success' }}
+      - name: "Download internal dependency square/retrofit"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-retrofit.result == 'success' }}
+        with:
+          name: square-retrofit-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/retrofit"
+        run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-retrofit value ${{ needs.square-retrofit.outputs.version }}
+        if: ${{ needs.square-retrofit.result == 'success' }}
       - name: "Build cashapp/molecule"
         run: |
           cd cashapp-molecule

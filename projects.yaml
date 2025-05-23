@@ -34,6 +34,10 @@
   external_dependencies:
     agp: libraries.android-plugin
     kotlin: versions.kotlin
+  internal_dependencies:
+    "cashapp/turbine": libraries.turbine
+    "square/okhttp": versions.squareup-okhttp
+    "square/retrofit": versions.squareup-retrofit
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

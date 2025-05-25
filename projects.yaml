@@ -126,6 +126,13 @@
     "square/retrofit": versions.retrofit
     "square/okhttp": versions.okhttp
 
+"JakeWharton/video-swatch":
+  pre_gradle: brew install ffmpeg
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "square/okio": libraries.okio
+
 "sqldelight/Grammar-Kit-Composer":
   external_dependencies:
     kotlin: plugins.kotlinJvm

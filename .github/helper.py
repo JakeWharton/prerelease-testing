@@ -174,7 +174,10 @@ jobs:
         if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
 ''')
 
-			f.write('''      - name: "Build ''' + project + '''"
+			if 'pre_gradle' in config:
+				f.write('      - name: "Pre-build ' + project + '''"
+        run: ''' + config['pre_gradle'] + '\n')
+			f.write('      - name: "Build ' + project + '''"
         run: |
           cd ''' + safe_project + '''
           git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"

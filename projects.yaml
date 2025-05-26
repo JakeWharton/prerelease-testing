@@ -142,15 +142,14 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
-# TODO https://github.com/sqldelight/sql-psi/issues/678
-#"sqldelight/sql-psi":
-#  external_dependencies:
-#    kotlin: versions.kotlin
-#  internal_dependencies:
-#    "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
-#  version:
-#    file: gradle.properties
-#    regex: "VERSION_NAME=(.*)"
+"sqldelight/sql-psi":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
 
 "square/kotlinpoet":
   pre_build: kotlinUpgradeYarnLock

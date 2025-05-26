@@ -828,6 +828,59 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-Grammar-Kit-Composer/gradle.properties >> "$GITHUB_OUTPUT"
 
+  sqldelight-sql-psi:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+      - sqldelight-Grammar-Kit-Composer
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout sqldelight/sql-psi repository"
+        uses: actions/checkout@v4
+        with:
+          repository: sqldelight/sql-psi
+          path: sqldelight-sql-psi
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
+      - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+        with:
+          name: sqldelight-Grammar-Kit-Composer-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency sqldelight/Grammar-Kit-Composer"
+        run: this/.github/helper.py patch-toml sqldelight-sql-psi plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+      - name: "Build sqldelight/sql-psi"
+        run: |
+          cd sqldelight-sql-psi
+          git grep -l mavenCentral | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sqldelight-sql-psi-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sql-psi/gradle.properties >> "$GITHUB_OUTPUT"
+
   square-kotlinpoet:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1054,6 +1107,7 @@ jobs:
       - JakeWharton-SaveArchived4Pocket
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer
+      - sqldelight-sql-psi
       - square-kotlinpoet
       - square-okio
       - square-okhttp

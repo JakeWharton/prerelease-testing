@@ -86,6 +86,12 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/dependency-watch":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "square/okhttp": versions.okhttp
+
 "JakeWharton/diffuse":
   external_dependencies:
     agp: libraries.apkSigner

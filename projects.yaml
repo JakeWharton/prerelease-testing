@@ -86,6 +86,14 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/crossword":
+  pre_build: kotlinUpgradeYarnLock
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/dependency-watch":
   external_dependencies:
     kotlin: versions.kotlin
@@ -120,6 +128,16 @@
   external_dependencies:
     agp: libraries.android-gradlePlugin
     kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"JakeWharton/picnic":
+  pre_build: kotlinUpgradeYarnLock
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin
+  internal_dependencies:
+    "JakeWharton/crossword": libraries.crossword
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

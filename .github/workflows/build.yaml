@@ -489,6 +489,49 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-crossword:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/crossword repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/crossword
+          path: JakeWharton-crossword
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-crossword libraries.kotlinPlugin key kotlin
+      - name: "Build JakeWharton/crossword"
+        run: |
+          cd JakeWharton-crossword
+          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-crossword-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-crossword/gradle.properties >> "$GITHUB_OUTPUT"
+
   JakeWharton-dependency-watch:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -717,6 +760,59 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-kmp-missing-targets/gradle.properties >> "$GITHUB_OUTPUT"
+
+  JakeWharton-picnic:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+      - JakeWharton-crossword
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/picnic repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/picnic
+          path: JakeWharton-picnic
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
+      - name: "Download internal dependency JakeWharton/crossword"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.JakeWharton-crossword.result == 'success' }}
+        with:
+          name: JakeWharton-crossword-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/crossword"
+        run: this/.github/helper.py patch-toml JakeWharton-picnic libraries.crossword value ${{ needs.JakeWharton-crossword.outputs.version }}
+        if: ${{ needs.JakeWharton-crossword.result == 'success' }}
+      - name: "Build JakeWharton/picnic"
+        run: |
+          cd JakeWharton-picnic
+          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-picnic-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-picnic/gradle.properties >> "$GITHUB_OUTPUT"
 
   JakeWharton-SaveArchived4Pocket:
     runs-on: macos-latest
@@ -1144,11 +1240,13 @@ jobs:
       - cashapp-redwood
       - cashapp-turbine
       - JakeWharton-cite
+      - JakeWharton-crossword
       - JakeWharton-dependency-watch
       - JakeWharton-diffuse
       - JakeWharton-finalization-hook
       - JakeWharton-hardcover-data-sync
       - JakeWharton-kmp-missing-targets
+      - JakeWharton-picnic
       - JakeWharton-SaveArchived4Pocket
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer

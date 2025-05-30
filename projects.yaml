@@ -133,6 +133,16 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/mosaic":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "JakeWharton/cite": libraries.cite-gradlePlugin
+    "JakeWharton/finalization-hook": libraries.finalizationHook
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/picnic":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:

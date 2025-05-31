@@ -59,6 +59,7 @@
     kotlin: versions.kotlin
     ksp: versions.ksp
     agp: libraries.androidGradlePlugin
+    atomicfu: libraries.atomicFuPlugin
   internal_dependencies:
     "cashapp/burst": versions.burst
     "cashapp/turbine": libraries.turbine

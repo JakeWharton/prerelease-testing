@@ -343,6 +343,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-redwood versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-redwood versions.ksp key ksp
           this/.github/helper.py patch-toml cashapp-redwood libraries.androidGradlePlugin key agp
+          this/.github/helper.py patch-toml cashapp-redwood libraries.atomicFuPlugin key atomicfu
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v4
         if: ${{ needs.cashapp-burst.result == 'success' }}

@@ -1,10 +1,12 @@
 [versions]
 agp = "8.12.0-alpha03"
+atomicfu = "0.27.0"
 kotlin = "2.1.21"
 ksp = "2.1.21-2.0.1"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }

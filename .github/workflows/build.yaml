@@ -1127,6 +1127,7 @@ jobs:
     needs:
       - workflow-up-to-date
       - square-okio
+      - square-kotlinpoet
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
@@ -1159,6 +1160,15 @@ jobs:
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml square-okhttp versions.com-squareup-okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
+      - name: "Download internal dependency square/kotlinpoet"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/kotlinpoet"
+        run: this/.github/helper.py patch-toml square-okhttp libraries.squareup-kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Build square/okhttp"
         run: |
           cd square-okhttp

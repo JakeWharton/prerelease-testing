@@ -762,6 +762,69 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-kmp-missing-targets/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-mosaic:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+      - JakeWharton-cite
+      - JakeWharton-finalization-hook
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/mosaic repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/mosaic
+          path: JakeWharton-mosaic
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
+      - name: "Download internal dependency JakeWharton/cite"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.JakeWharton-cite.result == 'success' }}
+        with:
+          name: JakeWharton-cite-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/cite"
+        run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.cite-gradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
+        if: ${{ needs.JakeWharton-cite.result == 'success' }}
+      - name: "Download internal dependency JakeWharton/finalization-hook"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
+        with:
+          name: JakeWharton-finalization-hook-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/finalization-hook"
+        run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.finalizationHook value ${{ needs.JakeWharton-finalization-hook.outputs.version }}
+        if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
+      - name: "Build JakeWharton/mosaic"
+        run: |
+          cd JakeWharton-mosaic
+          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-mosaic-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-mosaic/gradle.properties >> "$GITHUB_OUTPUT"
+
   JakeWharton-picnic:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1257,6 +1320,7 @@ jobs:
       - JakeWharton-finalization-hook
       - JakeWharton-hardcover-data-sync
       - JakeWharton-kmp-missing-targets
+      - JakeWharton-mosaic
       - JakeWharton-picnic
       - JakeWharton-SaveArchived4Pocket
       - JakeWharton-video-swatch

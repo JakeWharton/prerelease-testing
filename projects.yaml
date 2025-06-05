@@ -95,6 +95,10 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/dependency-tree-diff":
+  external_dependencies:
+    kotlin: libraries.kotlin-gradle-plugin
+
 "JakeWharton/dependency-watch":
   external_dependencies:
     kotlin: versions.kotlin

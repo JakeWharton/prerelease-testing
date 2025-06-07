@@ -1,7 +1,7 @@
 [versions]
 agp = "8.12.0-alpha04"
 atomicfu = "0.28.0-beta"
-jbCompose = "1.8.1"
+jbCompose = "1.9.0-alpha02"
 kotlin = "2.1.21"
 ksp = "2.1.21-2.0.1"
 

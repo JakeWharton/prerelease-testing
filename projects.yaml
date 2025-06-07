@@ -33,6 +33,7 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-plugin
+    jbCompose: versions.jetbrains-compose
     kotlin: versions.kotlin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
@@ -56,10 +57,11 @@
   pre_build: kotlinUpgradeYarnLock
   post_build: -x :redwood-treehouse-host:check
   external_dependencies:
-    kotlin: versions.kotlin
-    ksp: versions.ksp
     agp: libraries.androidGradlePlugin
     atomicfu: libraries.atomicFuPlugin
+    jbCompose: versions.jbCompose
+    kotlin: versions.kotlin
+    ksp: versions.ksp
   internal_dependencies:
     "cashapp/burst": versions.burst
     "cashapp/turbine": libraries.turbine
@@ -139,6 +141,7 @@
 
 "JakeWharton/mosaic":
   external_dependencies:
+    jbCompose: versions.jetbrains-compose
     kotlin: versions.kotlin
   internal_dependencies:
     "JakeWharton/cite": libraries.cite-gradlePlugin

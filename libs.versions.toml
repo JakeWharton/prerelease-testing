@@ -1,6 +1,7 @@
 [versions]
 agp = "8.12.0-alpha04"
 atomicfu = "0.28.0-beta"
+jbCompose = "1.8.1"
 kotlin = "2.1.21"
 ksp = "2.1.21-2.0.1"
 
@@ -8,5 +9,6 @@ ksp = "2.1.21-2.0.1"
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfu" }
+jetbrains-compose = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jbCompose" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }

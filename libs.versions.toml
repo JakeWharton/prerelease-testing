@@ -3,7 +3,7 @@ agp = "8.12.0-alpha04"
 atomicfu = "0.28.0-beta"
 jbCompose = "1.9.0-alpha02"
 kotlin = "2.1.21"
-ksp = "2.1.21-2.0.1"
+ksp = "2.1.21-2.0.2"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]

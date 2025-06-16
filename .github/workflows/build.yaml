@@ -915,6 +915,50 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-picnic/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-plex-auto-trash:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+      - square-okhttp
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/plex-auto-trash repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/plex-auto-trash
+          path: JakeWharton-plex-auto-trash
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-okhttp.result == 'success' }}
+        with:
+          name: square-okhttp-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okhttp"
+        run: this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
+        if: ${{ needs.square-okhttp.result == 'success' }}
+      - name: "Build JakeWharton/plex-auto-trash"
+        run: |
+          cd JakeWharton-plex-auto-trash
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build
+
   JakeWharton-SaveArchived4Pocket:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1476,6 +1520,7 @@ jobs:
       - JakeWharton-kmp-missing-targets
       - JakeWharton-mosaic
       - JakeWharton-picnic
+      - JakeWharton-plex-auto-trash
       - JakeWharton-SaveArchived4Pocket
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer

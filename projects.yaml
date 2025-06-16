@@ -165,6 +165,7 @@
     agp: libraries.androidGradlePlugin
     kotlin: versions.kotlin
   internal_dependencies:
+    "sqldelight/sqldelight": versions.sqldelight
     "square/retrofit": versions.retrofit
     "square/okhttp": versions.okhttp
 
@@ -189,6 +190,25 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"sqldelight/sqldelight":
+  pre_build: kotlinUpgradeYarnLock
+  post_build: -x dockerTest
+  external_dependencies:
+    agp: versions.agp
+    atomicfu: libraries.kotlinx-atomicfu-plugin
+    kotlin: versions.kotlin
+    ksp: plugins.ksp
+  internal_dependencies:
+    "cashapp/burst": libraries.burst
+    "cashapp/turbine": libraries.turbine
+    "JakeWharton/picnic": libraries.picnic
+    "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
+    "sqldelight/sql-psi": versions.sqlPsi
+    "square/kotlinpoet": libraries.kotlinPoet
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

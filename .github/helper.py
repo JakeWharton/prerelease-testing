@@ -16,6 +16,7 @@ def main():
 		case 'patch-toml':
 			if len(sys.argv) != 6:
 				print('Incorrect arguments for patch-toml')
+				exit(1)
 			patch_toml(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 		case _:
 			print('Unknown command:', sys.argv[1])
@@ -180,7 +181,7 @@ jobs:
 			f.write('      - name: "Build ' + project + '''"
         run: |
           cd ''' + safe_project + '''
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew ''')
 			if 'pre_build' in config:

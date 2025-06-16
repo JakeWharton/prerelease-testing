@@ -60,7 +60,7 @@ jobs:
       - name: "Build cashapp/burst"
         run: |
           cd cashapp-burst
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -114,7 +114,7 @@ jobs:
       - name: "Build cashapp/copper"
         run: |
           cd cashapp-copper
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -168,7 +168,7 @@ jobs:
       - name: "Build cashapp/licensee"
         run: |
           cd cashapp-licensee
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -243,7 +243,7 @@ jobs:
       - name: "Build cashapp/molecule"
         run: |
           cd cashapp-molecule
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -297,7 +297,7 @@ jobs:
       - name: "Build cashapp/paraphrase"
         run: |
           cd cashapp-paraphrase
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -394,7 +394,7 @@ jobs:
       - name: "Build cashapp/redwood"
         run: |
           cd cashapp-redwood
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal -x :redwood-treehouse-host:check
       - uses: actions/upload-artifact@v4
@@ -437,7 +437,7 @@ jobs:
       - name: "Build cashapp/turbine"
         run: |
           cd cashapp-turbine
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -481,7 +481,7 @@ jobs:
       - name: "Build JakeWharton/cite"
         run: |
           cd JakeWharton-cite
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -524,7 +524,7 @@ jobs:
       - name: "Build JakeWharton/crossword"
         run: |
           cd JakeWharton-crossword
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -565,7 +565,7 @@ jobs:
       - name: "Build JakeWharton/dependency-tree-diff"
         run: |
           cd JakeWharton-dependency-tree-diff
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build
 
@@ -609,7 +609,7 @@ jobs:
       - name: "Build JakeWharton/dependency-watch"
         run: |
           cd JakeWharton-dependency-watch
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build
 
@@ -656,7 +656,7 @@ jobs:
       - name: "Build JakeWharton/diffuse"
         run: |
           cd JakeWharton-diffuse
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -699,7 +699,7 @@ jobs:
       - name: "Build JakeWharton/finalization-hook"
         run: |
           cd JakeWharton-finalization-hook
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -750,7 +750,7 @@ jobs:
       - name: "Build JakeWharton/hardcover-data-sync"
         run: |
           cd JakeWharton-hardcover-data-sync
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build
 
@@ -787,7 +787,7 @@ jobs:
       - name: "Build JakeWharton/kmp-missing-targets"
         run: |
           cd JakeWharton-kmp-missing-targets
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -851,7 +851,7 @@ jobs:
       - name: "Build JakeWharton/mosaic"
         run: |
           cd JakeWharton-mosaic
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -904,7 +904,7 @@ jobs:
       - name: "Build JakeWharton/picnic"
         run: |
           cd JakeWharton-picnic
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -920,6 +920,7 @@ jobs:
     if: ${{ !cancelled() }}
     needs:
       - workflow-up-to-date
+      - sqldelight-sqldelight
       - square-retrofit
       - square-okhttp
     steps:
@@ -945,6 +946,15 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket libraries.androidGradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.kotlin key kotlin
+      - name: "Download internal dependency sqldelight/sqldelight"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.sqldelight-sqldelight.result == 'success' }}
+        with:
+          name: sqldelight-sqldelight-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency sqldelight/sqldelight"
+        run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.sqldelight value ${{ needs.sqldelight-sqldelight.outputs.version }}
+        if: ${{ needs.sqldelight-sqldelight.result == 'success' }}
       - name: "Download internal dependency square/retrofit"
         uses: actions/download-artifact@v4
         if: ${{ needs.square-retrofit.result == 'success' }}
@@ -966,7 +976,7 @@ jobs:
       - name: "Build JakeWharton/SaveArchived4Pocket"
         run: |
           cd JakeWharton-SaveArchived4Pocket
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build
 
@@ -1012,7 +1022,7 @@ jobs:
       - name: "Build JakeWharton/video-swatch"
         run: |
           cd JakeWharton-video-swatch
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build
 
@@ -1058,7 +1068,7 @@ jobs:
       - name: "Build sqldelight/Grammar-Kit-Composer"
         run: |
           cd sqldelight-Grammar-Kit-Composer
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1111,7 +1121,7 @@ jobs:
       - name: "Build sqldelight/sql-psi"
         run: |
           cd sqldelight-sql-psi
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1121,6 +1131,112 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sql-psi/gradle.properties >> "$GITHUB_OUTPUT"
+
+  sqldelight-sqldelight:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+      - cashapp-burst
+      - cashapp-turbine
+      - JakeWharton-picnic
+      - sqldelight-Grammar-Kit-Composer
+      - sqldelight-sql-psi
+      - square-kotlinpoet
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout sqldelight/sqldelight repository"
+        uses: actions/checkout@v4
+        with:
+          repository: sqldelight/sqldelight
+          path: sqldelight-sqldelight
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
+          this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinx-atomicfu-plugin key atomicfu
+          this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
+          this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp
+      - name: "Download internal dependency cashapp/burst"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.cashapp-burst.result == 'success' }}
+        with:
+          name: cashapp-burst-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency cashapp/burst"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.burst value ${{ needs.cashapp-burst.outputs.version }}
+        if: ${{ needs.cashapp-burst.result == 'success' }}
+      - name: "Download internal dependency cashapp/turbine"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        with:
+          name: cashapp-turbine-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency cashapp/turbine"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
+        if: ${{ needs.cashapp-turbine.result == 'success' }}
+      - name: "Download internal dependency JakeWharton/picnic"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.JakeWharton-picnic.result == 'success' }}
+        with:
+          name: JakeWharton-picnic-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/picnic"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.picnic value ${{ needs.JakeWharton-picnic.outputs.version }}
+        if: ${{ needs.JakeWharton-picnic.result == 'success' }}
+      - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+        with:
+          name: sqldelight-Grammar-Kit-Composer-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency sqldelight/Grammar-Kit-Composer"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+      - name: "Download internal dependency sqldelight/sql-psi"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.sqldelight-sql-psi.result == 'success' }}
+        with:
+          name: sqldelight-sql-psi-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency sqldelight/sql-psi"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.sqlPsi value ${{ needs.sqldelight-sql-psi.outputs.version }}
+        if: ${{ needs.sqldelight-sql-psi.result == 'success' }}
+      - name: "Download internal dependency square/kotlinpoet"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/kotlinpoet"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+      - name: "Build sqldelight/sqldelight"
+        run: |
+          cd sqldelight-sqldelight
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal -x dockerTest
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sqldelight-sqldelight-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sqldelight/gradle.properties >> "$GITHUB_OUTPUT"
 
   square-kotlinpoet:
     runs-on: macos-latest
@@ -1155,7 +1271,7 @@ jobs:
       - name: "Build square/kotlinpoet"
         run: |
           cd square-kotlinpoet
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1209,7 +1325,7 @@ jobs:
       - name: "Build square/okio"
         run: |
           cd square-okio
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1273,7 +1389,7 @@ jobs:
       - name: "Build square/okhttp"
         run: |
           cd square-okhttp
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1327,7 +1443,7 @@ jobs:
       - name: "Build square/retrofit"
         run: |
           cd square-retrofit
-          git grep -l 'mavenCentral()' 'build.*' '**/build.*' 'settings.*' '**/settings.*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1364,6 +1480,7 @@ jobs:
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer
       - sqldelight-sql-psi
+      - sqldelight-sqldelight
       - square-kotlinpoet
       - square-okio
       - square-okhttp

@@ -1024,6 +1024,40 @@ jobs:
           git diff --patch
           ../this/gradlew build
 
+  JakeWharton-singular-solution:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/singular-solution repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/singular-solution
+          path: JakeWharton-singular-solution
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-singular-solution libraries.kotlin-gradlePlugin key kotlin
+      - name: "Build JakeWharton/singular-solution"
+        run: |
+          cd JakeWharton-singular-solution
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build
+
   JakeWharton-video-swatch:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1522,6 +1556,7 @@ jobs:
       - JakeWharton-picnic
       - JakeWharton-plex-auto-trash
       - JakeWharton-SaveArchived4Pocket
+      - JakeWharton-singular-solution
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer
       - sqldelight-sql-psi

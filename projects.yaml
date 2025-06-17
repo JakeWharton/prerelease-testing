@@ -160,6 +160,12 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/plex-auto-trash":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "square/okhttp": versions.okhttp
+
 "JakeWharton/SaveArchived4Pocket":
   external_dependencies:
     agp: libraries.androidGradlePlugin

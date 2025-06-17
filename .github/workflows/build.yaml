@@ -448,6 +448,49 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-turbine/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-byteunits:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/byteunits repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/byteunits
+          path: JakeWharton-byteunits
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-byteunits libraries.kotlin-gradlePlugin key kotlin
+      - name: "Build JakeWharton/byteunits"
+        run: |
+          cd JakeWharton-byteunits
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-byteunits-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-byteunits/gradle.properties >> "$GITHUB_OUTPUT"
+
   JakeWharton-cite:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1544,6 +1587,7 @@ jobs:
       - cashapp-paraphrase
       - cashapp-redwood
       - cashapp-turbine
+      - JakeWharton-byteunits
       - JakeWharton-cite
       - JakeWharton-crossword
       - JakeWharton-dependency-tree-diff

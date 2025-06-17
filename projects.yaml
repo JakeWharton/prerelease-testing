@@ -175,6 +175,10 @@
     "square/retrofit": versions.retrofit
     "square/okhttp": versions.okhttp
 
+"JakeWharton/singular-solution":
+  external_dependencies:
+    kotlin: libraries.kotlin-gradlePlugin
+
 "JakeWharton/video-swatch":
   pre_gradle: brew install ffmpeg
   external_dependencies:

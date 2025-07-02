@@ -1101,6 +1101,50 @@ jobs:
           git diff --patch
           ../this/gradlew build
 
+  JakeWharton-timber:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/timber repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/timber
+          path: JakeWharton-timber
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-timber versions.agp key agp
+          this/.github/helper.py patch-toml JakeWharton-timber versions.kotlin key kotlin
+      - name: "Build JakeWharton/timber"
+        run: |
+          cd JakeWharton-timber
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-timber-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-timber/gradle.properties >> "$GITHUB_OUTPUT"
+
   JakeWharton-video-swatch:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1601,6 +1645,7 @@ jobs:
       - JakeWharton-plex-auto-trash
       - JakeWharton-SaveArchived4Pocket
       - JakeWharton-singular-solution
+      - JakeWharton-timber
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer
       - sqldelight-sql-psi

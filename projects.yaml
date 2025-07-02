@@ -186,6 +186,14 @@
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin
 
+"JakeWharton/timber":
+  external_dependencies:
+    agp: versions.agp
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/video-swatch":
   pre_gradle: brew install ffmpeg
   external_dependencies:

@@ -850,6 +850,7 @@ jobs:
       - workflow-up-to-date
       - JakeWharton-cite
       - JakeWharton-finalization-hook
+      - JakeWharton-test-distribution-gradle-plugin
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
@@ -891,6 +892,15 @@ jobs:
       - name: "Patch internal dependency JakeWharton/finalization-hook"
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.finalizationHook value ${{ needs.JakeWharton-finalization-hook.outputs.version }}
         if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
+      - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
+        uses: actions/download-artifact@v4
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
+        with:
+          name: JakeWharton-test-distribution-gradle-plugin-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/test-distribution-gradle-plugin"
+        run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
       - name: "Build JakeWharton/mosaic"
         run: |
           cd JakeWharton-mosaic
@@ -1100,6 +1110,50 @@ jobs:
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
           ../this/gradlew build
+
+  JakeWharton-test-distribution-gradle-plugin:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/test-distribution-gradle-plugin repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/test-distribution-gradle-plugin
+          path: JakeWharton-test-distribution-gradle-plugin
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
+      - name: "Build JakeWharton/test-distribution-gradle-plugin"
+        run: |
+          cd JakeWharton-test-distribution-gradle-plugin
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-test-distribution-gradle-plugin-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-test-distribution-gradle-plugin/gradle.properties >> "$GITHUB_OUTPUT"
 
   JakeWharton-timber:
     runs-on: macos-latest
@@ -1645,6 +1699,7 @@ jobs:
       - JakeWharton-plex-auto-trash
       - JakeWharton-SaveArchived4Pocket
       - JakeWharton-singular-solution
+      - JakeWharton-test-distribution-gradle-plugin
       - JakeWharton-timber
       - JakeWharton-video-swatch
       - sqldelight-Grammar-Kit-Composer

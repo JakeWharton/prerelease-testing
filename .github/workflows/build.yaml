@@ -880,7 +880,7 @@ jobs:
           name: JakeWharton-cite-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/cite"
-        run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.cite-gradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
+        run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.citeGradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
         if: ${{ needs.JakeWharton-cite.result == 'success' }}
       - name: "Download internal dependency JakeWharton/finalization-hook"
         uses: actions/download-artifact@v4

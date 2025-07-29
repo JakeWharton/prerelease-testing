@@ -62,7 +62,7 @@ jobs:
           cd cashapp-burst
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-burst-snapshot
@@ -116,7 +116,7 @@ jobs:
           cd cashapp-copper
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-copper-snapshot
@@ -170,7 +170,7 @@ jobs:
           cd cashapp-licensee
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew publishToMavenLocal
+          ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-licensee-snapshot
@@ -245,7 +245,7 @@ jobs:
           cd cashapp-molecule
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-molecule-snapshot
@@ -299,7 +299,7 @@ jobs:
           cd cashapp-paraphrase
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-paraphrase-snapshot
@@ -396,7 +396,7 @@ jobs:
           cd cashapp-redwood
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal -x :redwood-treehouse-host:check
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal -x :redwood-treehouse-host:check
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-redwood-snapshot
@@ -439,7 +439,7 @@ jobs:
           cd cashapp-turbine
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-turbine-snapshot
@@ -482,7 +482,7 @@ jobs:
           cd JakeWharton-byteunits
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-byteunits-snapshot
@@ -526,7 +526,7 @@ jobs:
           cd JakeWharton-cite
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-cite-snapshot
@@ -569,7 +569,7 @@ jobs:
           cd JakeWharton-crossword
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-crossword-snapshot
@@ -610,7 +610,7 @@ jobs:
           cd JakeWharton-dependency-tree-diff
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   JakeWharton-dependency-watch:
     runs-on: macos-latest
@@ -654,7 +654,7 @@ jobs:
           cd JakeWharton-dependency-watch
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   JakeWharton-diffuse:
     runs-on: macos-latest
@@ -701,7 +701,7 @@ jobs:
           cd JakeWharton-diffuse
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-diffuse-snapshot
@@ -744,7 +744,7 @@ jobs:
           cd JakeWharton-finalization-hook
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -795,7 +795,7 @@ jobs:
           cd JakeWharton-hardcover-data-sync
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   JakeWharton-kmp-missing-targets:
     runs-on: macos-latest
@@ -832,7 +832,7 @@ jobs:
           cd JakeWharton-kmp-missing-targets
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew publishToMavenLocal
+          ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-kmp-missing-targets-snapshot
@@ -906,7 +906,7 @@ jobs:
           cd JakeWharton-mosaic
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-mosaic-snapshot
@@ -959,7 +959,7 @@ jobs:
           cd JakeWharton-picnic
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-picnic-snapshot
@@ -1010,7 +1010,7 @@ jobs:
           cd JakeWharton-plex-auto-trash
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   JakeWharton-SaveArchived4Pocket:
     runs-on: macos-latest
@@ -1075,7 +1075,7 @@ jobs:
           cd JakeWharton-SaveArchived4Pocket
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   JakeWharton-singular-solution:
     runs-on: macos-latest
@@ -1109,7 +1109,7 @@ jobs:
           cd JakeWharton-singular-solution
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   JakeWharton-test-distribution-gradle-plugin:
     runs-on: macos-latest
@@ -1146,7 +1146,7 @@ jobs:
           cd JakeWharton-test-distribution-gradle-plugin
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -1190,7 +1190,7 @@ jobs:
           cd JakeWharton-timber
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-timber-snapshot
@@ -1243,7 +1243,7 @@ jobs:
           cd JakeWharton-video-swatch
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build
+          ../this/gradlew --continue build
 
   sqldelight-Grammar-Kit-Composer:
     runs-on: macos-latest
@@ -1289,7 +1289,7 @@ jobs:
           cd sqldelight-Grammar-Kit-Composer
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1342,7 +1342,7 @@ jobs:
           cd sqldelight-sql-psi
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sql-psi-snapshot
@@ -1448,7 +1448,7 @@ jobs:
           cd sqldelight-sqldelight
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal -x dockerTest
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal -x dockerTest
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sqldelight-snapshot
@@ -1492,7 +1492,7 @@ jobs:
           cd square-kotlinpoet
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-kotlinpoet-snapshot
@@ -1546,7 +1546,7 @@ jobs:
           cd square-okio
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew kotlinUpgradeYarnLock build publishToMavenLocal
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-snapshot
@@ -1610,7 +1610,7 @@ jobs:
           cd square-okhttp
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew publishToMavenLocal
+          ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okhttp-snapshot
@@ -1664,7 +1664,7 @@ jobs:
           cd square-retrofit
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew build publishToMavenLocal
+          ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-retrofit-snapshot

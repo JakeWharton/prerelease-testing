@@ -183,7 +183,7 @@ jobs:
           cd ''' + safe_project + '''
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew ''')
+          ../this/gradlew --continue ''')
 			if 'pre_build' in config:
 				f.write(config['pre_build'] + ' ')
 			if 'version' not in config:

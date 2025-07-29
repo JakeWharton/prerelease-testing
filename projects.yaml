@@ -153,6 +153,7 @@
   internal_dependencies:
     "JakeWharton/cite": libraries.citeGradlePlugin
     "JakeWharton/finalization-hook": libraries.finalizationHook
+    "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -185,6 +186,14 @@
 "JakeWharton/singular-solution":
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin
+
+"JakeWharton/test-distribution-gradle-plugin":
+  external_dependencies:
+    agp: libraries.android-gradlePlugin
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
 
 "JakeWharton/timber":
   external_dependencies:

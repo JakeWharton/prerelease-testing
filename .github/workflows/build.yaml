@@ -1358,7 +1358,6 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
-      - cashapp-burst
       - cashapp-turbine
       - JakeWharton-picnic
       - sqldelight-Grammar-Kit-Composer
@@ -1389,15 +1388,6 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinx-atomicfu-plugin key atomicfu
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp
-      - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v4
-        if: ${{ needs.cashapp-burst.result == 'success' }}
-        with:
-          name: cashapp-burst-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency cashapp/burst"
-        run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.burst value ${{ needs.cashapp-burst.outputs.version }}
-        if: ${{ needs.cashapp-burst.result == 'success' }}
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v4
         if: ${{ needs.cashapp-turbine.result == 'success' }}

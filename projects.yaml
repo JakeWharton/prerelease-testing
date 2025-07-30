@@ -237,7 +237,6 @@
     kotlin: versions.kotlin
     ksp: plugins.ksp
   internal_dependencies:
-    "cashapp/burst": libraries.burst
     "cashapp/turbine": libraries.turbine
     "JakeWharton/picnic": libraries.picnic
     "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer

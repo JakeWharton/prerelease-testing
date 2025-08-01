@@ -535,6 +535,49 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-confundus:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          path: this
+      - name: "Checkout JakeWharton/confundus repository"
+        uses: actions/checkout@v4
+        with:
+          repository: JakeWharton/confundus
+          path: JakeWharton-confundus
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-confundus versions.kotlin key kotlin
+      - name: "Build JakeWharton/confundus"
+        run: |
+          cd JakeWharton-confundus
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JakeWharton-confundus-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-confundus/gradle.properties >> "$GITHUB_OUTPUT"
+
   JakeWharton-crossword:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1677,6 +1720,7 @@ jobs:
       - cashapp-turbine
       - JakeWharton-byteunits
       - JakeWharton-cite
+      - JakeWharton-confundus
       - JakeWharton-crossword
       - JakeWharton-dependency-tree-diff
       - JakeWharton-dependency-watch

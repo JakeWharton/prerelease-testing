@@ -96,6 +96,14 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/confundus":
+  pre_build: kotlinUpgradeYarnLock
+  external_dependencies:
+    kotlin: versions.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/crossword":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:

@@ -103,7 +103,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-copper libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml cashapp-copper libraries.kotlin-gradlePlugin key kotlin
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-turbine.result == 'success' }}
         with:
           name: cashapp-turbine-snapshot
@@ -157,7 +157,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -214,7 +214,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-molecule versions.jetbrains-compose key jbCompose
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-turbine.result == 'success' }}
         with:
           name: cashapp-turbine-snapshot
@@ -223,7 +223,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.result == 'success' }}
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
@@ -232,7 +232,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Download internal dependency square/retrofit"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-retrofit.result == 'success' }}
         with:
           name: square-retrofit-snapshot
@@ -286,7 +286,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-paraphrase versions.agp key agp
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -347,7 +347,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-redwood versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-redwood versions.ksp key ksp
       - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-burst.result == 'success' }}
         with:
           name: cashapp-burst-snapshot
@@ -356,7 +356,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-redwood versions.burst value ${{ needs.cashapp-burst.outputs.version }}
         if: ${{ needs.cashapp-burst.result == 'success' }}
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-turbine.result == 'success' }}
         with:
           name: cashapp-turbine-snapshot
@@ -365,7 +365,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.result == 'success' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -374,7 +374,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okio.result == 'success' }}
         with:
           name: square-okio-snapshot
@@ -383,7 +383,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-redwood versions.okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
@@ -684,7 +684,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
@@ -731,7 +731,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.apkSigner key agp
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okio.result == 'success' }}
         with:
           name: square-okio-snapshot
@@ -825,7 +825,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlin-gradlePlugin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
@@ -918,7 +918,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.jetbrains-compose key jbCompose
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
       - name: "Download internal dependency JakeWharton/cite"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.JakeWharton-cite.result == 'success' }}
         with:
           name: JakeWharton-cite-snapshot
@@ -927,7 +927,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.citeGradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
         if: ${{ needs.JakeWharton-cite.result == 'success' }}
       - name: "Download internal dependency JakeWharton/finalization-hook"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -936,7 +936,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.finalizationHook value ${{ needs.JakeWharton-finalization-hook.outputs.version }}
         if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -989,7 +989,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency JakeWharton/crossword"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.JakeWharton-crossword.result == 'success' }}
         with:
           name: JakeWharton-crossword-snapshot
@@ -1040,7 +1040,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
@@ -1087,7 +1087,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket libraries.androidGradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.kotlin key kotlin
       - name: "Download internal dependency sqldelight/sqldelight"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.sqldelight-sqldelight.result == 'success' }}
         with:
           name: sqldelight-sqldelight-snapshot
@@ -1096,7 +1096,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.sqldelight value ${{ needs.sqldelight-sqldelight.outputs.version }}
         if: ${{ needs.sqldelight-sqldelight.result == 'success' }}
       - name: "Download internal dependency square/retrofit"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-retrofit.result == 'success' }}
         with:
           name: square-retrofit-snapshot
@@ -1105,7 +1105,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.retrofit value ${{ needs.square-retrofit.outputs.version }}
         if: ${{ needs.square-retrofit.result == 'success' }}
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot
@@ -1271,7 +1271,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-video-swatch versions.kotlin key kotlin
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okio.result == 'success' }}
         with:
           name: square-okio-snapshot
@@ -1319,7 +1319,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1372,7 +1372,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1432,7 +1432,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-turbine.result == 'success' }}
         with:
           name: cashapp-turbine-snapshot
@@ -1441,7 +1441,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.result == 'success' }}
       - name: "Download internal dependency JakeWharton/picnic"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.JakeWharton-picnic.result == 'success' }}
         with:
           name: JakeWharton-picnic-snapshot
@@ -1450,7 +1450,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.picnic value ${{ needs.JakeWharton-picnic.outputs.version }}
         if: ${{ needs.JakeWharton-picnic.result == 'success' }}
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1459,7 +1459,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
       - name: "Download internal dependency sqldelight/sql-psi"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.sqldelight-sql-psi.result == 'success' }}
         with:
           name: sqldelight-sql-psi-snapshot
@@ -1468,7 +1468,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.sqlPsi value ${{ needs.sqldelight-sql-psi.outputs.version }}
         if: ${{ needs.sqldelight-sql-psi.result == 'success' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1566,7 +1566,7 @@ jobs:
           this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-okio libraries.android-gradle-plugin key agp
       - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-burst.result == 'success' }}
         with:
           name: cashapp-burst-snapshot
@@ -1621,7 +1621,7 @@ jobs:
           this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okio.result == 'success' }}
         with:
           name: square-okio-snapshot
@@ -1630,7 +1630,7 @@ jobs:
         run: this/.github/helper.py patch-toml square-okhttp versions.com-squareup-okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1684,7 +1684,7 @@ jobs:
           this/.github/helper.py patch-toml square-retrofit libraries.androidPlugin key agp
           this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
         with:
           name: square-okhttp-snapshot

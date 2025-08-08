@@ -165,7 +165,7 @@ jobs:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = dep.replace('/', '-')
 					f.write('      - name: "Download internal dependency ' + dep + '''"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
         with:
           name: ''' + safe_dep + '''-snapshot

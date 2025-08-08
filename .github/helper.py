@@ -101,7 +101,7 @@ jobs:
   workflow-up-to-date:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -134,11 +134,11 @@ jobs:
 
 			f.write('''    steps:
       - name: Checkout this repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: this
       - name: "Checkout ''' + project + ''' repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: ''' + project + '''
           path: ''' + safe_project + '\n')

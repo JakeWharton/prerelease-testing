@@ -145,6 +145,10 @@
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
+"JakeWharton/jakewharton.com":
+  external_dependencies:
+    kotlin: libraries.kotlinGradlePlugin
+
 "JakeWharton/kmp-missing-targets":
   compile_only: true # Test golden files hard code versions.
   external_dependencies:

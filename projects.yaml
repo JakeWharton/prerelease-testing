@@ -182,15 +182,6 @@
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
-"JakeWharton/SaveArchived4Pocket":
-  external_dependencies:
-    agp: libraries.androidGradlePlugin
-    kotlin: versions.kotlin
-  internal_dependencies:
-    "sqldelight/sqldelight": versions.sqldelight
-    "square/retrofit": versions.retrofit
-    "square/okhttp": versions.okhttp
-
 "JakeWharton/singular-solution":
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin

@@ -1055,71 +1055,6 @@ jobs:
           git diff --patch
           ../this/gradlew --continue build
 
-  JakeWharton-SaveArchived4Pocket:
-    runs-on: macos-latest
-    if: ${{ !cancelled() }}
-    needs:
-      - workflow-up-to-date
-      - sqldelight-sqldelight
-      - square-retrofit
-      - square-okhttp
-    steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v5
-        with:
-          path: this
-      - name: "Checkout JakeWharton/SaveArchived4Pocket repository"
-        uses: actions/checkout@v5
-        with:
-          repository: JakeWharton/SaveArchived4Pocket
-          path: JakeWharton-SaveArchived4Pocket
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version-file: this/.github/workflows/.java-version
-      - uses: gradle/actions/setup-gradle@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-      - name: Patch external dependencies
-        run: |
-          pip install -r this/.github/requirements.txt
-          this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket libraries.androidGradlePlugin key agp
-          this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.kotlin key kotlin
-      - name: "Download internal dependency sqldelight/sqldelight"
-        uses: actions/download-artifact@v5
-        if: ${{ needs.sqldelight-sqldelight.result == 'success' }}
-        with:
-          name: sqldelight-sqldelight-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency sqldelight/sqldelight"
-        run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.sqldelight value ${{ needs.sqldelight-sqldelight.outputs.version }}
-        if: ${{ needs.sqldelight-sqldelight.result == 'success' }}
-      - name: "Download internal dependency square/retrofit"
-        uses: actions/download-artifact@v5
-        if: ${{ needs.square-retrofit.result == 'success' }}
-        with:
-          name: square-retrofit-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency square/retrofit"
-        run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.retrofit value ${{ needs.square-retrofit.outputs.version }}
-        if: ${{ needs.square-retrofit.result == 'success' }}
-      - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
-        with:
-          name: square-okhttp-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency square/okhttp"
-        run: this/.github/helper.py patch-toml JakeWharton-SaveArchived4Pocket versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
-      - name: "Build JakeWharton/SaveArchived4Pocket"
-        run: |
-          cd JakeWharton-SaveArchived4Pocket
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
-
   JakeWharton-singular-solution:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1731,7 +1666,6 @@ jobs:
       - JakeWharton-mosaic
       - JakeWharton-picnic
       - JakeWharton-plex-auto-trash
-      - JakeWharton-SaveArchived4Pocket
       - JakeWharton-singular-solution
       - JakeWharton-test-distribution-gradle-plugin
       - JakeWharton-timber

@@ -232,7 +232,7 @@
     regex: "VERSION_NAME=(.*)"
 
 "sqldelight/sqldelight":
-  pre_build: kotlinUpgradeYarnLock
+  pre_build: kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock
   post_build: -x dockerTest
   external_dependencies:
     agp: versions.agp

@@ -1416,7 +1416,7 @@ jobs:
           cd sqldelight-sqldelight
           git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
           git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal -x dockerTest
+          ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock build publishToMavenLocal -x dockerTest
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sqldelight-snapshot

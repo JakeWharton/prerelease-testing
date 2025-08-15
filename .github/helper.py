@@ -63,6 +63,10 @@ def patch_toml(project_dir: str, toml_key: str, version_type: str, version_arg: 
 		f.write(tomlkit.dumps(project_toml))
 
 
+def safe_name(name: str) -> str:
+	return name.replace('/', '-').replace('.', '-')
+
+
 def generate():
 	with open('projects.yaml', 'r') as y:
 		projects = yaml.safe_load(y)
@@ -71,11 +75,11 @@ def generate():
 		f.write('direction: left\n\n')
 
 		for project, config in projects.items():
-			f.write(project + '\n')
+			f.write('"' + project + '"\n')
 
 			if 'internal_dependencies' in config:
 				for dep in config['internal_dependencies'].keys():
-					f.write(project + ' -> ' + dep + '\n')
+					f.write('"' + project + '" -> "' + dep + '"\n')
 
 		f.close()
 
@@ -113,7 +117,7 @@ jobs:
 ''')
 
 		for project, config in projects.items():
-			safe_project = project.replace('/', '-')
+			safe_project = safe_name(project)
 			f.write('  ' + safe_project + ''':
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -129,7 +133,7 @@ jobs:
 ''')
 			if 'internal_dependencies' in config:
 				for dep in config['internal_dependencies']:
-					safe_dep = dep.replace('/', '-')
+					safe_dep = safe_name(dep)
 					f.write('      - ' + safe_dep + '\n')
 
 			f.write('''    steps:
@@ -163,7 +167,7 @@ jobs:
 
 			if 'internal_dependencies' in config:
 				for dep, key in config['internal_dependencies'].items():
-					safe_dep = dep.replace('/', '-')
+					safe_dep = safe_name(dep)
 					f.write('      - name: "Download internal dependency ' + dep + '''"
         uses: actions/download-artifact@v5
         if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
@@ -222,7 +226,7 @@ jobs:
       - workflow-up-to-date
 ''')
 		for project in projects.keys():
-			safe_project = project.replace('/', '-')
+			safe_project = safe_name(project)
 			f.write('      - ' + safe_project + '\n')
 		f.write('''    steps:
       - name: Check

@@ -840,6 +840,40 @@ jobs:
           git diff --patch
           ../this/gradlew --continue build
 
+  JakeWharton-jakewharton-com:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/jakewharton.com repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/jakewharton.com
+          path: JakeWharton-jakewharton-com
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Patch external dependencies
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
+      - name: "Build JakeWharton/jakewharton.com"
+        run: |
+          cd JakeWharton-jakewharton-com
+          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+          git diff --patch
+          ../this/gradlew --continue build
+
   JakeWharton-kmp-missing-targets:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1662,6 +1696,7 @@ jobs:
       - JakeWharton-diffuse
       - JakeWharton-finalization-hook
       - JakeWharton-hardcover-data-sync
+      - JakeWharton-jakewharton-com
       - JakeWharton-kmp-missing-targets
       - JakeWharton-mosaic
       - JakeWharton-picnic

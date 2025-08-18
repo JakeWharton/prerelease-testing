@@ -80,13 +80,6 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
-"JakeWharton/byteunits":
-  external_dependencies:
-    kotlin: libraries.kotlin-gradlePlugin
-  version:
-    file: gradle.properties
-    regex: "VERSION_NAME=(.*)"
-
 "JakeWharton/cite":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:

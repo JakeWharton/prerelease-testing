@@ -354,6 +354,7 @@ jobs:
       - workflow-up-to-date
       - cashapp-burst
       - cashapp-turbine
+      - cashapp-zipline
       - square-kotlinpoet
       - square-okio
       - square-okhttp
@@ -402,6 +403,15 @@ jobs:
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
+      - name: "Download internal dependency cashapp/zipline"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.cashapp-zipline.outputs.version != '' }}
+        with:
+          name: cashapp-zipline-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency cashapp/zipline"
+        run: this/.github/helper.py patch-toml cashapp-redwood libraries.zipline value ${{ needs.cashapp-zipline.outputs.version }}
+        if: ${{ needs.cashapp-zipline.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
@@ -499,6 +509,113 @@ jobs:
       - name: "Check cashapp-turbine"
         working-directory: cashapp-turbine
         run: ../this/gradlew --continue build
+
+  cashapp-zipline:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+      - cashapp-turbine
+      - JakeWharton-test-distribution-gradle-plugin
+      - square-okhttp
+      - square-okio
+      - sqldelight-sqldelight
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout cashapp/zipline repository"
+        uses: actions/checkout@v5
+        with:
+          repository: cashapp/zipline
+          submodules: true
+          path: cashapp-zipline
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-zipline libraries.android-gradle-plugin key agp
+          this/.github/helper.py patch-toml cashapp-zipline versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-zipline versions.ksp key ksp
+      - name: "Download internal dependency cashapp/turbine"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
+        with:
+          name: cashapp-turbine-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency cashapp/turbine"
+        run: this/.github/helper.py patch-toml cashapp-zipline libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
+      - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
+        with:
+          name: JakeWharton-test-distribution-gradle-plugin-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/test-distribution-gradle-plugin"
+        run: this/.github/helper.py patch-toml cashapp-zipline libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
+        with:
+          name: square-okhttp-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okhttp"
+        run: this/.github/helper.py patch-toml cashapp-zipline versions.okHttp value ${{ needs.square-okhttp.outputs.version }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
+      - name: "Download internal dependency square/okio"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-okio.outputs.version != '' }}
+        with:
+          name: square-okio-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okio"
+        run: this/.github/helper.py patch-toml cashapp-zipline versions.okio value ${{ needs.square-okio.outputs.version }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
+      - name: "Download internal dependency sqldelight/sqldelight"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.sqldelight-sqldelight.outputs.version != '' }}
+        with:
+          name: sqldelight-sqldelight-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency sqldelight/sqldelight"
+        run: this/.github/helper.py patch-toml cashapp-zipline versions.sqldelight value ${{ needs.sqldelight-sqldelight.outputs.version }}
+        if: ${{ needs.sqldelight-sqldelight.outputs.version != '' }}
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.14.0
+      - run: zig build -p src/jvmMain/resources/jni
+        working-directory: cashapp-zipline/zipline
+      - name: "Patch maven local"
+        working-directory: cashapp-zipline
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: cashapp-zipline
+        run: git diff --patch
+      - name: "Publish cashapp-zipline"
+        working-directory: cashapp-zipline
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cashapp-zipline-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-zipline/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-zipline"
+        working-directory: cashapp-zipline
+        run: ../this/gradlew --continue build -x spotlessCheck -x :zipline-gradle-plugin:validatePlugins
 
   JakeWharton-cite:
     runs-on: macos-latest
@@ -2157,6 +2274,7 @@ jobs:
       - cashapp-paraphrase
       - cashapp-redwood
       - cashapp-turbine
+      - cashapp-zipline
       - JakeWharton-cite
       - JakeWharton-confundus
       - JakeWharton-crossword

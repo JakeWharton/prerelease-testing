@@ -200,7 +200,8 @@
     regex: "VERSION_NAME=(.*)"
 
 "JakeWharton/video-swatch":
-  pre_gradle: brew install ffmpeg
+  setup:
+    - run: brew install ffmpeg
   external_dependencies:
     kotlin: versions.kotlin
   internal_dependencies:
@@ -280,6 +281,23 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "square/okhttp": versions.okhttp
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"square/zstd-kmp":
+  setup:
+    - uses: mlugg/setup-zig@v2
+      with:
+        version: 0.14.0
+    - run: zig build -p src/jvmMain/resources/jni
+      working-directory: square-zstd-kmp/zstd-kmp
+  external_dependencies:
+    agp: libraries.android-gradle-plugin
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
+    "square/okio": versions.okio
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

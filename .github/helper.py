@@ -3,6 +3,7 @@
 import subprocess
 import sys
 import tempfile
+import textwrap
 import tomlkit
 import yaml
 
@@ -145,6 +146,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: ''' + project + '''
+          submodules: true
           path: ''' + safe_project + '\n')
 			if 'ref' in config:
 				f.write('          ref: ' + config['ref'] + '\n')
@@ -179,9 +181,9 @@ jobs:
         if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
 ''')
 
-			if 'pre_gradle' in config:
-				f.write('      - name: "Pre-build ' + project + '''"
-        run: ''' + config['pre_gradle'] + '\n')
+			if 'setup' in config:
+				setup = yaml.dump(config['setup'])
+				f.write(textwrap.indent(setup, '      '))
 			f.write('      - name: "Build ' + project + '''"
         run: |
           cd ''' + safe_project + '''

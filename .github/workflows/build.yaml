@@ -34,7 +34,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -52,18 +52,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-burst libraries.google-ksp key ksp
-      - name: "Build cashapp/burst"
-        run: |
-          cd cashapp-burst
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: cashapp-burst
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-burst
+        run: git diff --patch
+      - name: "Build cashapp-burst"
+        working-directory: cashapp-burst
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-burst-snapshot
@@ -81,7 +84,7 @@ jobs:
       - workflow-up-to-date
       - cashapp-turbine
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -99,7 +102,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-copper libraries.android-gradlePlugin key agp
@@ -113,12 +116,15 @@ jobs:
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-copper libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.result == 'success' }}
-      - name: "Build cashapp/copper"
-        run: |
-          cd cashapp-copper
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: cashapp-copper
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-copper
+        run: git diff --patch
+      - name: "Build cashapp-copper"
+        working-directory: cashapp-copper
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-copper-snapshot
@@ -136,7 +142,7 @@ jobs:
       - workflow-up-to-date
       - square-kotlinpoet
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -154,7 +160,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
@@ -168,12 +174,15 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml cashapp-licensee libraries.kotlinpoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
-      - name: "Build cashapp/licensee"
-        run: |
-          cd cashapp-licensee
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: cashapp-licensee
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-licensee
+        run: git diff --patch
+      - name: "Build cashapp-licensee"
+        working-directory: cashapp-licensee
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-licensee-snapshot
@@ -193,7 +202,7 @@ jobs:
       - square-okhttp
       - square-retrofit
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -211,7 +220,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-molecule libraries.android-plugin key agp
@@ -244,12 +253,15 @@ jobs:
       - name: "Patch internal dependency square/retrofit"
         run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-retrofit value ${{ needs.square-retrofit.outputs.version }}
         if: ${{ needs.square-retrofit.result == 'success' }}
-      - name: "Build cashapp/molecule"
-        run: |
-          cd cashapp-molecule
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: cashapp-molecule
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-molecule
+        run: git diff --patch
+      - name: "Build cashapp-molecule"
+        working-directory: cashapp-molecule
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-molecule-snapshot
@@ -267,7 +279,7 @@ jobs:
       - workflow-up-to-date
       - square-kotlinpoet
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -285,7 +297,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-paraphrase versions.agp key agp
@@ -299,12 +311,15 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml cashapp-paraphrase libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
-      - name: "Build cashapp/paraphrase"
-        run: |
-          cd cashapp-paraphrase
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: cashapp-paraphrase
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-paraphrase
+        run: git diff --patch
+      - name: "Build cashapp-paraphrase"
+        working-directory: cashapp-paraphrase
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-paraphrase-snapshot
@@ -326,7 +341,7 @@ jobs:
       - square-okio
       - square-okhttp
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -344,7 +359,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-redwood libraries.androidGradlePlugin key agp
@@ -397,12 +412,15 @@ jobs:
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
-      - name: "Build cashapp/redwood"
-        run: |
-          cd cashapp-redwood
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal -x :redwood-treehouse-host:check
+      - name: "Patch maven local"
+        working-directory: cashapp-redwood
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-redwood
+        run: git diff --patch
+      - name: "Build cashapp-redwood"
+        working-directory: cashapp-redwood
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal -x :redwood-treehouse-host:check
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-redwood-snapshot
@@ -419,7 +437,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -437,16 +455,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-turbine plugins.kotlin key kotlin
-      - name: "Build cashapp/turbine"
-        run: |
-          cd cashapp-turbine
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: cashapp-turbine
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: cashapp-turbine
+        run: git diff --patch
+      - name: "Build cashapp-turbine"
+        working-directory: cashapp-turbine
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-turbine-snapshot
@@ -463,7 +484,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -481,17 +502,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-cite libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-cite versions.kotlin key kotlin
-      - name: "Build JakeWharton/cite"
-        run: |
-          cd JakeWharton-cite
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-cite
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-cite
+        run: git diff --patch
+      - name: "Build JakeWharton-cite"
+        working-directory: JakeWharton-cite
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-cite-snapshot
@@ -508,7 +532,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -526,16 +550,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-confundus versions.kotlin key kotlin
-      - name: "Build JakeWharton/confundus"
-        run: |
-          cd JakeWharton-confundus
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-confundus
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-confundus
+        run: git diff --patch
+      - name: "Build JakeWharton-confundus"
+        working-directory: JakeWharton-confundus
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-confundus-snapshot
@@ -552,7 +579,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -570,16 +597,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-crossword libraries.kotlinPlugin key kotlin
-      - name: "Build JakeWharton/crossword"
-        run: |
-          cd JakeWharton-crossword
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-crossword
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-crossword
+        run: git diff --patch
+      - name: "Build JakeWharton-crossword"
+        working-directory: JakeWharton-crossword
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-crossword-snapshot
@@ -594,7 +624,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -612,16 +642,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-dependency-tree-diff libraries.kotlin-gradle-plugin key kotlin
-      - name: "Build JakeWharton/dependency-tree-diff"
-        run: |
-          cd JakeWharton-dependency-tree-diff
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-dependency-tree-diff
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-dependency-tree-diff
+        run: git diff --patch
+      - name: "Build JakeWharton-dependency-tree-diff"
+        working-directory: JakeWharton-dependency-tree-diff
+        run: ../this/gradlew --continue build
 
   JakeWharton-dependency-watch:
     runs-on: macos-latest
@@ -630,7 +663,7 @@ jobs:
       - workflow-up-to-date
       - square-okhttp
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -648,7 +681,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlin key kotlin
@@ -661,12 +694,15 @@ jobs:
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
-      - name: "Build JakeWharton/dependency-watch"
-        run: |
-          cd JakeWharton-dependency-watch
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-dependency-watch
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-dependency-watch
+        run: git diff --patch
+      - name: "Build JakeWharton-dependency-watch"
+        working-directory: JakeWharton-dependency-watch
+        run: ../this/gradlew --continue build
 
   JakeWharton-diffuse:
     runs-on: macos-latest
@@ -677,7 +713,7 @@ jobs:
       - workflow-up-to-date
       - square-okio
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -695,7 +731,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.apkSigner key agp
@@ -709,12 +745,15 @@ jobs:
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml JakeWharton-diffuse libraries.okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
-      - name: "Build JakeWharton/diffuse"
-        run: |
-          cd JakeWharton-diffuse
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-diffuse
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-diffuse
+        run: git diff --patch
+      - name: "Build JakeWharton-diffuse"
+        working-directory: JakeWharton-diffuse
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-diffuse-snapshot
@@ -731,7 +770,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -749,16 +788,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-finalization-hook versions.kotlin key kotlin
-      - name: "Build JakeWharton/finalization-hook"
-        run: |
-          cd JakeWharton-finalization-hook
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-finalization-hook
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-finalization-hook
+        run: git diff --patch
+      - name: "Build JakeWharton-finalization-hook"
+        working-directory: JakeWharton-finalization-hook
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -774,7 +816,7 @@ jobs:
       - workflow-up-to-date
       - square-okhttp
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -792,7 +834,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlin-gradlePlugin key kotlin
@@ -805,12 +847,15 @@ jobs:
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
-      - name: "Build JakeWharton/hardcover-data-sync"
-        run: |
-          cd JakeWharton-hardcover-data-sync
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-hardcover-data-sync
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-hardcover-data-sync
+        run: git diff --patch
+      - name: "Build JakeWharton-hardcover-data-sync"
+        working-directory: JakeWharton-hardcover-data-sync
+        run: ../this/gradlew --continue build
 
   JakeWharton-jakewharton-com:
     runs-on: macos-latest
@@ -818,7 +863,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -836,16 +881,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
-      - name: "Build JakeWharton/jakewharton.com"
-        run: |
-          cd JakeWharton-jakewharton-com
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-jakewharton-com
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-jakewharton-com
+        run: git diff --patch
+      - name: "Build JakeWharton-jakewharton-com"
+        working-directory: JakeWharton-jakewharton-com
+        run: ../this/gradlew --continue build
 
   JakeWharton-kmp-missing-targets:
     runs-on: macos-latest
@@ -855,7 +903,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -873,17 +921,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets versions.kotlin key kotlin
-      - name: "Build JakeWharton/kmp-missing-targets"
-        run: |
-          cd JakeWharton-kmp-missing-targets
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-kmp-missing-targets
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-kmp-missing-targets
+        run: git diff --patch
+      - name: "Build JakeWharton-kmp-missing-targets"
+        working-directory: JakeWharton-kmp-missing-targets
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-kmp-missing-targets-snapshot
@@ -903,7 +954,7 @@ jobs:
       - JakeWharton-finalization-hook
       - JakeWharton-test-distribution-gradle-plugin
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -921,7 +972,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.jetbrains-compose key jbCompose
@@ -953,12 +1004,15 @@ jobs:
       - name: "Patch internal dependency JakeWharton/test-distribution-gradle-plugin"
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
-      - name: "Build JakeWharton/mosaic"
-        run: |
-          cd JakeWharton-mosaic
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-mosaic
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-mosaic
+        run: git diff --patch
+      - name: "Build JakeWharton-mosaic"
+        working-directory: JakeWharton-mosaic
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-mosaic-snapshot
@@ -976,7 +1030,7 @@ jobs:
       - workflow-up-to-date
       - JakeWharton-crossword
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -994,7 +1048,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
@@ -1007,12 +1061,15 @@ jobs:
       - name: "Patch internal dependency JakeWharton/crossword"
         run: this/.github/helper.py patch-toml JakeWharton-picnic libraries.crossword value ${{ needs.JakeWharton-crossword.outputs.version }}
         if: ${{ needs.JakeWharton-crossword.result == 'success' }}
-      - name: "Build JakeWharton/picnic"
-        run: |
-          cd JakeWharton-picnic
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-picnic
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-picnic
+        run: git diff --patch
+      - name: "Build JakeWharton-picnic"
+        working-directory: JakeWharton-picnic
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-picnic-snapshot
@@ -1028,7 +1085,7 @@ jobs:
       - workflow-up-to-date
       - square-okhttp
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1046,7 +1103,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
@@ -1059,12 +1116,15 @@ jobs:
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
-      - name: "Build JakeWharton/plex-auto-trash"
-        run: |
-          cd JakeWharton-plex-auto-trash
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-plex-auto-trash
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-plex-auto-trash
+        run: git diff --patch
+      - name: "Build JakeWharton-plex-auto-trash"
+        working-directory: JakeWharton-plex-auto-trash
+        run: ../this/gradlew --continue build
 
   JakeWharton-singular-solution:
     runs-on: macos-latest
@@ -1072,7 +1132,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1090,16 +1150,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-singular-solution libraries.kotlin-gradlePlugin key kotlin
-      - name: "Build JakeWharton/singular-solution"
-        run: |
-          cd JakeWharton-singular-solution
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-singular-solution
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-singular-solution
+        run: git diff --patch
+      - name: "Build JakeWharton-singular-solution"
+        working-directory: JakeWharton-singular-solution
+        run: ../this/gradlew --continue build
 
   JakeWharton-test-distribution-gradle-plugin:
     runs-on: macos-latest
@@ -1109,7 +1172,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1127,17 +1190,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
-      - name: "Build JakeWharton/test-distribution-gradle-plugin"
-        run: |
-          cd JakeWharton-test-distribution-gradle-plugin
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-test-distribution-gradle-plugin
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-test-distribution-gradle-plugin
+        run: git diff --patch
+      - name: "Build JakeWharton-test-distribution-gradle-plugin"
+        working-directory: JakeWharton-test-distribution-gradle-plugin
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -1154,7 +1220,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1172,17 +1238,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-timber versions.agp key agp
           this/.github/helper.py patch-toml JakeWharton-timber versions.kotlin key kotlin
-      - name: "Build JakeWharton/timber"
-        run: |
-          cd JakeWharton-timber
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: JakeWharton-timber
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-timber
+        run: git diff --patch
+      - name: "Build JakeWharton-timber"
+        working-directory: JakeWharton-timber
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-timber-snapshot
@@ -1198,7 +1267,7 @@ jobs:
       - workflow-up-to-date
       - square-okio
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1216,7 +1285,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-video-swatch versions.kotlin key kotlin
@@ -1230,12 +1299,15 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-video-swatch libraries.okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.result == 'success' }}
       - run: brew install ffmpeg
-      - name: "Build JakeWharton/video-swatch"
-        run: |
-          cd JakeWharton-video-swatch
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build
+      - name: "Patch maven local"
+        working-directory: JakeWharton-video-swatch
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: JakeWharton-video-swatch
+        run: git diff --patch
+      - name: "Build JakeWharton-video-swatch"
+        working-directory: JakeWharton-video-swatch
+        run: ../this/gradlew --continue build
 
   sqldelight-Grammar-Kit-Composer:
     runs-on: macos-latest
@@ -1246,7 +1318,7 @@ jobs:
       - workflow-up-to-date
       - square-kotlinpoet
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1264,7 +1336,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
@@ -1277,12 +1349,15 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
-      - name: "Build sqldelight/Grammar-Kit-Composer"
-        run: |
-          cd sqldelight-Grammar-Kit-Composer
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: sqldelight-Grammar-Kit-Composer
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: sqldelight-Grammar-Kit-Composer
+        run: git diff --patch
+      - name: "Build sqldelight-Grammar-Kit-Composer"
+        working-directory: sqldelight-Grammar-Kit-Composer
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1300,7 +1375,7 @@ jobs:
       - workflow-up-to-date
       - sqldelight-Grammar-Kit-Composer
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1318,7 +1393,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
@@ -1331,12 +1406,15 @@ jobs:
       - name: "Patch internal dependency sqldelight/Grammar-Kit-Composer"
         run: this/.github/helper.py patch-toml sqldelight-sql-psi plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
-      - name: "Build sqldelight/sql-psi"
-        run: |
-          cd sqldelight-sql-psi
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: sqldelight-sql-psi
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: sqldelight-sql-psi
+        run: git diff --patch
+      - name: "Build sqldelight-sql-psi"
+        working-directory: sqldelight-sql-psi
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sql-psi-snapshot
@@ -1358,7 +1436,7 @@ jobs:
       - sqldelight-sql-psi
       - square-kotlinpoet
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1376,7 +1454,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
@@ -1428,12 +1506,15 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
-      - name: "Build sqldelight/sqldelight"
-        run: |
-          cd sqldelight-sqldelight
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock build publishToMavenLocal -x dockerTest
+      - name: "Patch maven local"
+        working-directory: sqldelight-sqldelight
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: sqldelight-sqldelight
+        run: git diff --patch
+      - name: "Build sqldelight-sqldelight"
+        working-directory: sqldelight-sqldelight
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock build publishToMavenLocal -x dockerTest
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sqldelight-snapshot
@@ -1450,7 +1531,7 @@ jobs:
     needs:
       - workflow-up-to-date
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1468,17 +1549,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-kotlinpoet versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-kotlinpoet versions.ksp key ksp
-      - name: "Build square/kotlinpoet"
-        run: |
-          cd square-kotlinpoet
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: square-kotlinpoet
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: square-kotlinpoet
+        run: git diff --patch
+      - name: "Build square-kotlinpoet"
+        working-directory: square-kotlinpoet
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-kotlinpoet-snapshot
@@ -1496,7 +1580,7 @@ jobs:
       - workflow-up-to-date
       - cashapp-burst
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1514,7 +1598,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
@@ -1528,12 +1612,15 @@ jobs:
       - name: "Patch internal dependency cashapp/burst"
         run: this/.github/helper.py patch-toml square-okio libraries.burst-gradle-plugin value ${{ needs.cashapp-burst.outputs.version }}
         if: ${{ needs.cashapp-burst.result == 'success' }}
-      - name: "Build square/okio"
-        run: |
-          cd square-okio
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: square-okio
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: square-okio
+        run: git diff --patch
+      - name: "Build square-okio"
+        working-directory: square-okio
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-snapshot
@@ -1552,7 +1639,7 @@ jobs:
       - square-okio
       - square-kotlinpoet
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1570,7 +1657,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
@@ -1593,12 +1680,15 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml square-okhttp libraries.squareup-kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
-      - name: "Build square/okhttp"
-        run: |
-          cd square-okhttp
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: square-okhttp
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: square-okhttp
+        run: git diff --patch
+      - name: "Build square-okhttp"
+        working-directory: square-okhttp
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okhttp-snapshot
@@ -1616,7 +1706,7 @@ jobs:
       - workflow-up-to-date
       - square-okhttp
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1634,7 +1724,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-retrofit libraries.androidPlugin key agp
@@ -1648,12 +1738,15 @@ jobs:
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml square-retrofit versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
-      - name: "Build square/retrofit"
-        run: |
-          cd square-retrofit
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: square-retrofit
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: square-retrofit
+        run: git diff --patch
+      - name: "Build square-retrofit"
+        working-directory: square-retrofit
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-retrofit-snapshot
@@ -1672,7 +1765,7 @@ jobs:
       - JakeWharton-test-distribution-gradle-plugin
       - square-okio
     steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -1690,7 +1783,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-zstd-kmp libraries.android-gradle-plugin key agp
@@ -1718,12 +1811,15 @@ jobs:
           version: 0.14.0
       - run: zig build -p src/jvmMain/resources/jni
         working-directory: square-zstd-kmp/zstd-kmp
-      - name: "Build square/zstd-kmp"
-        run: |
-          cd square-zstd-kmp
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue build publishToMavenLocal
+      - name: "Patch maven local"
+        working-directory: square-zstd-kmp
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: square-zstd-kmp
+        run: git diff --patch
+      - name: "Build square-zstd-kmp"
+        working-directory: square-zstd-kmp
+        run: ../this/gradlew --continue build publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-zstd-kmp-snapshot

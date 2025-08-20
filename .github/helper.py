@@ -138,7 +138,7 @@ jobs:
 					f.write('      - ' + safe_dep + '\n')
 
 			f.write('''    steps:
-      - name: Checkout this repository
+      - name: "Checkout this repository"
         uses: actions/checkout@v5
         with:
           path: this
@@ -158,7 +158,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Patch external dependencies
+      - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
 ''')
@@ -184,12 +184,15 @@ jobs:
 			if 'setup' in config:
 				setup = yaml.dump(config['setup'])
 				f.write(textwrap.indent(setup, '      '))
-			f.write('      - name: "Build ' + project + '''"
-        run: |
-          cd ''' + safe_project + '''
-          git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
-          git diff --patch
-          ../this/gradlew --continue ''')
+			f.write('''      - name: "Patch maven local"
+        working-directory: ''' + safe_project + '''
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: ''' + safe_project + '''
+        run: git diff --patch
+      - name: "Build ''' + safe_project + '''"
+        working-directory: ''' + safe_project + '''
+        run: ../this/gradlew --continue ''')
 			if 'pre_build' in config:
 				f.write(config['pre_build'] + ' ')
 			if 'version' not in config:

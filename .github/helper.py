@@ -150,7 +150,7 @@ jobs:
           path: ''' + safe_project + '\n')
 			if 'ref' in config:
 				f.write('          ref: ' + config['ref'] + '\n')
-			f.write('''      - uses: actions/setup-java@v4
+			f.write('''      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version

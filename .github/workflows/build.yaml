@@ -44,7 +44,7 @@ jobs:
           repository: cashapp/burst
           submodules: true
           path: cashapp-burst
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -94,7 +94,7 @@ jobs:
           repository: cashapp/copper
           submodules: true
           path: cashapp-copper
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -152,7 +152,7 @@ jobs:
           repository: cashapp/licensee
           submodules: true
           path: cashapp-licensee
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -212,7 +212,7 @@ jobs:
           repository: cashapp/molecule
           submodules: true
           path: cashapp-molecule
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -289,7 +289,7 @@ jobs:
           repository: cashapp/paraphrase
           submodules: true
           path: cashapp-paraphrase
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -351,7 +351,7 @@ jobs:
           repository: cashapp/redwood
           submodules: true
           path: cashapp-redwood
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -447,7 +447,7 @@ jobs:
           repository: cashapp/turbine
           submodules: true
           path: cashapp-turbine
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -494,7 +494,7 @@ jobs:
           repository: JakeWharton/cite
           submodules: true
           path: JakeWharton-cite
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -542,7 +542,7 @@ jobs:
           repository: JakeWharton/confundus
           submodules: true
           path: JakeWharton-confundus
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -589,7 +589,7 @@ jobs:
           repository: JakeWharton/crossword
           submodules: true
           path: JakeWharton-crossword
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -634,7 +634,7 @@ jobs:
           repository: JakeWharton/dependency-tree-diff
           submodules: true
           path: JakeWharton-dependency-tree-diff
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -673,7 +673,7 @@ jobs:
           repository: JakeWharton/dependency-watch
           submodules: true
           path: JakeWharton-dependency-watch
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -723,7 +723,7 @@ jobs:
           repository: JakeWharton/diffuse
           submodules: true
           path: JakeWharton-diffuse
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -780,7 +780,7 @@ jobs:
           repository: JakeWharton/finalization-hook
           submodules: true
           path: JakeWharton-finalization-hook
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -826,7 +826,7 @@ jobs:
           repository: JakeWharton/hardcover-data-sync
           submodules: true
           path: JakeWharton-hardcover-data-sync
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -873,7 +873,7 @@ jobs:
           repository: JakeWharton/jakewharton.com
           submodules: true
           path: JakeWharton-jakewharton-com
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -913,7 +913,7 @@ jobs:
           repository: JakeWharton/kmp-missing-targets
           submodules: true
           path: JakeWharton-kmp-missing-targets
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -964,7 +964,7 @@ jobs:
           repository: JakeWharton/mosaic
           submodules: true
           path: JakeWharton-mosaic
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1040,7 +1040,7 @@ jobs:
           repository: JakeWharton/picnic
           submodules: true
           path: JakeWharton-picnic
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1095,7 +1095,7 @@ jobs:
           repository: JakeWharton/plex-auto-trash
           submodules: true
           path: JakeWharton-plex-auto-trash
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1142,7 +1142,7 @@ jobs:
           repository: JakeWharton/singular-solution
           submodules: true
           path: JakeWharton-singular-solution
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1182,7 +1182,7 @@ jobs:
           repository: JakeWharton/test-distribution-gradle-plugin
           submodules: true
           path: JakeWharton-test-distribution-gradle-plugin
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1230,7 +1230,7 @@ jobs:
           repository: JakeWharton/timber
           submodules: true
           path: JakeWharton-timber
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1277,7 +1277,7 @@ jobs:
           repository: JakeWharton/video-swatch
           submodules: true
           path: JakeWharton-video-swatch
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1328,7 +1328,7 @@ jobs:
           repository: sqldelight/Grammar-Kit-Composer
           submodules: true
           path: sqldelight-Grammar-Kit-Composer
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1385,7 +1385,7 @@ jobs:
           repository: sqldelight/sql-psi
           submodules: true
           path: sqldelight-sql-psi
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1446,7 +1446,7 @@ jobs:
           repository: sqldelight/sqldelight
           submodules: true
           path: sqldelight-sqldelight
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1541,7 +1541,7 @@ jobs:
           repository: square/kotlinpoet
           submodules: true
           path: square-kotlinpoet
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1590,7 +1590,7 @@ jobs:
           repository: square/okio
           submodules: true
           path: square-okio
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1649,7 +1649,7 @@ jobs:
           repository: square/okhttp
           submodules: true
           path: square-okhttp
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1716,7 +1716,7 @@ jobs:
           repository: square/retrofit
           submodules: true
           path: square-retrofit
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
@@ -1775,7 +1775,7 @@ jobs:
           repository: square/zstd-kmp
           submodules: true
           path: square-zstd-kmp
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version

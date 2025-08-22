@@ -1,5 +1,5 @@
 [versions]
-agp = "9.0.0-alpha01"
+agp = "9.0.0-alpha02"
 atomicfu = "0.29.0"
 jbCompose = "1.9.0-beta03"
 kotlin = "2.2.0"

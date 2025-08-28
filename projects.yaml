@@ -262,8 +262,8 @@
     "square/kotlinpoet": versions.kotlinpoet
     "square/okio": libraries.okio
   version:
-    file: gradle.properties
-    regex: "VERSION_NAME=(.*)"
+    file: build.gradle.kts
+    regex: 'version = "(.*)"'
 
 "square/okio":
   pre_build: kotlinUpgradeYarnLock

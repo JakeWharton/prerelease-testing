@@ -1657,7 +1657,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-moshi/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/version = "(.*)"/ and print "version=$1",$/' square-moshi/build.gradle.kts >> "$GITHUB_OUTPUT"
 
   square-okio:
     runs-on: macos-latest

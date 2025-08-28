@@ -186,7 +186,7 @@ jobs:
 				f.write(textwrap.indent(setup, '      '))
 			f.write('''      - name: "Patch maven local"
         working-directory: ''' + safe_project + '''
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\\(\\)$/\\1mavenLocal()\\n\\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: ''' + safe_project + '''
         run: git diff --patch

@@ -60,7 +60,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-burst libraries.google-ksp key ksp
       - name: "Patch maven local"
         working-directory: cashapp-burst
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-burst
         run: git diff --patch
@@ -118,7 +118,7 @@ jobs:
         if: ${{ needs.cashapp-turbine.result == 'success' }}
       - name: "Patch maven local"
         working-directory: cashapp-copper
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-copper
         run: git diff --patch
@@ -176,7 +176,7 @@ jobs:
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Patch maven local"
         working-directory: cashapp-licensee
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-licensee
         run: git diff --patch
@@ -265,7 +265,7 @@ jobs:
         if: ${{ needs.square-retrofit.result == 'success' }}
       - name: "Patch maven local"
         working-directory: cashapp-molecule
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-molecule
         run: git diff --patch
@@ -323,7 +323,7 @@ jobs:
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Patch maven local"
         working-directory: cashapp-paraphrase
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-paraphrase
         run: git diff --patch
@@ -424,7 +424,7 @@ jobs:
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Patch maven local"
         working-directory: cashapp-redwood
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-redwood
         run: git diff --patch
@@ -471,7 +471,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-turbine plugins.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: cashapp-turbine
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-turbine
         run: git diff --patch
@@ -519,7 +519,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-cite versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-cite
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-cite
         run: git diff --patch
@@ -566,7 +566,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-confundus versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-confundus
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-confundus
         run: git diff --patch
@@ -613,7 +613,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-crossword libraries.kotlinPlugin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-crossword
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-crossword
         run: git diff --patch
@@ -658,7 +658,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-dependency-tree-diff libraries.kotlin-gradle-plugin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-dependency-tree-diff
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-dependency-tree-diff
         run: git diff --patch
@@ -706,7 +706,7 @@ jobs:
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-dependency-watch
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-dependency-watch
         run: git diff --patch
@@ -757,7 +757,7 @@ jobs:
         if: ${{ needs.square-okio.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-diffuse
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-diffuse
         run: git diff --patch
@@ -804,7 +804,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-finalization-hook versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-finalization-hook
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-finalization-hook
         run: git diff --patch
@@ -859,7 +859,7 @@ jobs:
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-hardcover-data-sync
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-hardcover-data-sync
         run: git diff --patch
@@ -897,7 +897,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-jakewharton-com
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-jakewharton-com
         run: git diff --patch
@@ -938,7 +938,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-kmp-missing-targets
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-kmp-missing-targets
         run: git diff --patch
@@ -1016,7 +1016,7 @@ jobs:
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-mosaic
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-mosaic
         run: git diff --patch
@@ -1073,7 +1073,7 @@ jobs:
         if: ${{ needs.JakeWharton-crossword.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-picnic
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-picnic
         run: git diff --patch
@@ -1128,7 +1128,7 @@ jobs:
         if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-plex-auto-trash
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-plex-auto-trash
         run: git diff --patch
@@ -1166,7 +1166,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-singular-solution libraries.kotlin-gradlePlugin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-singular-solution
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-singular-solution
         run: git diff --patch
@@ -1207,7 +1207,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-test-distribution-gradle-plugin
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-test-distribution-gradle-plugin
         run: git diff --patch
@@ -1255,7 +1255,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-timber versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-timber
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-timber
         run: git diff --patch
@@ -1311,7 +1311,7 @@ jobs:
       - run: brew install ffmpeg
       - name: "Patch maven local"
         working-directory: JakeWharton-video-swatch
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-video-swatch
         run: git diff --patch
@@ -1361,7 +1361,7 @@ jobs:
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Patch maven local"
         working-directory: sqldelight-Grammar-Kit-Composer
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: sqldelight-Grammar-Kit-Composer
         run: git diff --patch
@@ -1418,7 +1418,7 @@ jobs:
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
       - name: "Patch maven local"
         working-directory: sqldelight-sql-psi
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: sqldelight-sql-psi
         run: git diff --patch
@@ -1528,7 +1528,7 @@ jobs:
         if: ${{ needs.square-moshi.result == 'success' }}
       - name: "Patch maven local"
         working-directory: sqldelight-sqldelight
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: sqldelight-sqldelight
         run: git diff --patch
@@ -1576,7 +1576,7 @@ jobs:
           this/.github/helper.py patch-toml square-kotlinpoet versions.ksp key ksp
       - name: "Patch maven local"
         working-directory: square-kotlinpoet
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-kotlinpoet
         run: git diff --patch
@@ -1644,7 +1644,7 @@ jobs:
         if: ${{ needs.square-okio.result == 'success' }}
       - name: "Patch maven local"
         working-directory: square-moshi
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-moshi
         run: git diff --patch
@@ -1702,7 +1702,7 @@ jobs:
         if: ${{ needs.cashapp-burst.result == 'success' }}
       - name: "Patch maven local"
         working-directory: square-okio
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-okio
         run: git diff --patch
@@ -1770,7 +1770,7 @@ jobs:
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
       - name: "Patch maven local"
         working-directory: square-okhttp
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-okhttp
         run: git diff --patch
@@ -1838,7 +1838,7 @@ jobs:
         if: ${{ needs.square-moshi.result == 'success' }}
       - name: "Patch maven local"
         working-directory: square-retrofit
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-retrofit
         run: git diff --patch
@@ -1911,7 +1911,7 @@ jobs:
         working-directory: square-zstd-kmp/zstd-kmp
       - name: "Patch maven local"
         working-directory: square-zstd-kmp
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-zstd-kmp
         run: git diff --patch

@@ -37,6 +37,7 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
+    "square/moshi": versions.com-squareup-moshi
     "square/okhttp": versions.squareup-okhttp
     "square/retrofit": versions.squareup-retrofit
   version:
@@ -239,6 +240,7 @@
     "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
     "sqldelight/sql-psi": versions.sqlPsi
     "square/kotlinpoet": libraries.kotlinPoet
+    "square/moshi": versions.moshi
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -248,6 +250,17 @@
   external_dependencies:
     kotlin: versions.kotlin
     ksp: versions.ksp
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"square/moshi":
+  external_dependencies:
+    kotlin: versions.kotlin
+    ksp: versions.ksp
+  internal_dependencies:
+    "square/kotlinpoet": versions.kotlinpoet
+    "square/okio": libraries.okio
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -281,6 +294,7 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "square/okhttp": versions.okhttp
+    "square/moshi": libraries.moshi
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

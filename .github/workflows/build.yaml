@@ -199,6 +199,7 @@ jobs:
     needs:
       - workflow-up-to-date
       - cashapp-turbine
+      - square-moshi
       - square-okhttp
       - square-retrofit
     steps:
@@ -235,6 +236,15 @@ jobs:
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.result == 'success' }}
+      - name: "Download internal dependency square/moshi"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-moshi.result == 'success' }}
+        with:
+          name: square-moshi-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/moshi"
+        run: this/.github/helper.py patch-toml cashapp-molecule versions.com-squareup-moshi value ${{ needs.square-moshi.outputs.version }}
+        if: ${{ needs.square-moshi.result == 'success' }}
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.result == 'success' }}
@@ -1435,6 +1445,7 @@ jobs:
       - sqldelight-Grammar-Kit-Composer
       - sqldelight-sql-psi
       - square-kotlinpoet
+      - square-moshi
     steps:
       - name: "Checkout this repository"
         uses: actions/checkout@v5
@@ -1506,6 +1517,15 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.result == 'success' }}
+      - name: "Download internal dependency square/moshi"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-moshi.result == 'success' }}
+        with:
+          name: square-moshi-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/moshi"
+        run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.moshi value ${{ needs.square-moshi.outputs.version }}
+        if: ${{ needs.square-moshi.result == 'success' }}
       - name: "Patch maven local"
         working-directory: sqldelight-sqldelight
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
@@ -1570,6 +1590,74 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-kotlinpoet/gradle.properties >> "$GITHUB_OUTPUT"
+
+  square-moshi:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+      - square-kotlinpoet
+      - square-okio
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout square/moshi repository"
+        uses: actions/checkout@v5
+        with:
+          repository: square/moshi
+          submodules: true
+          path: square-moshi
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-moshi versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-moshi versions.ksp key ksp
+      - name: "Download internal dependency square/kotlinpoet"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        with:
+          name: square-kotlinpoet-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/kotlinpoet"
+        run: this/.github/helper.py patch-toml square-moshi versions.kotlinpoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+      - name: "Download internal dependency square/okio"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-okio.result == 'success' }}
+        with:
+          name: square-okio-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okio"
+        run: this/.github/helper.py patch-toml square-moshi libraries.okio value ${{ needs.square-okio.outputs.version }}
+        if: ${{ needs.square-okio.result == 'success' }}
+      - name: "Patch maven local"
+        working-directory: square-moshi
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
+      - name: "Show local change diff"
+        working-directory: square-moshi
+        run: git diff --patch
+      - name: "Build square-moshi"
+        working-directory: square-moshi
+        run: ../this/gradlew --continue build publishToMavenLocal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: square-moshi-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-moshi/gradle.properties >> "$GITHUB_OUTPUT"
 
   square-okio:
     runs-on: macos-latest
@@ -1705,6 +1793,7 @@ jobs:
     needs:
       - workflow-up-to-date
       - square-okhttp
+      - square-moshi
     steps:
       - name: "Checkout this repository"
         uses: actions/checkout@v5
@@ -1738,6 +1827,15 @@ jobs:
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml square-retrofit versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.result == 'success' }}
+      - name: "Download internal dependency square/moshi"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-moshi.result == 'success' }}
+        with:
+          name: square-moshi-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/moshi"
+        run: this/.github/helper.py patch-toml square-retrofit libraries.moshi value ${{ needs.square-moshi.outputs.version }}
+        if: ${{ needs.square-moshi.result == 'success' }}
       - name: "Patch maven local"
         working-directory: square-retrofit
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" "s/mavenCentral()/mavenLocal(); mavenCentral()/g"
@@ -1861,6 +1959,7 @@ jobs:
       - sqldelight-sql-psi
       - sqldelight-sqldelight
       - square-kotlinpoet
+      - square-moshi
       - square-okio
       - square-okhttp
       - square-retrofit

@@ -819,6 +819,54 @@ jobs:
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties >> "$GITHUB_OUTPUT"
 
+  JakeWharton-gitout:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+      - square-okhttp
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/gitout repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/gitout
+          submodules: true
+          path: JakeWharton-gitout
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlin key kotlin
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-okhttp.result == 'success' }}
+        with:
+          name: square-okhttp-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okhttp"
+        run: this/.github/helper.py patch-toml JakeWharton-gitout versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
+        if: ${{ needs.square-okhttp.result == 'success' }}
+      - name: "Patch maven local"
+        working-directory: JakeWharton-gitout
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-gitout
+        run: git diff --patch
+      - name: "Build JakeWharton-gitout"
+        working-directory: JakeWharton-gitout
+        run: ../this/gradlew --continue build
+
   JakeWharton-hardcover-data-sync:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -872,6 +920,7 @@ jobs:
     if: ${{ !cancelled() }}
     needs:
       - workflow-up-to-date
+      - square-okhttp
     steps:
       - name: "Checkout this repository"
         uses: actions/checkout@v5
@@ -895,6 +944,15 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-okhttp.result == 'success' }}
+        with:
+          name: square-okhttp-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okhttp"
+        run: this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.okhttp value ${{ needs.square-okhttp.outputs.version }}
+        if: ${{ needs.square-okhttp.result == 'success' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-jakewharton-com
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1945,6 +2003,7 @@ jobs:
       - JakeWharton-dependency-watch
       - JakeWharton-diffuse
       - JakeWharton-finalization-hook
+      - JakeWharton-gitout
       - JakeWharton-hardcover-data-sync
       - JakeWharton-jakewharton-com
       - JakeWharton-kmp-missing-targets

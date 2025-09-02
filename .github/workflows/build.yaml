@@ -64,9 +64,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: cashapp-burst
         run: git diff --patch
-      - name: "Build cashapp-burst"
+      - name: "Publish cashapp-burst"
         working-directory: cashapp-burst
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-burst-snapshot
@@ -74,6 +74,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-burst/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-burst"
+        working-directory: cashapp-burst
+        run: ../this/gradlew --continue build
 
   cashapp-copper:
     runs-on: macos-latest
@@ -109,22 +112,22 @@ jobs:
           this/.github/helper.py patch-toml cashapp-copper libraries.kotlin-gradlePlugin key kotlin
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-copper libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: cashapp-copper
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-copper
         run: git diff --patch
-      - name: "Build cashapp-copper"
+      - name: "Publish cashapp-copper"
         working-directory: cashapp-copper
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-copper-snapshot
@@ -132,6 +135,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-copper/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-copper"
+        working-directory: cashapp-copper
+        run: ../this/gradlew --continue build
 
   cashapp-licensee:
     runs-on: macos-latest
@@ -167,20 +173,20 @@ jobs:
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml cashapp-licensee libraries.kotlinpoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: cashapp-licensee
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-licensee
         run: git diff --patch
-      - name: "Build cashapp-licensee"
+      - name: "Publish cashapp-licensee"
         working-directory: cashapp-licensee
         run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -229,49 +235,49 @@ jobs:
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency square/moshi"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-moshi.result == 'success' }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
         with:
           name: square-moshi-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/moshi"
         run: this/.github/helper.py patch-toml cashapp-molecule versions.com-squareup-moshi value ${{ needs.square-moshi.outputs.version }}
-        if: ${{ needs.square-moshi.result == 'success' }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Download internal dependency square/retrofit"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-retrofit.result == 'success' }}
+        if: ${{ needs.square-retrofit.outputs.version != '' }}
         with:
           name: square-retrofit-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/retrofit"
         run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-retrofit value ${{ needs.square-retrofit.outputs.version }}
-        if: ${{ needs.square-retrofit.result == 'success' }}
+        if: ${{ needs.square-retrofit.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: cashapp-molecule
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-molecule
         run: git diff --patch
-      - name: "Build cashapp-molecule"
+      - name: "Publish cashapp-molecule"
         working-directory: cashapp-molecule
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-molecule-snapshot
@@ -279,6 +285,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-molecule/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-molecule"
+        working-directory: cashapp-molecule
+        run: ../this/gradlew --continue build
 
   cashapp-paraphrase:
     runs-on: macos-latest
@@ -314,22 +323,22 @@ jobs:
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml cashapp-paraphrase libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: cashapp-paraphrase
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-paraphrase
         run: git diff --patch
-      - name: "Build cashapp-paraphrase"
+      - name: "Publish cashapp-paraphrase"
         working-directory: cashapp-paraphrase
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-paraphrase-snapshot
@@ -337,6 +346,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-paraphrase/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-paraphrase"
+        working-directory: cashapp-paraphrase
+        run: ../this/gradlew --continue build
 
   cashapp-redwood:
     runs-on: macos-latest
@@ -379,58 +391,58 @@ jobs:
           this/.github/helper.py patch-toml cashapp-redwood versions.ksp key ksp
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v5
-        if: ${{ needs.cashapp-burst.result == 'success' }}
+        if: ${{ needs.cashapp-burst.outputs.version != '' }}
         with:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/burst"
         run: this/.github/helper.py patch-toml cashapp-redwood versions.burst value ${{ needs.cashapp-burst.outputs.version }}
-        if: ${{ needs.cashapp-burst.result == 'success' }}
+        if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml cashapp-redwood versions.okio value ${{ needs.square-okio.outputs.version }}
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml cashapp-redwood libraries.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: cashapp-redwood
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: cashapp-redwood
         run: git diff --patch
-      - name: "Build cashapp-redwood"
+      - name: "Publish cashapp-redwood"
         working-directory: cashapp-redwood
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal -x :redwood-treehouse-host:check
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-redwood-snapshot
@@ -438,6 +450,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/REDWOOD_VERSION = "(.*)"/ and print "version=$1",$/' cashapp-redwood/build-support/src/main/kotlin/app/cash/redwood/buildsupport/RedwoodBuildPlugin.kt >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-redwood"
+        working-directory: cashapp-redwood
+        run: ../this/gradlew --continue build -x :redwood-treehouse-host:check
 
   cashapp-turbine:
     runs-on: macos-latest
@@ -475,9 +490,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: cashapp-turbine
         run: git diff --patch
-      - name: "Build cashapp-turbine"
+      - name: "Publish cashapp-turbine"
         working-directory: cashapp-turbine
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: cashapp-turbine-snapshot
@@ -485,6 +500,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-turbine/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check cashapp-turbine"
+        working-directory: cashapp-turbine
+        run: ../this/gradlew --continue build
 
   JakeWharton-cite:
     runs-on: macos-latest
@@ -523,9 +541,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-cite
         run: git diff --patch
-      - name: "Build JakeWharton-cite"
+      - name: "Publish JakeWharton-cite"
         working-directory: JakeWharton-cite
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-cite-snapshot
@@ -533,6 +551,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-cite"
+        working-directory: JakeWharton-cite
+        run: ../this/gradlew --continue build
 
   JakeWharton-confundus:
     runs-on: macos-latest
@@ -570,9 +591,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-confundus
         run: git diff --patch
-      - name: "Build JakeWharton-confundus"
+      - name: "Publish JakeWharton-confundus"
         working-directory: JakeWharton-confundus
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-confundus-snapshot
@@ -580,6 +601,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-confundus/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-confundus"
+        working-directory: JakeWharton-confundus
+        run: ../this/gradlew --continue build
 
   JakeWharton-crossword:
     runs-on: macos-latest
@@ -617,9 +641,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-crossword
         run: git diff --patch
-      - name: "Build JakeWharton-crossword"
+      - name: "Publish JakeWharton-crossword"
         working-directory: JakeWharton-crossword
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-crossword-snapshot
@@ -627,6 +651,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-crossword/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-crossword"
+        working-directory: JakeWharton-crossword
+        run: ../this/gradlew --continue build
 
   JakeWharton-dependency-tree-diff:
     runs-on: macos-latest
@@ -662,7 +689,7 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-dependency-tree-diff
         run: git diff --patch
-      - name: "Build JakeWharton-dependency-tree-diff"
+      - name: "Check JakeWharton-dependency-tree-diff"
         working-directory: JakeWharton-dependency-tree-diff
         run: ../this/gradlew --continue build
 
@@ -697,20 +724,20 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-dependency-watch
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-dependency-watch
         run: git diff --patch
-      - name: "Build JakeWharton-dependency-watch"
+      - name: "Check JakeWharton-dependency-watch"
         working-directory: JakeWharton-dependency-watch
         run: ../this/gradlew --continue build
 
@@ -748,22 +775,22 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml JakeWharton-diffuse libraries.okio value ${{ needs.square-okio.outputs.version }}
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-diffuse
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-diffuse
         run: git diff --patch
-      - name: "Build JakeWharton-diffuse"
+      - name: "Publish JakeWharton-diffuse"
         working-directory: JakeWharton-diffuse
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-diffuse-snapshot
@@ -771,6 +798,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-diffuse/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-diffuse"
+        working-directory: JakeWharton-diffuse
+        run: ../this/gradlew --continue build
 
   JakeWharton-finalization-hook:
     runs-on: macos-latest
@@ -808,9 +838,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-finalization-hook
         run: git diff --patch
-      - name: "Build JakeWharton-finalization-hook"
+      - name: "Publish JakeWharton-finalization-hook"
         working-directory: JakeWharton-finalization-hook
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -818,6 +848,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-finalization-hook"
+        working-directory: JakeWharton-finalization-hook
+        run: ../this/gradlew --continue build
 
   JakeWharton-gitout:
     runs-on: macos-latest
@@ -850,20 +883,20 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-gitout versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-gitout
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-gitout
         run: git diff --patch
-      - name: "Build JakeWharton-gitout"
+      - name: "Check JakeWharton-gitout"
         working-directory: JakeWharton-gitout
         run: ../this/gradlew --continue build
 
@@ -898,20 +931,20 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlin-gradlePlugin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-hardcover-data-sync
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-hardcover-data-sync
         run: git diff --patch
-      - name: "Build JakeWharton-hardcover-data-sync"
+      - name: "Check JakeWharton-hardcover-data-sync"
         working-directory: JakeWharton-hardcover-data-sync
         run: ../this/gradlew --continue build
 
@@ -946,20 +979,20 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-jakewharton-com
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-jakewharton-com
         run: git diff --patch
-      - name: "Build JakeWharton-jakewharton-com"
+      - name: "Check JakeWharton-jakewharton-com"
         working-directory: JakeWharton-jakewharton-com
         run: ../this/gradlew --continue build
 
@@ -1000,7 +1033,7 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-kmp-missing-targets
         run: git diff --patch
-      - name: "Build JakeWharton-kmp-missing-targets"
+      - name: "Publish JakeWharton-kmp-missing-targets"
         working-directory: JakeWharton-kmp-missing-targets
         run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1047,40 +1080,40 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
       - name: "Download internal dependency JakeWharton/cite"
         uses: actions/download-artifact@v5
-        if: ${{ needs.JakeWharton-cite.result == 'success' }}
+        if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
         with:
           name: JakeWharton-cite-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/cite"
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.citeGradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
-        if: ${{ needs.JakeWharton-cite.result == 'success' }}
+        if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/finalization-hook"
         uses: actions/download-artifact@v5
-        if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
+        if: ${{ needs.JakeWharton-finalization-hook.outputs.version != '' }}
         with:
           name: JakeWharton-finalization-hook-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/finalization-hook"
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.finalizationHook value ${{ needs.JakeWharton-finalization-hook.outputs.version }}
-        if: ${{ needs.JakeWharton-finalization-hook.result == 'success' }}
+        if: ${{ needs.JakeWharton-finalization-hook.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
         uses: actions/download-artifact@v5
-        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/test-distribution-gradle-plugin"
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
-        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-mosaic
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-mosaic
         run: git diff --patch
-      - name: "Build JakeWharton-mosaic"
+      - name: "Publish JakeWharton-mosaic"
         working-directory: JakeWharton-mosaic
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-mosaic-snapshot
@@ -1088,6 +1121,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-mosaic/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-mosaic"
+        working-directory: JakeWharton-mosaic
+        run: ../this/gradlew --continue build
 
   JakeWharton-picnic:
     runs-on: macos-latest
@@ -1122,22 +1158,22 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency JakeWharton/crossword"
         uses: actions/download-artifact@v5
-        if: ${{ needs.JakeWharton-crossword.result == 'success' }}
+        if: ${{ needs.JakeWharton-crossword.outputs.version != '' }}
         with:
           name: JakeWharton-crossword-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/crossword"
         run: this/.github/helper.py patch-toml JakeWharton-picnic libraries.crossword value ${{ needs.JakeWharton-crossword.outputs.version }}
-        if: ${{ needs.JakeWharton-crossword.result == 'success' }}
+        if: ${{ needs.JakeWharton-crossword.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-picnic
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-picnic
         run: git diff --patch
-      - name: "Build JakeWharton-picnic"
+      - name: "Publish JakeWharton-picnic"
         working-directory: JakeWharton-picnic
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-picnic-snapshot
@@ -1145,6 +1181,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-picnic/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-picnic"
+        working-directory: JakeWharton-picnic
+        run: ../this/gradlew --continue build
 
   JakeWharton-plex-auto-trash:
     runs-on: macos-latest
@@ -1177,20 +1216,20 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-plex-auto-trash
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: JakeWharton-plex-auto-trash
         run: git diff --patch
-      - name: "Build JakeWharton-plex-auto-trash"
+      - name: "Check JakeWharton-plex-auto-trash"
         working-directory: JakeWharton-plex-auto-trash
         run: ../this/gradlew --continue build
 
@@ -1228,7 +1267,7 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-singular-solution
         run: git diff --patch
-      - name: "Build JakeWharton-singular-solution"
+      - name: "Check JakeWharton-singular-solution"
         working-directory: JakeWharton-singular-solution
         run: ../this/gradlew --continue build
 
@@ -1269,9 +1308,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-test-distribution-gradle-plugin
         run: git diff --patch
-      - name: "Build JakeWharton-test-distribution-gradle-plugin"
+      - name: "Publish JakeWharton-test-distribution-gradle-plugin"
         working-directory: JakeWharton-test-distribution-gradle-plugin
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -1279,6 +1318,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-test-distribution-gradle-plugin/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-test-distribution-gradle-plugin"
+        working-directory: JakeWharton-test-distribution-gradle-plugin
+        run: ../this/gradlew --continue build
 
   JakeWharton-timber:
     runs-on: macos-latest
@@ -1317,9 +1359,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-timber
         run: git diff --patch
-      - name: "Build JakeWharton-timber"
+      - name: "Publish JakeWharton-timber"
         working-directory: JakeWharton-timber
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: JakeWharton-timber-snapshot
@@ -1327,6 +1369,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-timber/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-timber"
+        working-directory: JakeWharton-timber
+        run: ../this/gradlew --continue build
 
   JakeWharton-video-swatch:
     runs-on: macos-latest
@@ -1359,13 +1404,13 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-video-swatch versions.kotlin key kotlin
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml JakeWharton-video-swatch libraries.okio value ${{ needs.square-okio.outputs.version }}
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
       - run: brew install ffmpeg
       - name: "Patch maven local"
         working-directory: JakeWharton-video-swatch
@@ -1373,7 +1418,7 @@ jobs:
       - name: "Show local change diff"
         working-directory: JakeWharton-video-swatch
         run: git diff --patch
-      - name: "Build JakeWharton-video-swatch"
+      - name: "Check JakeWharton-video-swatch"
         working-directory: JakeWharton-video-swatch
         run: ../this/gradlew --continue build
 
@@ -1410,22 +1455,22 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: sqldelight-Grammar-Kit-Composer
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: sqldelight-Grammar-Kit-Composer
         run: git diff --patch
-      - name: "Build sqldelight-Grammar-Kit-Composer"
+      - name: "Publish sqldelight-Grammar-Kit-Composer"
         working-directory: sqldelight-Grammar-Kit-Composer
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1433,6 +1478,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-Grammar-Kit-Composer/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check sqldelight-Grammar-Kit-Composer"
+        working-directory: sqldelight-Grammar-Kit-Composer
+        run: ../this/gradlew --continue build
 
   sqldelight-sql-psi:
     runs-on: macos-latest
@@ -1467,22 +1515,22 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
         uses: actions/download-artifact@v5
-        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency sqldelight/Grammar-Kit-Composer"
         run: this/.github/helper.py patch-toml sqldelight-sql-psi plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
-        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: sqldelight-sql-psi
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: sqldelight-sql-psi
         run: git diff --patch
-      - name: "Build sqldelight-sql-psi"
+      - name: "Publish sqldelight-sql-psi"
         working-directory: sqldelight-sql-psi
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sql-psi-snapshot
@@ -1490,6 +1538,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sql-psi/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check sqldelight-sql-psi"
+        working-directory: sqldelight-sql-psi
+        run: ../this/gradlew --continue build
 
   sqldelight-sqldelight:
     runs-on: macos-latest
@@ -1532,67 +1583,67 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
-        if: ${{ needs.cashapp-turbine.result == 'success' }}
+        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/picnic"
         uses: actions/download-artifact@v5
-        if: ${{ needs.JakeWharton-picnic.result == 'success' }}
+        if: ${{ needs.JakeWharton-picnic.outputs.version != '' }}
         with:
           name: JakeWharton-picnic-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/picnic"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.picnic value ${{ needs.JakeWharton-picnic.outputs.version }}
-        if: ${{ needs.JakeWharton-picnic.result == 'success' }}
+        if: ${{ needs.JakeWharton-picnic.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
         uses: actions/download-artifact@v5
-        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency sqldelight/Grammar-Kit-Composer"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
-        if: ${{ needs.sqldelight-Grammar-Kit-Composer.result == 'success' }}
+        if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/sql-psi"
         uses: actions/download-artifact@v5
-        if: ${{ needs.sqldelight-sql-psi.result == 'success' }}
+        if: ${{ needs.sqldelight-sql-psi.outputs.version != '' }}
         with:
           name: sqldelight-sql-psi-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency sqldelight/sql-psi"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.sqlPsi value ${{ needs.sqldelight-sql-psi.outputs.version }}
-        if: ${{ needs.sqldelight-sql-psi.result == 'success' }}
+        if: ${{ needs.sqldelight-sql-psi.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Download internal dependency square/moshi"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-moshi.result == 'success' }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
         with:
           name: square-moshi-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/moshi"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.moshi value ${{ needs.square-moshi.outputs.version }}
-        if: ${{ needs.square-moshi.result == 'success' }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: sqldelight-sqldelight
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: sqldelight-sqldelight
         run: git diff --patch
-      - name: "Build sqldelight-sqldelight"
+      - name: "Publish sqldelight-sqldelight"
         working-directory: sqldelight-sqldelight
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock build publishToMavenLocal -x dockerTest
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: sqldelight-sqldelight-snapshot
@@ -1600,6 +1651,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sqldelight/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check sqldelight-sqldelight"
+        working-directory: sqldelight-sqldelight
+        run: ../this/gradlew --continue build -x dockerTest
 
   square-kotlinpoet:
     runs-on: macos-latest
@@ -1638,9 +1692,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: square-kotlinpoet
         run: git diff --patch
-      - name: "Build square-kotlinpoet"
+      - name: "Publish square-kotlinpoet"
         working-directory: square-kotlinpoet
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-kotlinpoet-snapshot
@@ -1648,6 +1702,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-kotlinpoet/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check square-kotlinpoet"
+        working-directory: square-kotlinpoet
+        run: ../this/gradlew --continue build
 
   square-moshi:
     runs-on: macos-latest
@@ -1684,31 +1741,31 @@ jobs:
           this/.github/helper.py patch-toml square-moshi versions.ksp key ksp
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml square-moshi versions.kotlinpoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml square-moshi libraries.okio value ${{ needs.square-okio.outputs.version }}
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-moshi
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-moshi
         run: git diff --patch
-      - name: "Build square-moshi"
+      - name: "Publish square-moshi"
         working-directory: square-moshi
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-moshi-snapshot
@@ -1716,6 +1773,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/version = "(.*)"/ and print "version=$1",$/' square-moshi/build.gradle.kts >> "$GITHUB_OUTPUT"
+      - name: "Check square-moshi"
+        working-directory: square-moshi
+        run: ../this/gradlew --continue build
 
   square-okio:
     runs-on: macos-latest
@@ -1751,22 +1811,22 @@ jobs:
           this/.github/helper.py patch-toml square-okio libraries.android-gradle-plugin key agp
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v5
-        if: ${{ needs.cashapp-burst.result == 'success' }}
+        if: ${{ needs.cashapp-burst.outputs.version != '' }}
         with:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/burst"
         run: this/.github/helper.py patch-toml square-okio libraries.burst-gradle-plugin value ${{ needs.cashapp-burst.outputs.version }}
-        if: ${{ needs.cashapp-burst.result == 'success' }}
+        if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-okio
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-okio
         run: git diff --patch
-      - name: "Build square-okio"
+      - name: "Publish square-okio"
         working-directory: square-okio
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock build publishToMavenLocal
+        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-okio-snapshot
@@ -1774,6 +1834,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-okio/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check square-okio"
+        working-directory: square-okio
+        run: ../this/gradlew --continue build
 
   square-okhttp:
     runs-on: macos-latest
@@ -1810,29 +1873,29 @@ jobs:
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml square-okhttp versions.com-squareup-okio value ${{ needs.square-okio.outputs.version }}
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml square-okhttp libraries.squareup-kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
-        if: ${{ needs.square-kotlinpoet.result == 'success' }}
+        if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-okhttp
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-okhttp
         run: git diff --patch
-      - name: "Build square-okhttp"
+      - name: "Publish square-okhttp"
         working-directory: square-okhttp
         run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
@@ -1878,31 +1941,31 @@ jobs:
           this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okhttp"
         run: this/.github/helper.py patch-toml square-retrofit versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
-        if: ${{ needs.square-okhttp.result == 'success' }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Download internal dependency square/moshi"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-moshi.result == 'success' }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
         with:
           name: square-moshi-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/moshi"
         run: this/.github/helper.py patch-toml square-retrofit libraries.moshi value ${{ needs.square-moshi.outputs.version }}
-        if: ${{ needs.square-moshi.result == 'success' }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-retrofit
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: square-retrofit
         run: git diff --patch
-      - name: "Build square-retrofit"
+      - name: "Publish square-retrofit"
         working-directory: square-retrofit
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-retrofit-snapshot
@@ -1910,6 +1973,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-retrofit/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check square-retrofit"
+        working-directory: square-retrofit
+        run: ../this/gradlew --continue build
 
   square-zstd-kmp:
     runs-on: macos-latest
@@ -1946,22 +2012,22 @@ jobs:
           this/.github/helper.py patch-toml square-zstd-kmp versions.kotlin key kotlin
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
         uses: actions/download-artifact@v5
-        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency JakeWharton/test-distribution-gradle-plugin"
         run: this/.github/helper.py patch-toml square-zstd-kmp libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
-        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.result == 'success' }}
+        if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
         run: this/.github/helper.py patch-toml square-zstd-kmp versions.okio value ${{ needs.square-okio.outputs.version }}
-        if: ${{ needs.square-okio.result == 'success' }}
+        if: ${{ needs.square-okio.outputs.version != '' }}
       - uses: mlugg/setup-zig@v2
         with:
           version: 0.14.0
@@ -1973,9 +2039,9 @@ jobs:
       - name: "Show local change diff"
         working-directory: square-zstd-kmp
         run: git diff --patch
-      - name: "Build square-zstd-kmp"
+      - name: "Publish square-zstd-kmp"
         working-directory: square-zstd-kmp
-        run: ../this/gradlew --continue build publishToMavenLocal
+        run: ../this/gradlew --continue publishToMavenLocal
       - uses: actions/upload-artifact@v4
         with:
           name: square-zstd-kmp-snapshot
@@ -1983,6 +2049,9 @@ jobs:
           if-no-files-found: error
       - id: version
         run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-zstd-kmp/gradle.properties >> "$GITHUB_OUTPUT"
+      - name: "Check square-zstd-kmp"
+        working-directory: square-zstd-kmp
+        run: ../this/gradlew --continue build
 
   final-status:
     if: ${{ !cancelled() }}

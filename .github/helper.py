@@ -172,44 +172,35 @@ jobs:
 					safe_dep = safe_name(dep)
 					f.write('      - name: "Download internal dependency ' + dep + '''"
         uses: actions/download-artifact@v5
-        if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
+        if: ${{ needs.''' + safe_dep + '''.outputs.version != '' }}
         with:
           name: ''' + safe_dep + '''-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency ''' + dep + '''"
         run: this/.github/helper.py patch-toml ''' + safe_project + ' ' + key + ''' value ${{ needs.''' + safe_dep + '''.outputs.version }}
-        if: ${{ needs.''' + safe_dep + '''.result == 'success' }}
+        if: ${{ needs.''' + safe_dep + '''.outputs.version != '' }}
 ''')
 
 			if 'setup' in config:
 				setup = yaml.dump(config['setup'])
 				f.write(textwrap.indent(setup, '      '))
+
 			f.write('''      - name: "Patch maven local"
         working-directory: ''' + safe_project + '''
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\\(\\)$/\\1mavenLocal()\\n\\1mavenCentral()/g'
       - name: "Show local change diff"
         working-directory: ''' + safe_project + '''
         run: git diff --patch
-      - name: "Build ''' + safe_project + '''"
+''')
+
+			if 'version' in config:
+				f.write('''      - name: "Publish ''' + safe_project + '''"
         working-directory: ''' + safe_project + '''
         run: ../this/gradlew --continue ''')
-			if 'pre_build' in config:
-				f.write(config['pre_build'] + ' ')
-			if 'version' not in config:
-				f.write('build')
-				if 'post_build' in config:
-					f.write(' ' + config['post_build'])
-				f.write('\n')
-			else:
-				if 'compile_only' in config and config['compile_only']:
-					f.write('publishToMavenLocal')
-				else:
-					f.write('build publishToMavenLocal')
-				if 'post_build' in config:
-					f.write(' ' + config['post_build'])
-				f.write('\n')
-
-				f.write('''      - uses: actions/upload-artifact@v4
+				if 'pre_build' in config:
+					f.write(config['pre_build'] + ' ')
+				f.write('''publishToMavenLocal
+      - uses: actions/upload-artifact@v4
         with:
           name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository
@@ -221,6 +212,18 @@ jobs:
 					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
 				else:
 					raise Exception("Unknown version strategy")
+
+			if 'compile_only' not in config:
+				f.write('''      - name: "Check ''' + safe_project + '''"
+        working-directory: ''' + safe_project + '''
+        run: ../this/gradlew --continue ''')
+				# Only run the pre_build if we didn't already run it as part of library deploy.
+				if 'pre_build' in config and 'version' not in config:
+					f.write(config['pre_build'] + ' ')
+				f.write('build')
+				if 'post_build' in config:
+					f.write(' ' + config['post_build'])
+				f.write('\n')
 
 			f.write('\n')
 

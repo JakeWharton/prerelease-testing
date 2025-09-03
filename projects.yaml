@@ -2,6 +2,7 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-gradlePlugin
+    dokka: libraries.dokka-gradle-plugin
     kotlin: versions.kotlin
     ksp: libraries.google-ksp
   version:
@@ -11,6 +12,7 @@
 "cashapp/copper":
   external_dependencies:
     agp: libraries.android-gradlePlugin
+    dokka: libraries.dokkaGradlePlugin
     kotlin: libraries.kotlin-gradlePlugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
@@ -22,6 +24,7 @@
   compile_only: true # Test golden files hard code versions.
   external_dependencies:
     agp: versions.agp
+    dokka: plugins.dokka
     kotlin: versions.kotlin
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinpoet
@@ -33,6 +36,7 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-plugin
+    dokka: libraries.dokka-plugin
     jbCompose: versions.jetbrains-compose
     kotlin: versions.kotlin
   internal_dependencies:
@@ -47,6 +51,7 @@
 "cashapp/paraphrase":
   external_dependencies:
     agp: versions.agp
+    dokka: plugins.dokka
     kotlin: versions.kotlin
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinPoet
@@ -60,6 +65,7 @@
   external_dependencies:
     agp: libraries.androidGradlePlugin
     atomicfu: libraries.atomicFuPlugin
+    dokka: libraries.dokkaPlugin
     jbCompose: versions.jbCompose
     kotlin: versions.kotlin
     ksp: versions.ksp
@@ -76,6 +82,7 @@
 "cashapp/turbine":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    dokka: plugins.dokka
     kotlin: plugins.kotlin
   version:
     file: gradle.properties
@@ -85,6 +92,7 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-gradlePlugin
+    dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -93,6 +101,7 @@
 "JakeWharton/confundus":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -101,6 +110,7 @@
 "JakeWharton/crossword":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    dokka: libraries.dokkaPlugin
     kotlin: libraries.kotlinPlugin
   version:
     file: gradle.properties
@@ -119,6 +129,7 @@
 "JakeWharton/diffuse":
   external_dependencies:
     agp: libraries.apkSigner
+    dokka: libraries.dokkaPlugin
     kotlin: libraries.kotlinPlugin
   internal_dependencies:
     "square/okio": libraries.okio
@@ -128,6 +139,7 @@
 
 "JakeWharton/finalization-hook":
   external_dependencies:
+    dokka: libraries.dokka-gradlePlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -155,6 +167,7 @@
   compile_only: true # Test golden files hard code versions.
   external_dependencies:
     agp: libraries.android-gradlePlugin
+    dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -162,6 +175,7 @@
 
 "JakeWharton/mosaic":
   external_dependencies:
+    dokka: libraries.dokkaGradlePlugin
     jbCompose: versions.jetbrains-compose
     kotlin: versions.kotlin
   internal_dependencies:
@@ -175,6 +189,7 @@
 "JakeWharton/picnic":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    dokka: libraries.dokkaPlugin
     kotlin: libraries.kotlinPlugin
   internal_dependencies:
     "JakeWharton/crossword": libraries.crossword
@@ -195,6 +210,7 @@
 "JakeWharton/test-distribution-gradle-plugin":
   external_dependencies:
     agp: libraries.android-gradlePlugin
+    dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -203,6 +219,7 @@
 "JakeWharton/timber":
   external_dependencies:
     agp: versions.agp
+    dokka: libraries.gradlePlugin-dokka
     kotlin: versions.kotlin
   version:
     file: gradle.properties
@@ -218,6 +235,7 @@
 
 "sqldelight/Grammar-Kit-Composer":
   external_dependencies:
+    dokka: plugins.dokka
     kotlin: plugins.kotlinJvm
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinPoet
@@ -227,6 +245,7 @@
 
 "sqldelight/sql-psi":
   external_dependencies:
+    dokka: plugins.dokka
     kotlin: versions.kotlin
   internal_dependencies:
     "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
@@ -240,6 +259,7 @@
   external_dependencies:
     agp: versions.agp
     atomicfu: libraries.kotlinx-atomicfu-plugin
+    dokka: versions.dokka
     kotlin: versions.kotlin
     ksp: plugins.ksp
   internal_dependencies:
@@ -256,6 +276,7 @@
 "square/kotlinpoet":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
+    dokka: plugins.dokka
     kotlin: versions.kotlin
     ksp: versions.ksp
   version:
@@ -264,6 +285,7 @@
 
 "square/moshi":
   external_dependencies:
+    dokka: plugins.dokka
     kotlin: versions.kotlin
     ksp: versions.ksp
   internal_dependencies:
@@ -276,8 +298,9 @@
 "square/okio":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
-    kotlin: versions.kotlin
     agp: libraries.android-gradle-plugin
+    dokka: libraries.dokka
+    kotlin: versions.kotlin
   internal_dependencies:
     "cashapp/burst": libraries.burst-gradle-plugin
   version:
@@ -287,6 +310,7 @@
 "square/okhttp":
   compile_only: true # Build is all kinds of messed up.
   external_dependencies:
+    dokka: libraries.gradlePlugin-dokka
     kotlin: versions.org-jetbrains-kotlin
     ksp: versions.ksp
   internal_dependencies:
@@ -299,6 +323,7 @@
 "square/retrofit":
   external_dependencies:
     agp: libraries.androidPlugin
+    dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
   internal_dependencies:
     "square/okhttp": versions.okhttp
@@ -316,6 +341,7 @@
       working-directory: square-zstd-kmp/zstd-kmp
   external_dependencies:
     agp: libraries.android-gradle-plugin
+    dokka: libraries.dokka-gradle-plugin
     kotlin: versions.kotlin
   internal_dependencies:
     "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin

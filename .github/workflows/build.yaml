@@ -56,6 +56,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml cashapp-burst libraries.dokka-gradle-plugin key dokka
           this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-burst libraries.google-ksp key ksp
       - name: "Patch maven local"
@@ -109,6 +110,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-copper libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml cashapp-copper libraries.dokkaGradlePlugin key dokka
           this/.github/helper.py patch-toml cashapp-copper libraries.kotlin-gradlePlugin key kotlin
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
@@ -170,6 +172,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
+          this/.github/helper.py patch-toml cashapp-licensee plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
@@ -231,6 +234,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-molecule libraries.android-plugin key agp
+          this/.github/helper.py patch-toml cashapp-molecule libraries.dokka-plugin key dokka
           this/.github/helper.py patch-toml cashapp-molecule versions.jetbrains-compose key jbCompose
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
       - name: "Download internal dependency cashapp/turbine"
@@ -320,6 +324,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-paraphrase versions.agp key agp
+          this/.github/helper.py patch-toml cashapp-paraphrase plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
@@ -386,6 +391,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-redwood libraries.androidGradlePlugin key agp
           this/.github/helper.py patch-toml cashapp-redwood libraries.atomicFuPlugin key atomicfu
+          this/.github/helper.py patch-toml cashapp-redwood libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml cashapp-redwood versions.jbCompose key jbCompose
           this/.github/helper.py patch-toml cashapp-redwood versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-redwood versions.ksp key ksp
@@ -483,6 +489,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml cashapp-turbine plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-turbine plugins.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: cashapp-turbine
@@ -534,6 +541,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-cite libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-cite libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-cite versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-cite
@@ -584,6 +592,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-confundus libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-confundus versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-confundus
@@ -634,6 +643,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-crossword libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-crossword libraries.kotlinPlugin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-crossword
@@ -772,6 +782,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.apkSigner key agp
+          this/.github/helper.py patch-toml JakeWharton-diffuse libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v5
@@ -831,6 +842,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-finalization-hook libraries.dokka-gradlePlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-finalization-hook versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-finalization-hook
@@ -1026,6 +1038,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-kmp-missing-targets
@@ -1076,6 +1089,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-mosaic libraries.dokkaGradlePlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.jetbrains-compose key jbCompose
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
       - name: "Download internal dependency JakeWharton/cite"
@@ -1155,6 +1169,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-picnic libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
       - name: "Download internal dependency JakeWharton/crossword"
         uses: actions/download-artifact@v5
@@ -1301,6 +1316,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.android-gradlePlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-test-distribution-gradle-plugin
@@ -1352,6 +1368,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-timber versions.agp key agp
+          this/.github/helper.py patch-toml JakeWharton-timber libraries.gradlePlugin-dokka key dokka
           this/.github/helper.py patch-toml JakeWharton-timber versions.kotlin key kotlin
       - name: "Patch maven local"
         working-directory: JakeWharton-timber
@@ -1452,6 +1469,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5
@@ -1512,6 +1530,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml sqldelight-sql-psi plugins.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
         uses: actions/download-artifact@v5
@@ -1579,6 +1598,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
           this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinx-atomicfu-plugin key atomicfu
+          this/.github/helper.py patch-toml sqldelight-sqldelight versions.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp
       - name: "Download internal dependency cashapp/turbine"
@@ -1684,6 +1704,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-kotlinpoet plugins.dokka key dokka
           this/.github/helper.py patch-toml square-kotlinpoet versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-kotlinpoet versions.ksp key ksp
       - name: "Patch maven local"
@@ -1737,6 +1758,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-moshi plugins.dokka key dokka
           this/.github/helper.py patch-toml square-moshi versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-moshi versions.ksp key ksp
       - name: "Download internal dependency square/kotlinpoet"
@@ -1807,8 +1829,9 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
-          this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-okio libraries.android-gradle-plugin key agp
+          this/.github/helper.py patch-toml square-okio libraries.dokka key dokka
+          this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
@@ -1869,6 +1892,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-dokka key dokka
           this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
       - name: "Download internal dependency square/okio"
@@ -1938,6 +1962,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-retrofit libraries.androidPlugin key agp
+          this/.github/helper.py patch-toml square-retrofit libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
@@ -2009,6 +2034,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-zstd-kmp libraries.android-gradle-plugin key agp
+          this/.github/helper.py patch-toml square-zstd-kmp libraries.dokka-gradle-plugin key dokka
           this/.github/helper.py patch-toml square-zstd-kmp versions.kotlin key kotlin
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
         uses: actions/download-artifact@v5

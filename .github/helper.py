@@ -107,7 +107,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
       - run: brew update && brew install d2
@@ -155,7 +155,7 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
       - name: "Patch external dependencies"

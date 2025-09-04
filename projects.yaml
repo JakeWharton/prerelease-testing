@@ -203,6 +203,13 @@
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
+"JakeWharton/radarr-folder-fixer":
+  external_dependencies:
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "square/okhttp": versions.okhttp
+    "square/retrofit": versions.retrofit
+
 "JakeWharton/singular-solution":
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin

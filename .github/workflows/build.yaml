@@ -1248,6 +1248,64 @@ jobs:
         working-directory: JakeWharton-plex-auto-trash
         run: ../this/gradlew --continue build
 
+  JakeWharton-radarr-folder-fixer:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+      - square-okhttp
+      - square-retrofit
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/radarr-folder-fixer repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/radarr-folder-fixer
+          submodules: true
+          path: JakeWharton-radarr-folder-fixer
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.kotlin key kotlin
+      - name: "Download internal dependency square/okhttp"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
+        with:
+          name: square-okhttp-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/okhttp"
+        run: this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
+        if: ${{ needs.square-okhttp.outputs.version != '' }}
+      - name: "Download internal dependency square/retrofit"
+        uses: actions/download-artifact@v5
+        if: ${{ needs.square-retrofit.outputs.version != '' }}
+        with:
+          name: square-retrofit-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/retrofit"
+        run: this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.retrofit value ${{ needs.square-retrofit.outputs.version }}
+        if: ${{ needs.square-retrofit.outputs.version != '' }}
+      - name: "Patch maven local"
+        working-directory: JakeWharton-radarr-folder-fixer
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-radarr-folder-fixer
+        run: git diff --patch
+      - name: "Check JakeWharton-radarr-folder-fixer"
+        working-directory: JakeWharton-radarr-folder-fixer
+        run: ../this/gradlew --continue build
+
   JakeWharton-singular-solution:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -2105,6 +2163,7 @@ jobs:
       - JakeWharton-mosaic
       - JakeWharton-picnic
       - JakeWharton-plex-auto-trash
+      - JakeWharton-radarr-folder-fixer
       - JakeWharton-singular-solution
       - JakeWharton-test-distribution-gradle-plugin
       - JakeWharton-timber

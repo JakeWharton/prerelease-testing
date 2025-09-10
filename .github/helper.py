@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import semver
 import subprocess
 import sys
 import tempfile
@@ -43,25 +44,31 @@ def patch_toml(project_dir: str, toml_key: str, version_type: str, version_arg: 
 
 	if toml_key.startswith('versions.'):
 		toml_versions_key = toml_key.removeprefix('versions.')
+		old_version = project_toml['versions'][toml_versions_key]
 		project_toml['versions'][toml_versions_key] = version
 	elif toml_key.startswith('plugins.'):
 		toml_plugins_key = toml_key.removeprefix('plugins.')
+		old_version = project_toml['plugins'][toml_plugins_key]['version']
 		project_toml['plugins'][toml_plugins_key]['version'] = version
 	elif toml_key.startswith('libraries.'):
 		toml_libraries_key = toml_key.removeprefix('libraries.')
 		project_toml_library = project_toml['libraries'][toml_libraries_key]
 		if isinstance(project_toml_library, str):
-			coordinates = project_toml_library.rpartition(':')[0]
+			coordinates, _, old_version = project_toml_library.rpartition(':')
 			new_triple = coordinates + ':' + version
 			project_toml['libraries'][toml_libraries_key] = new_triple
 		else:
+			old_version = project_toml_library['version']
 			project_toml_library['version'] = version
 	else:
 		print('Unknown TOML key prefix:', toml_key)
 		exit(1)
 
-	with open(project_toml_path, 'w') as f:
-		f.write(tomlkit.dumps(project_toml))
+	if semver.compare(old_version, version) > 0:
+		print("Refusing to downgrade", toml_key, 'from', old_version, 'to', version)
+	else:
+		with open(project_toml_path, 'w') as f:
+			f.write(tomlkit.dumps(project_toml))
 
 
 def safe_name(name: str) -> str:

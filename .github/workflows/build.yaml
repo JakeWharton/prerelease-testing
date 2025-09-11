@@ -208,7 +208,6 @@ jobs:
     needs:
       - workflow-up-to-date
       - cashapp-turbine
-      - square-moshi
       - square-okhttp
       - square-retrofit
     steps:
@@ -246,15 +245,6 @@ jobs:
       - name: "Patch internal dependency cashapp/turbine"
         run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
-      - name: "Download internal dependency square/moshi"
-        uses: actions/download-artifact@v5
-        if: ${{ needs.square-moshi.outputs.version != '' }}
-        with:
-          name: square-moshi-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency square/moshi"
-        run: this/.github/helper.py patch-toml cashapp-molecule versions.com-squareup-moshi value ${{ needs.square-moshi.outputs.version }}
-        if: ${{ needs.square-moshi.outputs.version != '' }}
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v5
         if: ${{ needs.square-okhttp.outputs.version != '' }}

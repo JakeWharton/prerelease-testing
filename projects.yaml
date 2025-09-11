@@ -41,7 +41,6 @@
     kotlin: versions.kotlin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
-    "square/moshi": versions.com-squareup-moshi
     "square/okhttp": versions.squareup-okhttp
     "square/retrofit": versions.squareup-retrofit
   version:

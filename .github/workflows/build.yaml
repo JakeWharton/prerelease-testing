@@ -1887,7 +1887,7 @@ jobs:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/burst"
-        run: this/.github/helper.py patch-toml square-okio libraries.burst-gradle-plugin value ${{ needs.cashapp-burst.outputs.version }}
+        run: this/.github/helper.py patch-toml square-okio versions.burst value ${{ needs.cashapp-burst.outputs.version }}
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-okio

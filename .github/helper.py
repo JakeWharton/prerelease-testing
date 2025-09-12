@@ -59,6 +59,9 @@ def patch_toml(project_dir: str, toml_key: str, version_type: str, version_arg: 
 			project_toml['libraries'][toml_libraries_key] = new_triple
 		else:
 			old_version = project_toml_library['version']
+			if isinstance(old_version, tomlkit.api.Table):
+				print('Library key ', toml_libraries_key, " contains a 'version' table. Migrate to using version key.")
+				exit(1)
 			project_toml_library['version'] = version
 	else:
 		print('Unknown TOML key prefix:', toml_key)

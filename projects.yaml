@@ -308,7 +308,7 @@
     dokka: libraries.dokka
     kotlin: versions.kotlin
   internal_dependencies:
-    "cashapp/burst": libraries.burst-gradle-plugin
+    "cashapp/burst": versions.burst
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

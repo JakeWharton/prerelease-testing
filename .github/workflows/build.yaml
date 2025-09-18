@@ -233,8 +233,8 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-molecule libraries.android-plugin key agp
+          this/.github/helper.py patch-toml cashapp-molecule libraries.androidx-compose-runtime key androidx-compose-runtime
           this/.github/helper.py patch-toml cashapp-molecule libraries.dokka-plugin key dokka
-          this/.github/helper.py patch-toml cashapp-molecule versions.jetbrains-compose key jbCompose
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
@@ -1080,7 +1080,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.dokkaGradlePlugin key dokka
-          this/.github/helper.py patch-toml JakeWharton-mosaic versions.jetbrains-compose key jbCompose
+          this/.github/helper.py patch-toml JakeWharton-mosaic libraries.androidx-compose-runtime key androidx-compose-runtime
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
       - name: "Download internal dependency JakeWharton/cite"
         uses: actions/download-artifact@v5

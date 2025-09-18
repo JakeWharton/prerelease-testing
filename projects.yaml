@@ -36,8 +36,8 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-plugin
+    androidx-compose-runtime: libraries.androidx-compose-runtime
     dokka: libraries.dokka-plugin
-    jbCompose: versions.jetbrains-compose
     kotlin: versions.kotlin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
@@ -175,7 +175,7 @@
 "JakeWharton/mosaic":
   external_dependencies:
     dokka: libraries.dokkaGradlePlugin
-    jbCompose: versions.jetbrains-compose
+    androidx-compose-runtime: libraries.androidx-compose-runtime
     kotlin: versions.kotlin
   internal_dependencies:
     "JakeWharton/cite": libraries.citeGradlePlugin

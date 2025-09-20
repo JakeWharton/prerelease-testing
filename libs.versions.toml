@@ -1,7 +1,7 @@
 [versions]
 agp = "9.0.0-alpha02"
 androidx-compose-runtime = "1.9.1"
-atomicfu = "0.29.0"
+atomicfu = "0.30.0-beta"
 dokka = "2.0.0"
 jbCompose = "1.10.0-alpha01"
 kotlin = "2.2.20"

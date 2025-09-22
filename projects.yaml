@@ -63,7 +63,6 @@
   post_build: -x :redwood-treehouse-host:check
   external_dependencies:
     agp: libraries.androidGradlePlugin
-    atomicfu: libraries.atomicFuPlugin
     dokka: libraries.dokkaPlugin
     jbCompose: versions.jbCompose
     kotlin: versions.kotlin
@@ -264,7 +263,6 @@
   post_build: -x dockerTest
   external_dependencies:
     agp: versions.agp
-    atomicfu: libraries.kotlinx-atomicfu-plugin
     dokka: versions.dokka
     kotlin: versions.kotlin
     ksp: plugins.ksp

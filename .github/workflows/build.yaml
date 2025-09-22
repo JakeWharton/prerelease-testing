@@ -380,7 +380,6 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-redwood libraries.androidGradlePlugin key agp
-          this/.github/helper.py patch-toml cashapp-redwood libraries.atomicFuPlugin key atomicfu
           this/.github/helper.py patch-toml cashapp-redwood libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml cashapp-redwood versions.jbCompose key jbCompose
           this/.github/helper.py patch-toml cashapp-redwood versions.kotlin key kotlin
@@ -1645,7 +1644,6 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
-          this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinx-atomicfu-plugin key atomicfu
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp

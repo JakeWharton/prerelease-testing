@@ -164,7 +164,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'

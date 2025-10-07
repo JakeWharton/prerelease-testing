@@ -119,7 +119,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: '3.14'
       - run: brew update && brew install d2
       - run: pip install -r .github/requirements.txt
       - run: .github/helper.py generate
@@ -167,7 +167,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: '3.14'
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt

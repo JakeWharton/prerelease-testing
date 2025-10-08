@@ -70,6 +70,7 @@
   internal_dependencies:
     "cashapp/burst": versions.burst
     "cashapp/turbine": libraries.turbine
+    "cashapp/zipline": libraries.zipline
     "square/kotlinpoet": libraries.kotlinPoet
     "square/okio": versions.okio
     "square/okhttp": libraries.okhttp
@@ -82,6 +83,29 @@
   external_dependencies:
     dokka: plugins.dokka
     kotlin: plugins.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"cashapp/zipline":
+  setup:
+    - uses: mlugg/setup-zig@v2
+      with:
+        version: 0.14.0
+    - run: zig build -p src/jvmMain/resources/jni
+      working-directory: cashapp-zipline/zipline
+  pre_build: kotlinUpgradeYarnLock
+  post_build: -x spotlessCheck -x :zipline-gradle-plugin:validatePlugins
+  external_dependencies:
+    agp: libraries.android-gradle-plugin
+    kotlin: versions.kotlin
+    ksp: versions.ksp
+  internal_dependencies:
+    "cashapp/turbine": libraries.turbine
+    "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
+    "square/okhttp": versions.okHttp
+    "square/okio": versions.okio
+    "sqldelight/sqldelight": versions.sqldelight
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

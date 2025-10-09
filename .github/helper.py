@@ -223,7 +223,7 @@ jobs:
 ''')
 				version = config['version']
 				if 'regex' in version:
-					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
+					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' | tee -a "$GITHUB_OUTPUT"\n')
 				else:
 					raise Exception("Unknown version strategy")
 

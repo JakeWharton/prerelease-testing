@@ -70,7 +70,7 @@
   internal_dependencies:
     "cashapp/burst": versions.burst
     "cashapp/turbine": libraries.turbine
-    "cashapp/zipline": libraries.zipline
+    "cashapp/zipline": versions.zipline
     "square/kotlinpoet": libraries.kotlinPoet
     "square/okio": versions.okio
     "square/okhttp": libraries.okhttp

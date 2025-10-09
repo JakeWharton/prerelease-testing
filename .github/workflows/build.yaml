@@ -410,7 +410,7 @@ jobs:
           name: cashapp-zipline-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency cashapp/zipline"
-        run: this/.github/helper.py patch-toml cashapp-redwood libraries.zipline value ${{ needs.cashapp-zipline.outputs.version }}
+        run: this/.github/helper.py patch-toml cashapp-redwood versions.zipline value ${{ needs.cashapp-zipline.outputs.version }}
         if: ${{ needs.cashapp-zipline.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v5

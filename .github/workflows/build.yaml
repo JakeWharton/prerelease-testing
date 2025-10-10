@@ -78,7 +78,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-burst/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-burst/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-burst"
         working-directory: cashapp-burst
         run: ../this/gradlew --continue build
@@ -140,7 +140,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-copper/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-copper/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-copper"
         working-directory: cashapp-copper
         run: ../this/gradlew --continue build
@@ -202,7 +202,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-licensee/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-licensee/gradle.properties | tee -a "$GITHUB_OUTPUT"
 
   cashapp-molecule:
     runs-on: macos-latest
@@ -282,7 +282,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-molecule/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-molecule/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-molecule"
         working-directory: cashapp-molecule
         run: ../this/gradlew --continue build
@@ -344,7 +344,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-paraphrase/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-paraphrase/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-paraphrase"
         working-directory: cashapp-paraphrase
         run: ../this/gradlew --continue build
@@ -458,7 +458,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/REDWOOD_VERSION = "(.*)"/ and print "version=$1",$/' cashapp-redwood/build-support/src/main/kotlin/app/cash/redwood/buildsupport/RedwoodBuildPlugin.kt >> "$GITHUB_OUTPUT"
+        run: perl -ne '/REDWOOD_VERSION = "(.*)"/ and print "version=$1",$/' cashapp-redwood/build-support/src/main/kotlin/app/cash/redwood/buildsupport/RedwoodBuildPlugin.kt | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-redwood"
         working-directory: cashapp-redwood
         run: ../this/gradlew --continue build -x :redwood-treehouse-host:check
@@ -509,7 +509,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-turbine/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-turbine/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-turbine"
         working-directory: cashapp-turbine
         run: ../this/gradlew --continue build
@@ -616,7 +616,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-zipline/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-zipline/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check cashapp-zipline"
         working-directory: cashapp-zipline
         run: ../this/gradlew --continue build -x spotlessCheck -x :zipline-gradle-plugin:validatePlugins
@@ -668,7 +668,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-cite/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-cite"
         working-directory: JakeWharton-cite
         run: ../this/gradlew --continue build
@@ -719,7 +719,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-confundus/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-confundus/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-confundus"
         working-directory: JakeWharton-confundus
         run: ../this/gradlew --continue build
@@ -770,7 +770,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-crossword/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-crossword/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-crossword"
         working-directory: JakeWharton-crossword
         run: ../this/gradlew --continue build
@@ -918,7 +918,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-diffuse/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-diffuse/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-diffuse"
         working-directory: JakeWharton-diffuse
         run: ../this/gradlew --continue build
@@ -969,7 +969,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-finalization-hook/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-finalization-hook"
         working-directory: JakeWharton-finalization-hook
         run: ../this/gradlew --continue build
@@ -1165,7 +1165,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-kmp-missing-targets/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-kmp-missing-targets/gradle.properties | tee -a "$GITHUB_OUTPUT"
 
   JakeWharton-mosaic:
     runs-on: macos-latest
@@ -1254,7 +1254,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-mosaic/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-mosaic/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-mosaic"
         working-directory: JakeWharton-mosaic
         run: ../this/gradlew --continue build
@@ -1315,7 +1315,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-picnic/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-picnic/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-picnic"
         working-directory: JakeWharton-picnic
         run: ../this/gradlew --continue build
@@ -1521,7 +1521,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-test-distribution-gradle-plugin/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-test-distribution-gradle-plugin/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-test-distribution-gradle-plugin"
         working-directory: JakeWharton-test-distribution-gradle-plugin
         run: ../this/gradlew --continue build
@@ -1573,7 +1573,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-timber/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-timber/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check JakeWharton-timber"
         working-directory: JakeWharton-timber
         run: ../this/gradlew --continue build
@@ -1683,7 +1683,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-Grammar-Kit-Composer/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-Grammar-Kit-Composer/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check sqldelight-Grammar-Kit-Composer"
         working-directory: sqldelight-Grammar-Kit-Composer
         run: ../this/gradlew --continue build
@@ -1744,7 +1744,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sql-psi/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sql-psi/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check sqldelight-sql-psi"
         working-directory: sqldelight-sql-psi
         run: ../this/gradlew --continue build
@@ -1857,7 +1857,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sqldelight/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' sqldelight-sqldelight/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check sqldelight-sqldelight"
         working-directory: sqldelight-sqldelight
         run: ../this/gradlew --continue build -x dockerTest
@@ -1909,7 +1909,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-kotlinpoet/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-kotlinpoet/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check square-kotlinpoet"
         working-directory: square-kotlinpoet
         run: ../this/gradlew --continue build
@@ -1981,7 +1981,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/version = "(.*)"/ and print "version=$1",$/' square-moshi/build.gradle.kts >> "$GITHUB_OUTPUT"
+        run: perl -ne '/version = "(.*)"/ and print "version=$1",$/' square-moshi/build.gradle.kts | tee -a "$GITHUB_OUTPUT"
       - name: "Check square-moshi"
         working-directory: square-moshi
         run: ../this/gradlew --continue build
@@ -2043,7 +2043,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-okio/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-okio/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check square-okio"
         working-directory: square-okio
         run: ../this/gradlew --continue build
@@ -2115,7 +2115,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/version = (.*)/ and print "version=$1",$/' square-okhttp/build.gradle.kts >> "$GITHUB_OUTPUT"
+        run: perl -ne '/version = (.*)/ and print "version=$1",$/' square-okhttp/build.gradle.kts | tee -a "$GITHUB_OUTPUT"
 
   square-retrofit:
     runs-on: macos-latest
@@ -2184,7 +2184,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-retrofit/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-retrofit/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check square-retrofit"
         working-directory: square-retrofit
         run: ../this/gradlew --continue build
@@ -2261,7 +2261,7 @@ jobs:
           path: ~/.m2/repository
           if-no-files-found: error
       - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-zstd-kmp/gradle.properties >> "$GITHUB_OUTPUT"
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' square-zstd-kmp/gradle.properties | tee -a "$GITHUB_OUTPUT"
       - name: "Check square-zstd-kmp"
         working-directory: square-zstd-kmp
         run: ../this/gradlew --continue build

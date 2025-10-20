@@ -60,7 +60,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
-          this/.github/helper.py patch-toml cashapp-burst libraries.dokka-gradle-plugin key dokka
+          this/.github/helper.py patch-toml cashapp-burst plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-burst libraries.google-ksp key ksp
       - name: "Patch maven local"

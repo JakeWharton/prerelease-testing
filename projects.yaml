@@ -2,7 +2,7 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-gradlePlugin
-    dokka: libraries.dokka-gradle-plugin
+    dokka: plugins.dokka
     kotlin: versions.kotlin
     ksp: libraries.google-ksp
   version:

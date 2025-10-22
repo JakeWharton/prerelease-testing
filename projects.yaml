@@ -290,7 +290,6 @@
     agp: versions.agp
     dokka: versions.dokka
     kotlin: versions.kotlin
-    ksp: plugins.ksp
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
     "JakeWharton/picnic": libraries.picnic

@@ -3,8 +3,8 @@ agp = "9.0.0-alpha02"
 androidx-compose-runtime = "1.9.4"
 dokka = "2.0.0"
 jbCompose = "1.10.0-alpha01"
-kotlin = "2.2.21-RC2"
-ksp = "2.2.20-2.0.2"
+kotlin = "2.3.0-Beta1"
+ksp = "2.3.0"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]

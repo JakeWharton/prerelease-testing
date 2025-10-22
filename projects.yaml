@@ -4,7 +4,6 @@
     agp: libraries.android-gradlePlugin
     dokka: plugins.dokka
     kotlin: versions.kotlin
-    ksp: libraries.google-ksp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -99,7 +98,6 @@
   external_dependencies:
     agp: libraries.android-gradle-plugin
     kotlin: versions.kotlin
-    ksp: versions.ksp
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
     "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import semver
 import subprocess
 import sys
 import tempfile
@@ -26,6 +25,8 @@ def main():
 
 
 def patch_toml(project_dir: str, toml_key: str, version_type: str, version_arg: str):
+	import semver
+
 	match version_type:
 		case 'key':
 			this_toml_path = 'this/libs.versions.toml'

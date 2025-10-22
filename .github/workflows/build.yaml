@@ -1785,7 +1785,6 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
-          this/.github/helper.py patch-toml sqldelight-sqldelight plugins.ksp key ksp
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}

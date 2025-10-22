@@ -62,7 +62,6 @@ jobs:
           this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml cashapp-burst plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
-          this/.github/helper.py patch-toml cashapp-burst libraries.google-ksp key ksp
       - name: "Patch maven local"
         working-directory: cashapp-burst
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -550,7 +549,6 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-zipline libraries.android-gradle-plugin key agp
           this/.github/helper.py patch-toml cashapp-zipline versions.kotlin key kotlin
-          this/.github/helper.py patch-toml cashapp-zipline versions.ksp key ksp
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v5
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}

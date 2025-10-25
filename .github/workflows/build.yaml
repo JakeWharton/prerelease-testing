@@ -1424,6 +1424,82 @@ jobs:
         working-directory: JakeWharton-radarr-folder-fixer
         run: ../this/gradlew --continue build
 
+  JakeWharton-RxReplayingShare:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/RxReplayingShare repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/RxReplayingShare
+          submodules: true
+          path: JakeWharton-RxReplayingShare
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-RxReplayingShare libraries.kotlinPlugin key kotlin
+      - name: "Patch maven local"
+        working-directory: JakeWharton-RxReplayingShare
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-RxReplayingShare
+        run: git diff --patch
+      - name: "Check JakeWharton-RxReplayingShare"
+        working-directory: JakeWharton-RxReplayingShare
+        run: ../this/gradlew --continue build
+
+  JakeWharton-RxWindowIfChanged:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/RxWindowIfChanged repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/RxWindowIfChanged
+          submodules: true
+          path: JakeWharton-RxWindowIfChanged
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-RxWindowIfChanged libraries.kotlinPlugin key kotlin
+      - name: "Patch maven local"
+        working-directory: JakeWharton-RxWindowIfChanged
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-RxWindowIfChanged
+        run: git diff --patch
+      - name: "Check JakeWharton-RxWindowIfChanged"
+        working-directory: JakeWharton-RxWindowIfChanged
+        run: ../this/gradlew --continue build
+
   JakeWharton-singular-solution:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -2291,6 +2367,8 @@ jobs:
       - JakeWharton-picnic
       - JakeWharton-plex-auto-trash
       - JakeWharton-radarr-folder-fixer
+      - JakeWharton-RxReplayingShare
+      - JakeWharton-RxWindowIfChanged
       - JakeWharton-singular-solution
       - JakeWharton-test-distribution-gradle-plugin
       - JakeWharton-timber

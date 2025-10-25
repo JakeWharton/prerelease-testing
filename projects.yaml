@@ -231,6 +231,14 @@
     "square/okhttp": versions.okhttp
     "square/retrofit": versions.retrofit
 
+"JakeWharton/RxReplayingShare":
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin
+
+"JakeWharton/RxWindowIfChanged":
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin
+
 "JakeWharton/singular-solution":
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin

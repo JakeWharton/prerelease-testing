@@ -165,6 +165,8 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/flip-tables": {}
+
 "JakeWharton/gitout":
   external_dependencies:
     kotlin: versions.kotlin
@@ -224,12 +226,18 @@
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
+"JakeWharton/ProcessPhoenix":
+  external_dependencies:
+    agp: libraries.androidPlugin
+
 "JakeWharton/radarr-folder-fixer":
   external_dependencies:
     kotlin: versions.kotlin
   internal_dependencies:
     "square/okhttp": versions.okhttp
     "square/retrofit": versions.retrofit
+
+"JakeWharton/RxRelay": {}
 
 "JakeWharton/RxReplayingShare":
   external_dependencies:
@@ -238,6 +246,10 @@
 "JakeWharton/RxWindowIfChanged":
   external_dependencies:
     kotlin: libraries.kotlinPlugin
+
+"JakeWharton/shimo":
+  internal_dependencies:
+    "square/moshi": libraries.moshi
 
 "JakeWharton/singular-solution":
   external_dependencies:

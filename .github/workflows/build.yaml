@@ -972,6 +972,43 @@ jobs:
         working-directory: JakeWharton-finalization-hook
         run: ../this/gradlew --continue build
 
+  JakeWharton-flip-tables:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/flip-tables repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/flip-tables
+          submodules: true
+          path: JakeWharton-flip-tables
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+      - name: "Patch maven local"
+        working-directory: JakeWharton-flip-tables
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-flip-tables
+        run: git diff --patch
+      - name: "Check JakeWharton-flip-tables"
+        working-directory: JakeWharton-flip-tables
+        run: ../this/gradlew --continue build
+
   JakeWharton-gitout:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1366,6 +1403,44 @@ jobs:
         working-directory: JakeWharton-plex-auto-trash
         run: ../this/gradlew --continue build
 
+  JakeWharton-ProcessPhoenix:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/ProcessPhoenix repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/ProcessPhoenix
+          submodules: true
+          path: JakeWharton-ProcessPhoenix
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-ProcessPhoenix libraries.androidPlugin key agp
+      - name: "Patch maven local"
+        working-directory: JakeWharton-ProcessPhoenix
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-ProcessPhoenix
+        run: git diff --patch
+      - name: "Check JakeWharton-ProcessPhoenix"
+        working-directory: JakeWharton-ProcessPhoenix
+        run: ../this/gradlew --continue build
+
   JakeWharton-radarr-folder-fixer:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1422,6 +1497,43 @@ jobs:
         run: git diff --patch
       - name: "Check JakeWharton-radarr-folder-fixer"
         working-directory: JakeWharton-radarr-folder-fixer
+        run: ../this/gradlew --continue build
+
+  JakeWharton-RxRelay:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/RxRelay repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/RxRelay
+          submodules: true
+          path: JakeWharton-RxRelay
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+      - name: "Patch maven local"
+        working-directory: JakeWharton-RxRelay
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-RxRelay
+        run: git diff --patch
+      - name: "Check JakeWharton-RxRelay"
+        working-directory: JakeWharton-RxRelay
         run: ../this/gradlew --continue build
 
   JakeWharton-RxReplayingShare:
@@ -1498,6 +1610,53 @@ jobs:
         run: git diff --patch
       - name: "Check JakeWharton-RxWindowIfChanged"
         working-directory: JakeWharton-RxWindowIfChanged
+        run: ../this/gradlew --continue build
+
+  JakeWharton-shimo:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+      - square-moshi
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/shimo repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/shimo
+          submodules: true
+          path: JakeWharton-shimo
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+      - name: "Download internal dependency square/moshi"
+        uses: actions/download-artifact@v6
+        if: ${{ needs.square-moshi.outputs.version != '' }}
+        with:
+          name: square-moshi-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency square/moshi"
+        run: this/.github/helper.py patch-toml JakeWharton-shimo libraries.moshi value ${{ needs.square-moshi.outputs.version }}
+        if: ${{ needs.square-moshi.outputs.version != '' }}
+      - name: "Patch maven local"
+        working-directory: JakeWharton-shimo
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-shimo
+        run: git diff --patch
+      - name: "Check JakeWharton-shimo"
+        working-directory: JakeWharton-shimo
         run: ../this/gradlew --continue build
 
   JakeWharton-singular-solution:
@@ -2359,6 +2518,7 @@ jobs:
       - JakeWharton-dependency-watch
       - JakeWharton-diffuse
       - JakeWharton-finalization-hook
+      - JakeWharton-flip-tables
       - JakeWharton-gitout
       - JakeWharton-hardcover-data-sync
       - JakeWharton-jakewharton-com
@@ -2366,9 +2526,12 @@ jobs:
       - JakeWharton-mosaic
       - JakeWharton-picnic
       - JakeWharton-plex-auto-trash
+      - JakeWharton-ProcessPhoenix
       - JakeWharton-radarr-folder-fixer
+      - JakeWharton-RxRelay
       - JakeWharton-RxReplayingShare
       - JakeWharton-RxWindowIfChanged
+      - JakeWharton-shimo
       - JakeWharton-singular-solution
       - JakeWharton-test-distribution-gradle-plugin
       - JakeWharton-timber

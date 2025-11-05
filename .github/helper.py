@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import semver
 import subprocess
 import sys
 import tempfile
@@ -26,6 +25,8 @@ def main():
 
 
 def patch_toml(project_dir: str, toml_key: str, version_type: str, version_arg: str):
+	import semver
+
 	match version_type:
 		case 'key':
 			this_toml_path = 'this/libs.versions.toml'
@@ -109,6 +110,10 @@ on:
     # 9:23 AM EST
     - cron: "23 13 * * *"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -Dkotlin.incremental=false -Dorg.gradle.daemon=false -Dorg.gradle.vfs.watch=false -Dorg.gradle.logging.stacktrace=full"
 
@@ -181,7 +186,7 @@ jobs:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = safe_name(dep)
 					f.write('      - name: "Download internal dependency ' + dep + '''"
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         if: ${{ needs.''' + safe_dep + '''.outputs.version != '' }}
         with:
           name: ''' + safe_dep + '''-snapshot
@@ -210,7 +215,7 @@ jobs:
 				if 'pre_build' in config:
 					f.write(config['pre_build'] + ' ')
 				f.write('''publishToMavenLocal
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository
@@ -219,7 +224,7 @@ jobs:
 ''')
 				version = config['version']
 				if 'regex' in version:
-					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' >> "$GITHUB_OUTPUT"\n')
+					f.write('''        run: perl -ne '/''' + version['regex'].encode('unicode_escape').decode("utf-8") + '''/ and print "version=$1",$/' ''' + safe_project + '/' + version['file'] + ' | tee -a "$GITHUB_OUTPUT"\n')
 				else:
 					raise Exception("Unknown version strategy")
 

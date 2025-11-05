@@ -1,16 +1,16 @@
 [versions]
 agp = "9.0.0-alpha02"
-androidx-compose-runtime = "1.9.2"
+androidx-compose-runtime = "1.10.0-beta01"
 dokka = "2.0.0"
-jbCompose = "1.10.0-alpha01"
-kotlin = "2.2.21-RC"
-ksp = "2.2.20-2.0.2"
+jbCompose = "1.10.0-beta01"
+kotlin = "2.2.21"
+ksp = "2.3.1"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "androidx-compose-runtime" }
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
-jetbrains-compose = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "jbCompose" }
+jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jbCompose" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }

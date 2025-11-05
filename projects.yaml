@@ -2,9 +2,8 @@
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
     agp: libraries.android-gradlePlugin
-    dokka: libraries.dokka-gradle-plugin
+    dokka: plugins.dokka
     kotlin: versions.kotlin
-    ksp: libraries.google-ksp
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -70,6 +69,7 @@
   internal_dependencies:
     "cashapp/burst": versions.burst
     "cashapp/turbine": libraries.turbine
+    "cashapp/zipline": versions.zipline
     "square/kotlinpoet": libraries.kotlinPoet
     "square/okio": versions.okio
     "square/okhttp": libraries.okhttp
@@ -82,6 +82,28 @@
   external_dependencies:
     dokka: plugins.dokka
     kotlin: plugins.kotlin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"cashapp/zipline":
+  setup:
+    - uses: mlugg/setup-zig@v2
+      with:
+        version: 0.14.0
+    - run: zig build -p src/jvmMain/resources/jni
+      working-directory: cashapp-zipline/zipline
+  pre_build: kotlinUpgradeYarnLock
+  post_build: -x spotlessCheck -x :zipline-gradle-plugin:validatePlugins
+  external_dependencies:
+    agp: libraries.android-gradle-plugin
+    kotlin: versions.kotlin
+  internal_dependencies:
+    "cashapp/turbine": libraries.turbine
+    "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
+    "square/okhttp": versions.okHttp
+    "square/okio": versions.okio
+    "sqldelight/sqldelight": versions.sqldelight
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -143,6 +165,8 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/flip-tables": {}
+
 "JakeWharton/gitout":
   external_dependencies:
     kotlin: versions.kotlin
@@ -202,12 +226,30 @@
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
+"JakeWharton/ProcessPhoenix":
+  external_dependencies:
+    agp: libraries.androidPlugin
+
 "JakeWharton/radarr-folder-fixer":
   external_dependencies:
     kotlin: versions.kotlin
   internal_dependencies:
     "square/okhttp": versions.okhttp
     "square/retrofit": versions.retrofit
+
+"JakeWharton/RxRelay": {}
+
+"JakeWharton/RxReplayingShare":
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin
+
+"JakeWharton/RxWindowIfChanged":
+  external_dependencies:
+    kotlin: libraries.kotlinPlugin
+
+"JakeWharton/shimo":
+  internal_dependencies:
+    "square/moshi": libraries.moshi
 
 "JakeWharton/singular-solution":
   external_dependencies:
@@ -268,7 +310,6 @@
     agp: versions.agp
     dokka: versions.dokka
     kotlin: versions.kotlin
-    ksp: plugins.ksp
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
     "JakeWharton/picnic": libraries.picnic

@@ -62,6 +62,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml cashapp-burst plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-burst libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Patch maven local"
         working-directory: cashapp-burst
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -115,6 +116,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-copper libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml cashapp-copper libraries.dokkaGradlePlugin key dokka
           this/.github/helper.py patch-toml cashapp-copper libraries.kotlin-gradlePlugin key kotlin
+          this/.github/helper.py patch-toml cashapp-copper libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
@@ -177,6 +179,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
           this/.github/helper.py patch-toml cashapp-licensee plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-licensee plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
@@ -239,6 +242,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-molecule libraries.androidx-compose-runtime key androidx-compose-runtime
           this/.github/helper.py patch-toml cashapp-molecule libraries.dokka-plugin key dokka
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-molecule libraries.maven-publish-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
@@ -319,6 +323,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-paraphrase versions.agp key agp
           this/.github/helper.py patch-toml cashapp-paraphrase plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-paraphrase plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
@@ -379,6 +384,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-turbine plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-turbine plugins.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-turbine plugins.publish key mavenPublish
       - name: "Patch maven local"
         working-directory: cashapp-turbine
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -434,7 +440,9 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml cashapp-zipline libraries.android-gradle-plugin key agp
+          this/.github/helper.py patch-toml cashapp-zipline libraries.dokka-gradle-plugin key dokka
           this/.github/helper.py patch-toml cashapp-zipline versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-zipline libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
@@ -537,6 +545,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-cite libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-cite libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-cite versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-cite libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-cite
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -588,6 +597,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-confundus libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-confundus versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-confundus libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-confundus
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -639,6 +649,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-crossword libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-crossword libraries.kotlinPlugin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-crossword libraries.publishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-crossword
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -778,6 +789,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.apkSigner key agp
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-diffuse libraries.mavenPublishPlugin key mavenPublish
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-okio.outputs.version != '' }}
@@ -838,6 +850,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-finalization-hook libraries.dokka-gradlePlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-finalization-hook versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-finalization-hook libraries.maven-publish-gradlePlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-finalization-hook
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -885,6 +898,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-flip-tables libraries.mavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-flip-tables
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1071,6 +1085,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-kmp-missing-targets
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1124,6 +1139,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.dokkaGradlePlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.androidx-compose-runtime key androidx-compose-runtime
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-mosaic libraries.mavenPublishGradlePlugin key mavenPublish
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
@@ -1212,6 +1228,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-picnic libraries.publishPlugin key mavenPublish
       - name: "Download internal dependency JakeWharton/crossword"
         uses: actions/download-artifact@v6
         if: ${{ needs.JakeWharton-crossword.outputs.version != '' }}
@@ -1317,6 +1334,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-ProcessPhoenix libraries.androidPlugin key agp
+          this/.github/helper.py patch-toml JakeWharton-ProcessPhoenix libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-ProcessPhoenix
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1412,6 +1430,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-RxRelay libraries.mavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-RxRelay
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1450,6 +1469,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-RxReplayingShare libraries.kotlinPlugin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-RxReplayingShare libraries.mavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-RxReplayingShare
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1488,6 +1508,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-RxWindowIfChanged libraries.kotlinPlugin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-RxWindowIfChanged libraries.mavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-RxWindowIfChanged
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1526,6 +1547,7 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-shimo libraries.publishPlugin key mavenPublish
       - name: "Download internal dependency square/moshi"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-moshi.outputs.version != '' }}
@@ -1616,6 +1638,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
@@ -1677,6 +1700,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-timber versions.agp key agp
           this/.github/helper.py patch-toml JakeWharton-timber libraries.gradlePlugin-dokka key dokka
           this/.github/helper.py patch-toml JakeWharton-timber versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-timber libraries.gradlePlugin-mavenPublish key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-timber
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1778,6 +1802,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
+          this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
@@ -1839,6 +1864,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml sqldelight-sql-psi plugins.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
+          this/.github/helper.py patch-toml sqldelight-sql-psi plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
         uses: actions/download-artifact@v6
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
@@ -1906,6 +1932,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
+          this/.github/helper.py patch-toml sqldelight-sqldelight plugins.publish key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
@@ -2012,6 +2039,7 @@ jobs:
           this/.github/helper.py patch-toml square-kotlinpoet plugins.dokka key dokka
           this/.github/helper.py patch-toml square-kotlinpoet versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-kotlinpoet versions.ksp key ksp
+          this/.github/helper.py patch-toml square-kotlinpoet plugins.mavenPublish key mavenPublish
       - name: "Patch maven local"
         working-directory: square-kotlinpoet
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -2066,6 +2094,7 @@ jobs:
           this/.github/helper.py patch-toml square-moshi plugins.dokka key dokka
           this/.github/helper.py patch-toml square-moshi versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-moshi versions.ksp key ksp
+          this/.github/helper.py patch-toml square-moshi plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
@@ -2137,6 +2166,7 @@ jobs:
           this/.github/helper.py patch-toml square-okio libraries.android-gradle-plugin key agp
           this/.github/helper.py patch-toml square-okio libraries.dokka key dokka
           this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-okio libraries.vanniktech-publish-plugin key mavenPublish
       - name: "Download internal dependency cashapp/burst"
         uses: actions/download-artifact@v6
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
@@ -2200,6 +2230,7 @@ jobs:
           this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-dokka key dokka
           this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
+          this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-mavenPublish key mavenPublish
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-okio.outputs.version != '' }}
@@ -2269,6 +2300,7 @@ jobs:
           this/.github/helper.py patch-toml square-retrofit libraries.androidPlugin key agp
           this/.github/helper.py patch-toml square-retrofit libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-retrofit libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-okhttp.outputs.version != '' }}
@@ -2341,6 +2373,7 @@ jobs:
           this/.github/helper.py patch-toml square-zstd-kmp libraries.android-gradle-plugin key agp
           this/.github/helper.py patch-toml square-zstd-kmp libraries.dokka-gradle-plugin key dokka
           this/.github/helper.py patch-toml square-zstd-kmp versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-zstd-kmp libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
         uses: actions/download-artifact@v6
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}

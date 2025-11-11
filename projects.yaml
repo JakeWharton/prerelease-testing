@@ -4,6 +4,7 @@
     agp: libraries.android-gradlePlugin
     dokka: plugins.dokka
     kotlin: versions.kotlin
+    mavenPublish: libraries.mavenPublish-gradle-plugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -13,6 +14,7 @@
     agp: libraries.android-gradlePlugin
     dokka: libraries.dokkaGradlePlugin
     kotlin: libraries.kotlin-gradlePlugin
+    mavenPublish: libraries.gradleMavenPublishPlugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
   version:
@@ -25,6 +27,7 @@
     agp: versions.agp
     dokka: plugins.dokka
     kotlin: versions.kotlin
+    mavenPublish: plugins.publish
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinpoet
   version:
@@ -38,6 +41,7 @@
     androidx-compose-runtime: libraries.androidx-compose-runtime
     dokka: libraries.dokka-plugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.maven-publish-plugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
     "square/okhttp": versions.squareup-okhttp
@@ -51,6 +55,7 @@
     agp: versions.agp
     dokka: plugins.dokka
     kotlin: versions.kotlin
+    mavenPublish: plugins.mavenPublish
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinPoet
   version:
@@ -62,6 +67,7 @@
   external_dependencies:
     dokka: plugins.dokka
     kotlin: plugins.kotlin
+    mavenPublish: plugins.publish
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -77,7 +83,9 @@
   post_build: -x spotlessCheck -x :zipline-gradle-plugin:validatePlugins
   external_dependencies:
     agp: libraries.android-gradle-plugin
+    dokka: libraries.dokka-gradle-plugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.mavenPublish-gradle-plugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
     "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
@@ -94,6 +102,7 @@
     agp: libraries.android-gradlePlugin
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.gradleMavenPublishPlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -103,6 +112,7 @@
   external_dependencies:
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.gradleMavenPublishPlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -112,6 +122,7 @@
   external_dependencies:
     dokka: libraries.dokkaPlugin
     kotlin: libraries.kotlinPlugin
+    mavenPublish: libraries.publishPlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -131,6 +142,7 @@
     agp: libraries.apkSigner
     dokka: libraries.dokkaPlugin
     kotlin: libraries.kotlinPlugin
+    mavenPublish: libraries.mavenPublishPlugin
   internal_dependencies:
     "square/okio": libraries.okio
   version:
@@ -141,11 +153,14 @@
   external_dependencies:
     dokka: libraries.dokka-gradlePlugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.maven-publish-gradlePlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
-"JakeWharton/flip-tables": {}
+"JakeWharton/flip-tables":
+  external_dependencies:
+    mavenPublish: libraries.mavenPublishPlugin
 
 "JakeWharton/gitout":
   external_dependencies:
@@ -171,6 +186,7 @@
     agp: libraries.android-gradlePlugin
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.gradleMavenPublishPlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -180,6 +196,7 @@
     dokka: libraries.dokkaGradlePlugin
     androidx-compose-runtime: libraries.androidx-compose-runtime
     kotlin: versions.kotlin
+    mavenPublish: libraries.mavenPublishGradlePlugin
   internal_dependencies:
     "cashapp/burst": libraries.burstGradlePlugin
     "JakeWharton/cite": libraries.citeGradlePlugin
@@ -194,6 +211,7 @@
   external_dependencies:
     dokka: libraries.dokkaPlugin
     kotlin: libraries.kotlinPlugin
+    mavenPublish: libraries.publishPlugin
   internal_dependencies:
     "JakeWharton/crossword": libraries.crossword
   version:
@@ -209,6 +227,7 @@
 "JakeWharton/ProcessPhoenix":
   external_dependencies:
     agp: libraries.androidPlugin
+    mavenPublish: libraries.gradleMavenPublishPlugin
 
 "JakeWharton/radarr-folder-fixer":
   external_dependencies:
@@ -217,17 +236,23 @@
     "square/okhttp": versions.okhttp
     "square/retrofit": versions.retrofit
 
-"JakeWharton/RxRelay": {}
+"JakeWharton/RxRelay":
+  external_dependencies:
+    mavenPublish: libraries.mavenPublishPlugin
 
 "JakeWharton/RxReplayingShare":
   external_dependencies:
     kotlin: libraries.kotlinPlugin
+    mavenPublish: libraries.mavenPublishPlugin
 
 "JakeWharton/RxWindowIfChanged":
   external_dependencies:
     kotlin: libraries.kotlinPlugin
+    mavenPublish: libraries.mavenPublishPlugin
 
 "JakeWharton/shimo":
+  external_dependencies:
+    mavenPublish: libraries.publishPlugin
   internal_dependencies:
     "square/moshi": libraries.moshi
 
@@ -240,6 +265,7 @@
     agp: libraries.android-gradlePlugin
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.gradleMavenPublishPlugin
   internal_dependencies:
     "cashapp/burst": libraries.burst-gradlePlugin
   version:
@@ -251,6 +277,7 @@
     agp: versions.agp
     dokka: libraries.gradlePlugin-dokka
     kotlin: versions.kotlin
+    mavenPublish: libraries.gradlePlugin-mavenPublish
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -267,6 +294,7 @@
   external_dependencies:
     dokka: plugins.dokka
     kotlin: plugins.kotlinJvm
+    mavenPublish: plugins.publish
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinPoet
   version:
@@ -277,6 +305,7 @@
   external_dependencies:
     dokka: plugins.dokka
     kotlin: versions.kotlin
+    mavenPublish: plugins.mavenPublish
   internal_dependencies:
     "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
   version:
@@ -290,6 +319,7 @@
     agp: versions.agp
     dokka: versions.dokka
     kotlin: versions.kotlin
+    mavenPublish: plugins.publish
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
     "JakeWharton/picnic": libraries.picnic
@@ -307,6 +337,7 @@
     dokka: plugins.dokka
     kotlin: versions.kotlin
     ksp: versions.ksp
+    mavenPublish: plugins.mavenPublish
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -316,6 +347,7 @@
     dokka: plugins.dokka
     kotlin: versions.kotlin
     ksp: versions.ksp
+    mavenPublish: plugins.mavenPublish
   internal_dependencies:
     "square/kotlinpoet": versions.kotlinpoet
     "square/okio": libraries.okio
@@ -329,6 +361,7 @@
     agp: libraries.android-gradle-plugin
     dokka: libraries.dokka
     kotlin: versions.kotlin
+    mavenPublish: libraries.vanniktech-publish-plugin
   internal_dependencies:
     "cashapp/burst": versions.burst
   version:
@@ -341,6 +374,7 @@
     dokka: libraries.gradlePlugin-dokka
     kotlin: versions.org-jetbrains-kotlin
     ksp: versions.ksp
+    mavenPublish: libraries.gradlePlugin-mavenPublish
   internal_dependencies:
     "square/okio": versions.com-squareup-okio
     "square/kotlinpoet": libraries.squareup-kotlinPoet
@@ -353,6 +387,7 @@
     agp: libraries.androidPlugin
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.gradleMavenPublishPlugin
   internal_dependencies:
     "square/okhttp": versions.okhttp
     "square/moshi": libraries.moshi
@@ -371,6 +406,7 @@
     agp: libraries.android-gradle-plugin
     dokka: libraries.dokka-gradle-plugin
     kotlin: versions.kotlin
+    mavenPublish: libraries.mavenPublish-gradle-plugin
   internal_dependencies:
     "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
     "square/okio": versions.okio

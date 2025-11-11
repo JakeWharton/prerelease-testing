@@ -5,6 +5,7 @@ dokka = "2.1.0"
 jbCompose = "1.10.0-beta01"
 kotlin = "2.2.21"
 ksp = "2.3.2"
+mavenPublish = "0.34.0"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.
 [libraries]
@@ -14,3 +15,4 @@ dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dok
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jbCompose" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
+mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "gmpp" }

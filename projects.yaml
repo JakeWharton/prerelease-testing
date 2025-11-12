@@ -127,6 +127,13 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/dalvik-dx":
+  external_dependencies:
+    mavenPublish: libraries.mavenPublishPlugin
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
 "JakeWharton/dependency-tree-diff":
   external_dependencies:
     kotlin: libraries.kotlin-gradle-plugin
@@ -144,6 +151,7 @@
     kotlin: libraries.kotlinPlugin
     mavenPublish: libraries.mavenPublishPlugin
   internal_dependencies:
+    "JakeWharton/dalvik-dx": libraries.dalvikDx
     "square/okio": libraries.okio
   version:
     file: gradle.properties

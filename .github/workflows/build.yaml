@@ -670,6 +670,56 @@ jobs:
         working-directory: JakeWharton-crossword
         run: ../this/gradlew --continue build
 
+  JakeWharton-dalvik-dx:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v5
+        with:
+          path: this
+      - name: "Checkout JakeWharton/dalvik-dx repository"
+        uses: actions/checkout@v5
+        with:
+          repository: JakeWharton/dalvik-dx
+          submodules: true
+          path: JakeWharton-dalvik-dx
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-dalvik-dx libraries.mavenPublishPlugin key mavenPublish
+      - name: "Patch maven local"
+        working-directory: JakeWharton-dalvik-dx
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-dalvik-dx
+        run: git diff --patch
+      - name: "Publish JakeWharton-dalvik-dx"
+        working-directory: JakeWharton-dalvik-dx
+        run: ../this/gradlew --continue publishToMavenLocal
+      - uses: actions/upload-artifact@v5
+        with:
+          name: JakeWharton-dalvik-dx-snapshot
+          path: ~/.m2/repository
+          if-no-files-found: error
+      - id: version
+        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' JakeWharton-dalvik-dx/gradle.properties | tee -a "$GITHUB_OUTPUT"
+      - name: "Check JakeWharton-dalvik-dx"
+        working-directory: JakeWharton-dalvik-dx
+        run: ../this/gradlew --continue build
+
   JakeWharton-dependency-tree-diff:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -763,6 +813,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
+      - JakeWharton-dalvik-dx
       - square-okio
     steps:
       - name: "Checkout this repository"
@@ -790,6 +841,15 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.mavenPublishPlugin key mavenPublish
+      - name: "Download internal dependency JakeWharton/dalvik-dx"
+        uses: actions/download-artifact@v6
+        if: ${{ needs.JakeWharton-dalvik-dx.outputs.version != '' }}
+        with:
+          name: JakeWharton-dalvik-dx-snapshot
+          path: ~/.m2/repository
+      - name: "Patch internal dependency JakeWharton/dalvik-dx"
+        run: this/.github/helper.py patch-toml JakeWharton-diffuse libraries.dalvikDx value ${{ needs.JakeWharton-dalvik-dx.outputs.version }}
+        if: ${{ needs.JakeWharton-dalvik-dx.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v6
         if: ${{ needs.square-okio.outputs.version != '' }}
@@ -2432,6 +2492,7 @@ jobs:
       - JakeWharton-cite
       - JakeWharton-confundus
       - JakeWharton-crossword
+      - JakeWharton-dalvik-dx
       - JakeWharton-dependency-tree-diff
       - JakeWharton-dependency-watch
       - JakeWharton-diffuse

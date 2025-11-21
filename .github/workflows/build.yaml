@@ -21,7 +21,7 @@ jobs:
   workflow-up-to-date:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: '3.14'
@@ -39,11 +39,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout cashapp/burst repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: cashapp/burst
           submodules: true
@@ -93,11 +93,11 @@ jobs:
       - square-kotlinpoet
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout cashapp/licensee repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: cashapp/licensee
           submodules: true
@@ -155,11 +155,11 @@ jobs:
       - square-retrofit
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout cashapp/molecule repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: cashapp/molecule
           submodules: true
@@ -237,11 +237,11 @@ jobs:
       - square-kotlinpoet
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout cashapp/paraphrase repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: cashapp/paraphrase
           submodules: true
@@ -299,11 +299,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout cashapp/turbine repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: cashapp/turbine
           submodules: true
@@ -356,11 +356,11 @@ jobs:
       - sqldelight-sqldelight
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout cashapp/zipline repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: cashapp/zipline
           submodules: true
@@ -459,11 +459,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/cite repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/cite
           submodules: true
@@ -512,11 +512,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/confundus repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/confundus
           submodules: true
@@ -564,11 +564,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/crossword repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/crossword
           submodules: true
@@ -616,11 +616,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/dalvik-dx repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/dalvik-dx
           submodules: true
@@ -664,11 +664,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/dependency-tree-diff repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/dependency-tree-diff
           submodules: true
@@ -703,11 +703,11 @@ jobs:
       - square-okhttp
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/dependency-watch repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/dependency-watch
           submodules: true
@@ -754,11 +754,11 @@ jobs:
       - square-okio
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/diffuse repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/diffuse
           submodules: true
@@ -825,11 +825,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/finalization-hook repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/finalization-hook
           submodules: true
@@ -875,11 +875,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/flip-tables repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/flip-tables
           submodules: true
@@ -914,11 +914,11 @@ jobs:
       - square-okhttp
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/gitout repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/gitout
           submodules: true
@@ -962,11 +962,11 @@ jobs:
       - square-okhttp
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/hardcover-data-sync repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/hardcover-data-sync
           submodules: true
@@ -1010,11 +1010,11 @@ jobs:
       - square-okhttp
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/jakewharton.com repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/jakewharton.com
           submodules: true
@@ -1059,11 +1059,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/kmp-missing-targets repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/kmp-missing-targets
           submodules: true
@@ -1113,11 +1113,11 @@ jobs:
       - JakeWharton-test-distribution-gradle-plugin
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/mosaic repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/mosaic
           submodules: true
@@ -1203,11 +1203,11 @@ jobs:
       - JakeWharton-crossword
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/picnic repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/picnic
           submodules: true
@@ -1263,11 +1263,11 @@ jobs:
       - square-okhttp
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/plex-auto-trash repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/plex-auto-trash
           submodules: true
@@ -1310,11 +1310,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/ProcessPhoenix repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/ProcessPhoenix
           submodules: true
@@ -1351,11 +1351,11 @@ jobs:
       - square-retrofit
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/radarr-folder-fixer repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/radarr-folder-fixer
           submodules: true
@@ -1407,11 +1407,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/RxRelay repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/RxRelay
           submodules: true
@@ -1445,11 +1445,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/RxReplayingShare repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/RxReplayingShare
           submodules: true
@@ -1484,11 +1484,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/RxWindowIfChanged repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/RxWindowIfChanged
           submodules: true
@@ -1524,11 +1524,11 @@ jobs:
       - square-moshi
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/shimo repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/shimo
           submodules: true
@@ -1571,11 +1571,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/singular-solution repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/singular-solution
           submodules: true
@@ -1612,11 +1612,11 @@ jobs:
       - cashapp-burst
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/test-distribution-gradle-plugin repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/test-distribution-gradle-plugin
           submodules: true
@@ -1674,11 +1674,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/timber repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/timber
           submodules: true
@@ -1726,11 +1726,11 @@ jobs:
       - square-okio
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout JakeWharton/video-swatch repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: JakeWharton/video-swatch
           submodules: true
@@ -1777,11 +1777,11 @@ jobs:
       - square-kotlinpoet
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout sqldelight/Grammar-Kit-Composer repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: sqldelight/Grammar-Kit-Composer
           submodules: true
@@ -1839,11 +1839,11 @@ jobs:
       - sqldelight-Grammar-Kit-Composer
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout sqldelight/sql-psi repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: sqldelight/sql-psi
           submodules: true
@@ -1906,11 +1906,11 @@ jobs:
       - square-moshi
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout sqldelight/sqldelight repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: sqldelight/sqldelight
           submodules: true
@@ -2013,11 +2013,11 @@ jobs:
       - workflow-up-to-date
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout square/kotlinpoet repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: square/kotlinpoet
           submodules: true
@@ -2068,11 +2068,11 @@ jobs:
       - square-okio
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout square/moshi repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: square/moshi
           submodules: true
@@ -2140,11 +2140,11 @@ jobs:
       - cashapp-burst
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout square/okio repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: square/okio
           submodules: true
@@ -2204,11 +2204,11 @@ jobs:
       - square-kotlinpoet
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout square/okhttp repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: square/okhttp
           submodules: true
@@ -2274,11 +2274,11 @@ jobs:
       - square-moshi
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout square/retrofit repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: square/retrofit
           submodules: true
@@ -2347,11 +2347,11 @@ jobs:
       - square-okio
     steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: this
       - name: "Checkout square/zstd-kmp repository"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: square/zstd-kmp
           submodules: true

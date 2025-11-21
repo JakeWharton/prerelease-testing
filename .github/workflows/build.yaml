@@ -83,69 +83,6 @@ jobs:
         working-directory: cashapp-burst
         run: ../this/gradlew --continue build
 
-  cashapp-copper:
-    runs-on: macos-latest
-    if: ${{ !cancelled() }}
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    needs:
-      - workflow-up-to-date
-      - cashapp-turbine
-    steps:
-      - name: "Checkout this repository"
-        uses: actions/checkout@v5
-        with:
-          path: this
-      - name: "Checkout cashapp/copper repository"
-        uses: actions/checkout@v5
-        with:
-          repository: cashapp/copper
-          submodules: true
-          path: cashapp-copper
-      - uses: actions/setup-java@v5
-        with:
-          distribution: 'zulu'
-          java-version-file: this/.github/workflows/.java-version
-      - uses: gradle/actions/setup-gradle@v5
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.14'
-      - name: "Patch external dependencies"
-        run: |
-          pip install -r this/.github/requirements.txt
-          this/.github/helper.py patch-toml cashapp-copper libraries.android-gradlePlugin key agp
-          this/.github/helper.py patch-toml cashapp-copper libraries.dokkaGradlePlugin key dokka
-          this/.github/helper.py patch-toml cashapp-copper libraries.kotlin-gradlePlugin key kotlin
-          this/.github/helper.py patch-toml cashapp-copper libraries.gradleMavenPublishPlugin key mavenPublish
-      - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v6
-        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
-        with:
-          name: cashapp-turbine-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency cashapp/turbine"
-        run: this/.github/helper.py patch-toml cashapp-copper libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
-        if: ${{ needs.cashapp-turbine.outputs.version != '' }}
-      - name: "Patch maven local"
-        working-directory: cashapp-copper
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
-      - name: "Show local change diff"
-        working-directory: cashapp-copper
-        run: git diff --patch
-      - name: "Publish cashapp-copper"
-        working-directory: cashapp-copper
-        run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
-        with:
-          name: cashapp-copper-snapshot
-          path: ~/.m2/repository
-          if-no-files-found: error
-      - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-copper/gradle.properties | tee -a "$GITHUB_OUTPUT"
-      - name: "Check cashapp-copper"
-        working-directory: cashapp-copper
-        run: ../this/gradlew --continue build
-
   cashapp-licensee:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -2483,7 +2420,6 @@ jobs:
     needs:
       - workflow-up-to-date
       - cashapp-burst
-      - cashapp-copper
       - cashapp-licensee
       - cashapp-molecule
       - cashapp-paraphrase

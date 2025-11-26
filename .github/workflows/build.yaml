@@ -7,8 +7,8 @@ on:
     branches:
       - 'trunk'
   schedule:
-    # 9:23 AM EST
-    - cron: "23 13 * * *"
+    # 3:33 AM EST / 4:33 AM EDT
+    - cron: "33 8 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

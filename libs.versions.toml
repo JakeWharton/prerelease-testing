@@ -2,7 +2,7 @@
 agp = "9.0.0-alpha02"
 androidx-compose-runtime = "1.11.0-alpha01"
 dokka = "2.1.0"
-jbCompose = "1.10.0-rc01"
+jbCompose = "1.10.0-rc02"
 kotlin = "2.2.21"
 ksp = "2.3.3"
 mavenPublish = "0.34.0"

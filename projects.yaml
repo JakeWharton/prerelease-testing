@@ -322,7 +322,6 @@
     "sqldelight/Grammar-Kit-Composer": plugins.grammarKitComposer
     "sqldelight/sql-psi": versions.sqlPsi
     "square/kotlinpoet": libraries.kotlinPoet
-    "square/moshi": versions.moshi
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

@@ -1903,7 +1903,6 @@ jobs:
       - sqldelight-Grammar-Kit-Composer
       - sqldelight-sql-psi
       - square-kotlinpoet
-      - square-moshi
     steps:
       - name: "Checkout this repository"
         uses: actions/checkout@v6
@@ -1975,15 +1974,6 @@ jobs:
       - name: "Patch internal dependency square/kotlinpoet"
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
-      - name: "Download internal dependency square/moshi"
-        uses: actions/download-artifact@v6
-        if: ${{ needs.square-moshi.outputs.version != '' }}
-        with:
-          name: square-moshi-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency square/moshi"
-        run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.moshi value ${{ needs.square-moshi.outputs.version }}
-        if: ${{ needs.square-moshi.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: sqldelight-sqldelight
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'

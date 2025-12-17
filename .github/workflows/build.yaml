@@ -72,7 +72,7 @@ jobs:
       - name: "Publish cashapp-burst"
         working-directory: cashapp-burst
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
@@ -118,7 +118,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-licensee plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -135,7 +135,7 @@ jobs:
       - name: "Publish cashapp-licensee"
         working-directory: cashapp-licensee
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: cashapp-licensee-snapshot
           path: ~/.m2/repository
@@ -181,7 +181,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-molecule libraries.maven-publish-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
@@ -190,7 +190,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -199,7 +199,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Download internal dependency square/retrofit"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-retrofit.outputs.version != '' }}
         with:
           name: square-retrofit-snapshot
@@ -216,7 +216,7 @@ jobs:
       - name: "Publish cashapp-molecule"
         working-directory: cashapp-molecule
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: cashapp-molecule-snapshot
           path: ~/.m2/repository
@@ -262,7 +262,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-paraphrase plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -279,7 +279,7 @@ jobs:
       - name: "Publish cashapp-paraphrase"
         working-directory: cashapp-paraphrase
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: cashapp-paraphrase-snapshot
           path: ~/.m2/repository
@@ -331,7 +331,7 @@ jobs:
       - name: "Publish cashapp-turbine"
         working-directory: cashapp-turbine
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: cashapp-turbine-snapshot
           path: ~/.m2/repository
@@ -381,7 +381,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-zipline versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-zipline libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
@@ -390,7 +390,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-zipline libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -399,7 +399,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-zipline libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -408,7 +408,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-zipline versions.okHttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
@@ -417,7 +417,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-zipline versions.okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/sqldelight"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.sqldelight-sqldelight.outputs.version != '' }}
         with:
           name: sqldelight-sqldelight-snapshot
@@ -439,7 +439,7 @@ jobs:
       - name: "Publish cashapp-zipline"
         working-directory: cashapp-zipline
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: cashapp-zipline-snapshot
           path: ~/.m2/repository
@@ -492,7 +492,7 @@ jobs:
       - name: "Publish JakeWharton-cite"
         working-directory: JakeWharton-cite
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-cite-snapshot
           path: ~/.m2/repository
@@ -544,7 +544,7 @@ jobs:
       - name: "Publish JakeWharton-confundus"
         working-directory: JakeWharton-confundus
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-confundus-snapshot
           path: ~/.m2/repository
@@ -596,7 +596,7 @@ jobs:
       - name: "Publish JakeWharton-crossword"
         working-directory: JakeWharton-crossword
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-crossword-snapshot
           path: ~/.m2/repository
@@ -646,7 +646,7 @@ jobs:
       - name: "Publish JakeWharton-dalvik-dx"
         working-directory: JakeWharton-dalvik-dx
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-dalvik-dx-snapshot
           path: ~/.m2/repository
@@ -725,7 +725,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -779,7 +779,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.mavenPublishPlugin key mavenPublish
       - name: "Download internal dependency JakeWharton/dalvik-dx"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-dalvik-dx.outputs.version != '' }}
         with:
           name: JakeWharton-dalvik-dx-snapshot
@@ -788,7 +788,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-diffuse libraries.dalvikDx value ${{ needs.JakeWharton-dalvik-dx.outputs.version }}
         if: ${{ needs.JakeWharton-dalvik-dx.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
@@ -805,7 +805,7 @@ jobs:
       - name: "Publish JakeWharton-diffuse"
         working-directory: JakeWharton-diffuse
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-diffuse-snapshot
           path: ~/.m2/repository
@@ -857,7 +857,7 @@ jobs:
       - name: "Publish JakeWharton-finalization-hook"
         working-directory: JakeWharton-finalization-hook
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-finalization-hook-snapshot
           path: ~/.m2/repository
@@ -936,7 +936,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -984,7 +984,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlin-gradlePlugin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -1032,7 +1032,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -1092,7 +1092,7 @@ jobs:
       - name: "Publish JakeWharton-kmp-missing-targets"
         working-directory: JakeWharton-kmp-missing-targets
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-kmp-missing-targets-snapshot
           path: ~/.m2/repository
@@ -1138,7 +1138,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.mavenPublishGradlePlugin key mavenPublish
       - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
         with:
           name: cashapp-burst-snapshot
@@ -1147,7 +1147,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.burstGradlePlugin value ${{ needs.cashapp-burst.outputs.version }}
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/cite"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
         with:
           name: JakeWharton-cite-snapshot
@@ -1156,7 +1156,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.citeGradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
         if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/finalization-hook"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-finalization-hook.outputs.version != '' }}
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -1165,7 +1165,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.finalizationHook value ${{ needs.JakeWharton-finalization-hook.outputs.version }}
         if: ${{ needs.JakeWharton-finalization-hook.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -1182,7 +1182,7 @@ jobs:
       - name: "Publish JakeWharton-mosaic"
         working-directory: JakeWharton-mosaic
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-mosaic-snapshot
           path: ~/.m2/repository
@@ -1227,7 +1227,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.publishPlugin key mavenPublish
       - name: "Download internal dependency JakeWharton/crossword"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-crossword.outputs.version != '' }}
         with:
           name: JakeWharton-crossword-snapshot
@@ -1244,7 +1244,7 @@ jobs:
       - name: "Publish JakeWharton-picnic"
         working-directory: JakeWharton-picnic
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-picnic-snapshot
           path: ~/.m2/repository
@@ -1285,7 +1285,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -1373,7 +1373,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.kotlin key kotlin
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -1382,7 +1382,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Download internal dependency square/retrofit"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-retrofit.outputs.version != '' }}
         with:
           name: square-retrofit-snapshot
@@ -1546,7 +1546,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-shimo libraries.publishPlugin key mavenPublish
       - name: "Download internal dependency square/moshi"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-moshi.outputs.version != '' }}
         with:
           name: square-moshi-snapshot
@@ -1637,7 +1637,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
         with:
           name: cashapp-burst-snapshot
@@ -1654,7 +1654,7 @@ jobs:
       - name: "Publish JakeWharton-test-distribution-gradle-plugin"
         working-directory: JakeWharton-test-distribution-gradle-plugin
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
           path: ~/.m2/repository
@@ -1707,7 +1707,7 @@ jobs:
       - name: "Publish JakeWharton-timber"
         working-directory: JakeWharton-timber
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: JakeWharton-timber-snapshot
           path: ~/.m2/repository
@@ -1748,7 +1748,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-video-swatch versions.kotlin key kotlin
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
@@ -1801,7 +1801,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1818,7 +1818,7 @@ jobs:
       - name: "Publish sqldelight-Grammar-Kit-Composer"
         working-directory: sqldelight-Grammar-Kit-Composer
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
           path: ~/.m2/repository
@@ -1863,7 +1863,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sql-psi plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1880,7 +1880,7 @@ jobs:
       - name: "Publish sqldelight-sql-psi"
         working-directory: sqldelight-sql-psi
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: sqldelight-sql-psi-snapshot
           path: ~/.m2/repository
@@ -1930,7 +1930,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.publish key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
@@ -1939,7 +1939,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/picnic"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-picnic.outputs.version != '' }}
         with:
           name: JakeWharton-picnic-snapshot
@@ -1948,7 +1948,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.picnic value ${{ needs.JakeWharton-picnic.outputs.version }}
         if: ${{ needs.JakeWharton-picnic.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1957,7 +1957,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/sql-psi"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.sqldelight-sql-psi.outputs.version != '' }}
         with:
           name: sqldelight-sql-psi-snapshot
@@ -1966,7 +1966,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.sqlPsi value ${{ needs.sqldelight-sql-psi.outputs.version }}
         if: ${{ needs.sqldelight-sql-psi.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1983,7 +1983,7 @@ jobs:
       - name: "Publish sqldelight-sqldelight"
         working-directory: sqldelight-sqldelight
         run: ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: sqldelight-sqldelight-snapshot
           path: ~/.m2/repository
@@ -2036,7 +2036,7 @@ jobs:
       - name: "Publish square-kotlinpoet"
         working-directory: square-kotlinpoet
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
@@ -2083,7 +2083,7 @@ jobs:
           this/.github/helper.py patch-toml square-moshi versions.ksp key ksp
           this/.github/helper.py patch-toml square-moshi plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -2092,7 +2092,7 @@ jobs:
         run: this/.github/helper.py patch-toml square-moshi versions.kotlinpoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
@@ -2109,7 +2109,7 @@ jobs:
       - name: "Publish square-moshi"
         working-directory: square-moshi
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: square-moshi-snapshot
           path: ~/.m2/repository
@@ -2155,7 +2155,7 @@ jobs:
           this/.github/helper.py patch-toml square-okio versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-okio libraries.vanniktech-publish-plugin key mavenPublish
       - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.cashapp-burst.outputs.version != '' }}
         with:
           name: cashapp-burst-snapshot
@@ -2172,7 +2172,7 @@ jobs:
       - name: "Publish square-okio"
         working-directory: square-okio
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
@@ -2219,7 +2219,7 @@ jobs:
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
           this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-mavenPublish key mavenPublish
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
@@ -2228,7 +2228,7 @@ jobs:
         run: this/.github/helper.py patch-toml square-okhttp versions.com-squareup-okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -2245,7 +2245,7 @@ jobs:
       - name: "Publish square-okhttp"
         working-directory: square-okhttp
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
@@ -2289,7 +2289,7 @@ jobs:
           this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-retrofit libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency square/okhttp"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
         with:
           name: square-okhttp-snapshot
@@ -2298,7 +2298,7 @@ jobs:
         run: this/.github/helper.py patch-toml square-retrofit versions.okhttp value ${{ needs.square-okhttp.outputs.version }}
         if: ${{ needs.square-okhttp.outputs.version != '' }}
       - name: "Download internal dependency square/moshi"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-moshi.outputs.version != '' }}
         with:
           name: square-moshi-snapshot
@@ -2315,7 +2315,7 @@ jobs:
       - name: "Publish square-retrofit"
         working-directory: square-retrofit
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: square-retrofit-snapshot
           path: ~/.m2/repository
@@ -2362,7 +2362,7 @@ jobs:
           this/.github/helper.py patch-toml square-zstd-kmp versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-zstd-kmp libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -2371,7 +2371,7 @@ jobs:
         run: this/.github/helper.py patch-toml square-zstd-kmp libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
       - name: "Download internal dependency square/okio"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.square-okio.outputs.version != '' }}
         with:
           name: square-okio-snapshot
@@ -2393,7 +2393,7 @@ jobs:
       - name: "Publish square-zstd-kmp"
         working-directory: square-zstd-kmp
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: square-zstd-kmp-snapshot
           path: ~/.m2/repository

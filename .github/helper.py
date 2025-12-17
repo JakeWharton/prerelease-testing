@@ -186,7 +186,7 @@ jobs:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = safe_name(dep)
 					f.write('      - name: "Download internal dependency ' + dep + '''"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         if: ${{ needs.''' + safe_dep + '''.outputs.version != '' }}
         with:
           name: ''' + safe_dep + '''-snapshot
@@ -215,7 +215,7 @@ jobs:
 				if 'pre_build' in config:
 					f.write(config['pre_build'] + ' ')
 				f.write('''publishToMavenLocal
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository

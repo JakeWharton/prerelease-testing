@@ -15,6 +15,7 @@
     agp: versions.agp
     dokka: plugins.dokka
     kotlin: versions.kotlin
+    kotlinx-serialization: libraries.kotlinx-serialization
     mavenPublish: plugins.publish
   internal_dependencies:
     "square/kotlinpoet": libraries.kotlinpoet
@@ -29,6 +30,7 @@
     androidx-compose-runtime: libraries.androidx-compose-runtime
     dokka: libraries.dokka-plugin
     kotlin: versions.kotlin
+    kotlinx-serialization: versions.serialization
     mavenPublish: libraries.maven-publish-plugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
@@ -73,6 +75,7 @@
     agp: libraries.android-gradle-plugin
     dokka: libraries.dokka-gradle-plugin
     kotlin: versions.kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
     mavenPublish: libraries.mavenPublish-gradle-plugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
@@ -129,6 +132,7 @@
 "JakeWharton/dependency-watch":
   external_dependencies:
     kotlin: versions.kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
@@ -161,12 +165,14 @@
 "JakeWharton/gitout":
   external_dependencies:
     kotlin: versions.kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
 "JakeWharton/hardcover-data-sync":
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin
+    kotlinx-serialization: libraries.kotlinx-serialization-json-okio
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
@@ -182,6 +188,7 @@
     agp: libraries.android-gradlePlugin
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    kotlinx-serialization: libraries.kotlinx-serialization
     mavenPublish: libraries.gradleMavenPublishPlugin
   version:
     file: gradle.properties
@@ -217,6 +224,7 @@
 "JakeWharton/plex-auto-trash":
   external_dependencies:
     kotlin: versions.kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
   internal_dependencies:
     "square/okhttp": versions.okhttp
 
@@ -228,6 +236,7 @@
 "JakeWharton/radarr-folder-fixer":
   external_dependencies:
     kotlin: versions.kotlin
+    kotlinx-serialization: libraries.kotlinx-serialization-json
   internal_dependencies:
     "square/okhttp": versions.okhttp
     "square/retrofit": versions.retrofit
@@ -315,6 +324,7 @@
     agp: versions.agp
     dokka: versions.dokka
     kotlin: versions.kotlin
+    kotlinx-serialization: libraries.kotlinx-serialization-json
     mavenPublish: plugins.publish
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
@@ -368,6 +378,7 @@
   external_dependencies:
     dokka: libraries.gradlePlugin-dokka
     kotlin: versions.org-jetbrains-kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
     ksp: versions.ksp
     mavenPublish: libraries.gradlePlugin-mavenPublish
   internal_dependencies:
@@ -382,6 +393,7 @@
     agp: libraries.androidPlugin
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
     mavenPublish: libraries.gradleMavenPublishPlugin
   internal_dependencies:
     "square/okhttp": versions.okhttp

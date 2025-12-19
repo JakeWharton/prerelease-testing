@@ -116,6 +116,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-licensee versions.agp key agp
           this/.github/helper.py patch-toml cashapp-licensee plugins.dokka key dokka
           this/.github/helper.py patch-toml cashapp-licensee versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-licensee libraries.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml cashapp-licensee plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v7
@@ -179,6 +180,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-molecule libraries.androidx-compose-runtime key androidx-compose-runtime
           this/.github/helper.py patch-toml cashapp-molecule libraries.dokka-plugin key dokka
           this/.github/helper.py patch-toml cashapp-molecule versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-molecule versions.serialization key kotlinx-serialization
           this/.github/helper.py patch-toml cashapp-molecule libraries.maven-publish-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v7
@@ -379,6 +381,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-zipline libraries.android-gradle-plugin key agp
           this/.github/helper.py patch-toml cashapp-zipline libraries.dokka-gradle-plugin key dokka
           this/.github/helper.py patch-toml cashapp-zipline versions.kotlin key kotlin
+          this/.github/helper.py patch-toml cashapp-zipline versions.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml cashapp-zipline libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v7
@@ -724,6 +727,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlinx-serialization key kotlinx-serialization
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
@@ -935,6 +939,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlinx-serialization key kotlinx-serialization
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
@@ -983,6 +988,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlin-gradlePlugin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlinx-serialization-json-okio key kotlinx-serialization
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
@@ -1082,6 +1088,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.android-gradlePlugin key agp
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml JakeWharton-kmp-missing-targets libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Patch maven local"
         working-directory: JakeWharton-kmp-missing-targets
@@ -1284,6 +1291,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlinx-serialization key kotlinx-serialization
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
@@ -1372,6 +1380,7 @@ jobs:
         run: |
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.kotlin key kotlin
+          this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer libraries.kotlinx-serialization-json key kotlinx-serialization
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v7
         if: ${{ needs.square-okhttp.outputs.version != '' }}
@@ -1928,6 +1937,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.agp key agp
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.dokka key dokka
           this/.github/helper.py patch-toml sqldelight-sqldelight versions.kotlin key kotlin
+          this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinx-serialization-json key kotlinx-serialization
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.publish key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
         uses: actions/download-artifact@v7
@@ -2216,6 +2226,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-dokka key dokka
           this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
+          this/.github/helper.py patch-toml square-okhttp versions.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
           this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-mavenPublish key mavenPublish
       - name: "Download internal dependency square/okio"
@@ -2287,6 +2298,7 @@ jobs:
           this/.github/helper.py patch-toml square-retrofit libraries.androidPlugin key agp
           this/.github/helper.py patch-toml square-retrofit libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml square-retrofit versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-retrofit versions.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml square-retrofit libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency square/okhttp"
         uses: actions/download-artifact@v7

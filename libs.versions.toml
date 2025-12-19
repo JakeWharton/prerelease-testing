@@ -4,6 +4,7 @@ androidx-compose-runtime = "1.11.0-alpha02"
 dokka = "2.1.0"
 jbCompose = "1.11.0-alpha01"
 kotlin = "2.2.21"
+kotlinx-serialization = "1.9.0"
 ksp = "2.3.4"
 mavenPublish = "0.34.0"
 
@@ -14,5 +15,6 @@ androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", versio
 dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jbCompose" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 ksp = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "gmpp" }

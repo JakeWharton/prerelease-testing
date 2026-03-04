@@ -72,7 +72,7 @@ jobs:
       - name: "Publish cashapp-burst"
         working-directory: cashapp-burst
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: cashapp-burst-snapshot
           path: ~/.m2/repository
@@ -136,7 +136,7 @@ jobs:
       - name: "Publish cashapp-licensee"
         working-directory: cashapp-licensee
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: cashapp-licensee-snapshot
           path: ~/.m2/repository
@@ -218,7 +218,7 @@ jobs:
       - name: "Publish cashapp-molecule"
         working-directory: cashapp-molecule
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: cashapp-molecule-snapshot
           path: ~/.m2/repository
@@ -281,7 +281,7 @@ jobs:
       - name: "Publish cashapp-paraphrase"
         working-directory: cashapp-paraphrase
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: cashapp-paraphrase-snapshot
           path: ~/.m2/repository
@@ -333,7 +333,7 @@ jobs:
       - name: "Publish cashapp-turbine"
         working-directory: cashapp-turbine
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: cashapp-turbine-snapshot
           path: ~/.m2/repository
@@ -442,7 +442,7 @@ jobs:
       - name: "Publish cashapp-zipline"
         working-directory: cashapp-zipline
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: cashapp-zipline-snapshot
           path: ~/.m2/repository
@@ -495,7 +495,7 @@ jobs:
       - name: "Publish JakeWharton-cite"
         working-directory: JakeWharton-cite
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-cite-snapshot
           path: ~/.m2/repository
@@ -547,7 +547,7 @@ jobs:
       - name: "Publish JakeWharton-confundus"
         working-directory: JakeWharton-confundus
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-confundus-snapshot
           path: ~/.m2/repository
@@ -599,7 +599,7 @@ jobs:
       - name: "Publish JakeWharton-crossword"
         working-directory: JakeWharton-crossword
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-crossword-snapshot
           path: ~/.m2/repository
@@ -649,7 +649,7 @@ jobs:
       - name: "Publish JakeWharton-dalvik-dx"
         working-directory: JakeWharton-dalvik-dx
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-dalvik-dx-snapshot
           path: ~/.m2/repository
@@ -809,7 +809,7 @@ jobs:
       - name: "Publish JakeWharton-diffuse"
         working-directory: JakeWharton-diffuse
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-diffuse-snapshot
           path: ~/.m2/repository
@@ -861,7 +861,7 @@ jobs:
       - name: "Publish JakeWharton-finalization-hook"
         working-directory: JakeWharton-finalization-hook
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-finalization-hook-snapshot
           path: ~/.m2/repository
@@ -1099,7 +1099,7 @@ jobs:
       - name: "Publish JakeWharton-kmp-missing-targets"
         working-directory: JakeWharton-kmp-missing-targets
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-kmp-missing-targets-snapshot
           path: ~/.m2/repository
@@ -1189,7 +1189,7 @@ jobs:
       - name: "Publish JakeWharton-mosaic"
         working-directory: JakeWharton-mosaic
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-mosaic-snapshot
           path: ~/.m2/repository
@@ -1251,7 +1251,7 @@ jobs:
       - name: "Publish JakeWharton-picnic"
         working-directory: JakeWharton-picnic
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-picnic-snapshot
           path: ~/.m2/repository
@@ -1663,7 +1663,7 @@ jobs:
       - name: "Publish JakeWharton-test-distribution-gradle-plugin"
         working-directory: JakeWharton-test-distribution-gradle-plugin
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
           path: ~/.m2/repository
@@ -1716,7 +1716,7 @@ jobs:
       - name: "Publish JakeWharton-timber"
         working-directory: JakeWharton-timber
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: JakeWharton-timber-snapshot
           path: ~/.m2/repository
@@ -1827,7 +1827,7 @@ jobs:
       - name: "Publish sqldelight-Grammar-Kit-Composer"
         working-directory: sqldelight-Grammar-Kit-Composer
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
           path: ~/.m2/repository
@@ -1889,7 +1889,7 @@ jobs:
       - name: "Publish sqldelight-sql-psi"
         working-directory: sqldelight-sql-psi
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: sqldelight-sql-psi-snapshot
           path: ~/.m2/repository
@@ -1993,7 +1993,7 @@ jobs:
       - name: "Publish sqldelight-sqldelight"
         working-directory: sqldelight-sqldelight
         run: ../this/gradlew --continue kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: sqldelight-sqldelight-snapshot
           path: ~/.m2/repository
@@ -2046,7 +2046,7 @@ jobs:
       - name: "Publish square-kotlinpoet"
         working-directory: square-kotlinpoet
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
@@ -2119,7 +2119,7 @@ jobs:
       - name: "Publish square-moshi"
         working-directory: square-moshi
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: square-moshi-snapshot
           path: ~/.m2/repository
@@ -2182,7 +2182,7 @@ jobs:
       - name: "Publish square-okio"
         working-directory: square-okio
         run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: square-okio-snapshot
           path: ~/.m2/repository
@@ -2256,7 +2256,7 @@ jobs:
       - name: "Publish square-okhttp"
         working-directory: square-okhttp
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: square-okhttp-snapshot
           path: ~/.m2/repository
@@ -2327,7 +2327,7 @@ jobs:
       - name: "Publish square-retrofit"
         working-directory: square-retrofit
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: square-retrofit-snapshot
           path: ~/.m2/repository
@@ -2405,7 +2405,7 @@ jobs:
       - name: "Publish square-zstd-kmp"
         working-directory: square-zstd-kmp
         run: ../this/gradlew --continue publishToMavenLocal
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: square-zstd-kmp-snapshot
           path: ~/.m2/repository

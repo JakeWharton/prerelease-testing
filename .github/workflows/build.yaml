@@ -2224,11 +2224,11 @@ jobs:
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt
-          this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-dokka key dokka
-          this/.github/helper.py patch-toml square-okhttp versions.org-jetbrains-kotlin key kotlin
-          this/.github/helper.py patch-toml square-okhttp versions.kotlinx-serialization key kotlinx-serialization
+          this/.github/helper.py patch-toml square-okhttp versions.dokka key dokka
+          this/.github/helper.py patch-toml square-okhttp versions.kotlin key kotlin
+          this/.github/helper.py patch-toml square-okhttp versions.serialization key kotlinx-serialization
           this/.github/helper.py patch-toml square-okhttp versions.ksp key ksp
-          this/.github/helper.py patch-toml square-okhttp libraries.gradlePlugin-mavenPublish key mavenPublish
+          this/.github/helper.py patch-toml square-okhttp versions.maven-publish key mavenPublish
       - name: "Download internal dependency square/okio"
         uses: actions/download-artifact@v8
         if: ${{ needs.square-okio.outputs.version != '' }}
@@ -2236,7 +2236,7 @@ jobs:
           name: square-okio-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/okio"
-        run: this/.github/helper.py patch-toml square-okhttp versions.com-squareup-okio value ${{ needs.square-okio.outputs.version }}
+        run: this/.github/helper.py patch-toml square-okhttp versions.square-okio value ${{ needs.square-okio.outputs.version }}
         if: ${{ needs.square-okio.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
         uses: actions/download-artifact@v8
@@ -2245,7 +2245,7 @@ jobs:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
-        run: this/.github/helper.py patch-toml square-okhttp libraries.squareup-kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        run: this/.github/helper.py patch-toml square-okhttp versions.square-kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-okhttp

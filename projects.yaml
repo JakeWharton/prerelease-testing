@@ -376,14 +376,14 @@
 "square/okhttp":
   compile_only: true # Build is all kinds of messed up.
   external_dependencies:
-    dokka: libraries.gradlePlugin-dokka
-    kotlin: versions.org-jetbrains-kotlin
-    kotlinx-serialization: versions.kotlinx-serialization
+    dokka: versions.dokka
+    kotlin: versions.kotlin
+    kotlinx-serialization: versions.serialization
     ksp: versions.ksp
-    mavenPublish: libraries.gradlePlugin-mavenPublish
+    mavenPublish: versions.maven-publish
   internal_dependencies:
-    "square/okio": versions.com-squareup-okio
-    "square/kotlinpoet": libraries.squareup-kotlinPoet
+    "square/okio": versions.square-okio
+    "square/kotlinpoet": versions.square-kotlin-poet
   version:
     file: build.gradle.kts
     regex: "version = (.*)"

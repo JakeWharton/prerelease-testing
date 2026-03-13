@@ -2245,7 +2245,7 @@ jobs:
           name: square-kotlinpoet-snapshot
           path: ~/.m2/repository
       - name: "Patch internal dependency square/kotlinpoet"
-        run: this/.github/helper.py patch-toml square-okhttp versions.square-kotlinPoet value ${{ needs.square-kotlinpoet.outputs.version }}
+        run: this/.github/helper.py patch-toml square-okhttp versions.square-kotlin-poet value ${{ needs.square-kotlinpoet.outputs.version }}
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: square-okhttp

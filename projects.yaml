@@ -383,7 +383,7 @@
     mavenPublish: versions.maven-publish
   internal_dependencies:
     "square/okio": versions.square-okio
-    "square/kotlinpoet": versions.square-kotlinPoet
+    "square/kotlinpoet": versions.square-kotlin-poet
   version:
     file: build.gradle.kts
     regex: "version = (.*)"

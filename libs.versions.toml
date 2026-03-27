@@ -1,7 +1,7 @@
 [versions]
 agp = "9.0.1"
 androidx-compose-runtime = "1.11.0-beta02"
-dokka = "2.1.0"
+dokka = "2.2.0"
 jbCompose = "1.11.0-beta01"
 kotlin = "2.3.0"
 kotlinx-serialization = "1.10.0"

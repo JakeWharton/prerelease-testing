@@ -5,7 +5,7 @@ dokka = "2.2.0"
 jbCompose = "1.11.0-beta03"
 kotlin = "2.3.21-RC"
 kotlinx-serialization = "1.11.0"
-ksp = "2.3.6"
+ksp = "2.3.7"
 mavenPublish = "0.34.0"
 
 # These coordinates are othewise unused, but allow Renovate to understand the associated versions.

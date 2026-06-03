@@ -124,6 +124,10 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
+"JakeWharton/dir-stepper":
+  external_dependencies:
+    kotlin: versions.kotlin
+
 "JakeWharton/finalization-hook":
   external_dependencies:
     dokka: libraries.dokka-gradlePlugin

@@ -711,6 +711,44 @@ jobs:
         working-directory: JakeWharton-diffuse
         run: ../this/gradlew --continue build
 
+  JakeWharton-dir-stepper:
+    runs-on: macos-latest
+    if: ${{ !cancelled() }}
+    needs:
+      - workflow-up-to-date
+    steps:
+      - name: "Checkout this repository"
+        uses: actions/checkout@v6
+        with:
+          path: this
+      - name: "Checkout JakeWharton/dir-stepper repository"
+        uses: actions/checkout@v6
+        with:
+          repository: JakeWharton/dir-stepper
+          submodules: true
+          path: JakeWharton-dir-stepper
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version-file: this/.github/workflows/.java-version
+      - uses: gradle/actions/setup-gradle@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: "Patch external dependencies"
+        run: |
+          pip install -r this/.github/requirements.txt
+          this/.github/helper.py patch-toml JakeWharton-dir-stepper versions.kotlin key kotlin
+      - name: "Patch maven local"
+        working-directory: JakeWharton-dir-stepper
+        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
+      - name: "Show local change diff"
+        working-directory: JakeWharton-dir-stepper
+        run: git diff --patch
+      - name: "Check JakeWharton-dir-stepper"
+        working-directory: JakeWharton-dir-stepper
+        run: ../this/gradlew --continue build
+
   JakeWharton-finalization-hook:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -2324,6 +2362,7 @@ jobs:
       - JakeWharton-dependency-tree-diff
       - JakeWharton-dependency-watch
       - JakeWharton-diffuse
+      - JakeWharton-dir-stepper
       - JakeWharton-finalization-hook
       - JakeWharton-flip-tables
       - JakeWharton-gitout

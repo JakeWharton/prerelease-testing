@@ -237,8 +237,6 @@
 "JakeWharton/shimo":
   external_dependencies:
     mavenPublish: libraries.publishPlugin
-  internal_dependencies:
-    "square/moshi": libraries.moshi
 
 "JakeWharton/singular-solution":
   external_dependencies:
@@ -326,19 +324,6 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
-"square/moshi":
-  external_dependencies:
-    dokka: plugins.dokka
-    kotlin: versions.kotlin
-    ksp: versions.ksp
-    mavenPublish: plugins.mavenPublish
-  internal_dependencies:
-    "square/kotlinpoet": versions.kotlinpoet
-    "square/okio": libraries.okio
-  version:
-    file: build.gradle.kts
-    regex: 'version = "(.*)"'
-
 "square/okio":
   pre_build: kotlinUpgradeYarnLock
   external_dependencies:
@@ -376,7 +361,6 @@
     mavenPublish: libraries.gradleMavenPublishPlugin
   internal_dependencies:
     "square/okhttp": versions.okhttp
-    "square/moshi": libraries.moshi
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

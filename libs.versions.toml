@@ -1,6 +1,6 @@
 [versions]
 agp = "9.2.1"
-androidx-compose-runtime = "1.12.0-alpha03"
+androidx-compose-runtime = "1.12.0-beta01"
 dokka = "2.2.0"
 jbCompose = "1.12.0-alpha02"
 kotlin = "2.4.0"

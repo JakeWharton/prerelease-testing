@@ -170,7 +170,7 @@ jobs:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
       - uses: gradle/actions/setup-gradle@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.14'
       - name: "Patch external dependencies"

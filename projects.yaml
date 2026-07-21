@@ -34,8 +34,8 @@
     mavenPublish: libraries.maven-publish-plugin
   internal_dependencies:
     "cashapp/turbine": libraries.turbine
-    "square/okhttp": versions.squareup-okhttp
-    "square/retrofit": versions.squareup-retrofit
+    "lysine-dev/okhttp": versions.squareup-okhttp
+    "lysine-dev/retrofit": versions.squareup-retrofit
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -109,7 +109,7 @@
     kotlin: versions.kotlin
     kotlinx-serialization: versions.kotlinx-serialization
   internal_dependencies:
-    "square/okhttp": versions.okhttp
+    "lysine-dev/okhttp": versions.okhttp
 
 "JakeWharton/diffuse":
   external_dependencies:
@@ -119,7 +119,7 @@
     mavenPublish: libraries.mavenPublishPlugin
   internal_dependencies:
     "JakeWharton/dalvik-dx": libraries.dalvikDx
-    "square/okio": libraries.okio
+    "lysine-dev/okio": libraries.okio
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -146,20 +146,20 @@
     kotlin: versions.kotlin
     kotlinx-serialization: versions.kotlinx-serialization
   internal_dependencies:
-    "square/okhttp": versions.okhttp
+    "lysine-dev/okhttp": versions.okhttp
 
 "JakeWharton/hardcover-data-sync":
   external_dependencies:
     kotlin: libraries.kotlin-gradlePlugin
     kotlinx-serialization: libraries.kotlinx-serialization-json-okio
   internal_dependencies:
-    "square/okhttp": versions.okhttp
+    "lysine-dev/okhttp": versions.okhttp
 
 "JakeWharton/jakewharton.com":
   external_dependencies:
     kotlin: libraries.kotlinGradlePlugin
   internal_dependencies:
-    "square/okhttp": libraries.okhttp
+    "lysine-dev/okhttp": libraries.okhttp
 
 "JakeWharton/kmp-missing-targets":
   compile_only: true # Test golden files hard code versions.
@@ -205,7 +205,7 @@
     kotlin: versions.kotlin
     kotlinx-serialization: versions.kotlinx-serialization
   internal_dependencies:
-    "square/okhttp": versions.okhttp
+    "lysine-dev/okhttp": versions.okhttp
 
 "JakeWharton/ProcessPhoenix":
   external_dependencies:
@@ -217,8 +217,8 @@
     kotlin: versions.kotlin
     kotlinx-serialization: libraries.kotlinx-serialization-json
   internal_dependencies:
-    "square/okhttp": versions.okhttp
-    "square/retrofit": versions.retrofit
+    "lysine-dev/okhttp": versions.okhttp
+    "lysine-dev/retrofit": versions.retrofit
 
 "JakeWharton/RxRelay":
   external_dependencies:
@@ -270,7 +270,48 @@
   external_dependencies:
     kotlin: versions.kotlin
   internal_dependencies:
-    "square/okio": libraries.okio
+    "lysine-dev/okio": libraries.okio
+
+"lysine-dev/okio":
+  pre_build: kotlinUpgradeYarnLock
+  external_dependencies:
+    agp: libraries.android-gradle-plugin
+    dokka: libraries.dokka
+    kotlin: versions.kotlin
+    mavenPublish: libraries.vanniktech-publish-plugin
+  internal_dependencies:
+    "cashapp/burst": versions.burst
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
+
+"lysine-dev/okhttp":
+  compile_only: true # Build is all kinds of messed up.
+  external_dependencies:
+    dokka: versions.dokka
+    kotlin: versions.kotlin
+    kotlinx-serialization: versions.serialization
+    ksp: versions.ksp
+    mavenPublish: versions.maven-publish
+  internal_dependencies:
+    "lysine-dev/okio": versions.square-okio
+    "square/kotlinpoet": versions.square-kotlin-poet
+  version:
+    file: build.gradle.kts
+    regex: "version = (.*)"
+
+"lysine-dev/retrofit":
+  external_dependencies:
+    agp: libraries.androidPlugin
+    dokka: libraries.dokkaPlugin
+    kotlin: versions.kotlin
+    kotlinx-serialization: versions.kotlinx-serialization
+    mavenPublish: libraries.gradleMavenPublishPlugin
+  internal_dependencies:
+    "lysine-dev/okhttp": versions.okhttp
+  version:
+    file: gradle.properties
+    regex: "VERSION_NAME=(.*)"
 
 "sqldelight/Grammar-Kit-Composer":
   external_dependencies:
@@ -324,47 +365,6 @@
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
 
-"square/okio":
-  pre_build: kotlinUpgradeYarnLock
-  external_dependencies:
-    agp: libraries.android-gradle-plugin
-    dokka: libraries.dokka
-    kotlin: versions.kotlin
-    mavenPublish: libraries.vanniktech-publish-plugin
-  internal_dependencies:
-    "cashapp/burst": versions.burst
-  version:
-    file: gradle.properties
-    regex: "VERSION_NAME=(.*)"
-
-"square/okhttp":
-  compile_only: true # Build is all kinds of messed up.
-  external_dependencies:
-    dokka: versions.dokka
-    kotlin: versions.kotlin
-    kotlinx-serialization: versions.serialization
-    ksp: versions.ksp
-    mavenPublish: versions.maven-publish
-  internal_dependencies:
-    "square/okio": versions.square-okio
-    "square/kotlinpoet": versions.square-kotlin-poet
-  version:
-    file: build.gradle.kts
-    regex: "version = (.*)"
-
-"square/retrofit":
-  external_dependencies:
-    agp: libraries.androidPlugin
-    dokka: libraries.dokkaPlugin
-    kotlin: versions.kotlin
-    kotlinx-serialization: versions.kotlinx-serialization
-    mavenPublish: libraries.gradleMavenPublishPlugin
-  internal_dependencies:
-    "square/okhttp": versions.okhttp
-  version:
-    file: gradle.properties
-    regex: "VERSION_NAME=(.*)"
-
 "square/zstd-kmp":
   setup:
     - uses: mlugg/setup-zig@v2
@@ -379,7 +379,7 @@
     mavenPublish: libraries.mavenPublish-gradle-plugin
   internal_dependencies:
     "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
-    "square/okio": versions.okio
+    "lysine-dev/okio": versions.okio
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

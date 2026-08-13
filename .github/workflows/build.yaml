@@ -30,59 +30,6 @@ jobs:
       - run: .github/helper.py generate
       - run: git diff --exit-code
 
-  cashapp-burst:
-    runs-on: macos-latest
-    if: ${{ !cancelled() }}
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-    needs:
-      - workflow-up-to-date
-    steps:
-      - name: "Checkout this repository"
-        uses: actions/checkout@v7
-        with:
-          path: this
-      - name: "Checkout cashapp/burst repository"
-        uses: actions/checkout@v7
-        with:
-          repository: cashapp/burst
-          submodules: true
-          path: cashapp-burst
-      - uses: actions/setup-java@v5
-        with:
-          distribution: 'zulu'
-          java-version-file: this/.github/workflows/.java-version
-      - uses: gradle/actions/setup-gradle@v6
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.14'
-      - name: "Patch external dependencies"
-        run: |
-          pip install -r this/.github/requirements.txt
-          this/.github/helper.py patch-toml cashapp-burst libraries.android-gradlePlugin key agp
-          this/.github/helper.py patch-toml cashapp-burst plugins.dokka key dokka
-          this/.github/helper.py patch-toml cashapp-burst versions.kotlin key kotlin
-          this/.github/helper.py patch-toml cashapp-burst libraries.mavenPublish-gradle-plugin key mavenPublish
-      - name: "Patch maven local"
-        working-directory: cashapp-burst
-        run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
-      - name: "Show local change diff"
-        working-directory: cashapp-burst
-        run: git diff --patch
-      - name: "Publish cashapp-burst"
-        working-directory: cashapp-burst
-        run: ../this/gradlew --continue kotlinUpgradeYarnLock publishToMavenLocal
-      - uses: actions/upload-artifact@v7
-        with:
-          name: cashapp-burst-snapshot
-          path: ~/.m2/repository
-          if-no-files-found: error
-      - id: version
-        run: perl -ne '/VERSION_NAME=(.*)/ and print "version=$1",$/' cashapp-burst/gradle.properties | tee -a "$GITHUB_OUTPUT"
-      - name: "Check cashapp-burst"
-        working-directory: cashapp-burst
-        run: ../this/gradlew --continue build
-
   cashapp-licensee:
     runs-on: macos-latest
     if: ${{ !cancelled() }}
@@ -1043,7 +990,6 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
-      - cashapp-burst
       - JakeWharton-cite
       - JakeWharton-finalization-hook
       - JakeWharton-test-distribution-gradle-plugin
@@ -1073,15 +1019,6 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.androidx-compose-runtime key androidx-compose-runtime
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.mavenPublishGradlePlugin key mavenPublish
-      - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v8
-        if: ${{ needs.cashapp-burst.outputs.version != '' }}
-        with:
-          name: cashapp-burst-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency cashapp/burst"
-        run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.burstGradlePlugin value ${{ needs.cashapp-burst.outputs.version }}
-        if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/cite"
         uses: actions/download-artifact@v8
         if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
@@ -1537,7 +1474,6 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
-      - cashapp-burst
     steps:
       - name: "Checkout this repository"
         uses: actions/checkout@v7
@@ -1564,15 +1500,6 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.dokkaPlugin key dokka
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.gradleMavenPublishPlugin key mavenPublish
-      - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v8
-        if: ${{ needs.cashapp-burst.outputs.version != '' }}
-        with:
-          name: cashapp-burst-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency cashapp/burst"
-        run: this/.github/helper.py patch-toml JakeWharton-test-distribution-gradle-plugin libraries.burst-gradlePlugin value ${{ needs.cashapp-burst.outputs.version }}
-        if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: JakeWharton-test-distribution-gradle-plugin
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -1702,7 +1629,6 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     needs:
       - workflow-up-to-date
-      - cashapp-burst
     steps:
       - name: "Checkout this repository"
         uses: actions/checkout@v7
@@ -1729,15 +1655,6 @@ jobs:
           this/.github/helper.py patch-toml lysine-dev-okio libraries.dokka key dokka
           this/.github/helper.py patch-toml lysine-dev-okio versions.kotlin key kotlin
           this/.github/helper.py patch-toml lysine-dev-okio libraries.vanniktech-publish-plugin key mavenPublish
-      - name: "Download internal dependency cashapp/burst"
-        uses: actions/download-artifact@v8
-        if: ${{ needs.cashapp-burst.outputs.version != '' }}
-        with:
-          name: cashapp-burst-snapshot
-          path: ~/.m2/repository
-      - name: "Patch internal dependency cashapp/burst"
-        run: this/.github/helper.py patch-toml lysine-dev-okio versions.burst value ${{ needs.cashapp-burst.outputs.version }}
-        if: ${{ needs.cashapp-burst.outputs.version != '' }}
       - name: "Patch maven local"
         working-directory: lysine-dev-okio
         run: git grep -l 'mavenCentral()' '*.gradle*' | xargs sed -i "" -E 's/^([[:space:]]+)mavenCentral\(\)$/\1mavenLocal()\n\1mavenCentral()/g'
@@ -2257,7 +2174,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - workflow-up-to-date
-      - cashapp-burst
       - cashapp-licensee
       - cashapp-molecule
       - cashapp-paraphrase

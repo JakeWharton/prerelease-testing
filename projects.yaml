@@ -1,14 +1,3 @@
-"cashapp/burst":
-  pre_build: kotlinUpgradeYarnLock
-  external_dependencies:
-    agp: libraries.android-gradlePlugin
-    dokka: plugins.dokka
-    kotlin: versions.kotlin
-    mavenPublish: libraries.mavenPublish-gradle-plugin
-  version:
-    file: gradle.properties
-    regex: "VERSION_NAME=(.*)"
-
 "cashapp/licensee":
   compile_only: true # Test golden files hard code versions.
   external_dependencies:
@@ -180,7 +169,6 @@
     kotlin: versions.kotlin
     mavenPublish: libraries.mavenPublishGradlePlugin
   internal_dependencies:
-    "cashapp/burst": libraries.burstGradlePlugin
     "JakeWharton/cite": libraries.citeGradlePlugin
     "JakeWharton/finalization-hook": libraries.finalizationHook
     "JakeWharton/test-distribution-gradle-plugin": libraries.testDistributionGradlePlugin
@@ -248,8 +236,6 @@
     dokka: libraries.dokkaPlugin
     kotlin: versions.kotlin
     mavenPublish: libraries.gradleMavenPublishPlugin
-  internal_dependencies:
-    "cashapp/burst": libraries.burst-gradlePlugin
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"
@@ -279,8 +265,6 @@
     dokka: libraries.dokka
     kotlin: versions.kotlin
     mavenPublish: libraries.vanniktech-publish-plugin
-  internal_dependencies:
-    "cashapp/burst": versions.burst
   version:
     file: gradle.properties
     regex: "VERSION_NAME=(.*)"

@@ -121,8 +121,8 @@ jobs:
   workflow-up-to-date:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.14'
       - run: brew update && brew install d2
@@ -154,23 +154,23 @@ jobs:
 
 			f.write('''    steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: this
       - name: "Checkout ''' + project + ''' repository"
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: ''' + project + '''
           submodules: true
           path: ''' + safe_project + '\n')
 			if 'ref' in config:
 				f.write('          ref: ' + config['ref'] + '\n')
-			f.write('''      - uses: actions/setup-java@v5
+			f.write('''      - uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
-      - uses: gradle/actions/setup-gradle@v6
-      - uses: actions/setup-python@v7
+      - uses: gradle/actions/setup-gradle@39e147cb9de83bb9910b8ef8bd7fff0ee20fcd6f # v6.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.14'
       - name: "Patch external dependencies"
@@ -186,7 +186,7 @@ jobs:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = safe_name(dep)
 					f.write('      - name: "Download internal dependency ' + dep + '''"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.''' + safe_dep + '''.outputs.version != '' }}
         with:
           name: ''' + safe_dep + '''-snapshot
@@ -215,7 +215,7 @@ jobs:
 				if 'pre_build' in config:
 					f.write(config['pre_build'] + ' ')
 				f.write('''publishToMavenLocal
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository

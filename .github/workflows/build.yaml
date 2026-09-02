@@ -66,7 +66,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-licensee libraries.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml cashapp-licensee plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -130,7 +130,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-molecule versions.serialization key kotlinx-serialization
           this/.github/helper.py patch-toml cashapp-molecule libraries.maven-publish-plugin key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
@@ -139,7 +139,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-molecule libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -148,7 +148,7 @@ jobs:
         run: this/.github/helper.py patch-toml cashapp-molecule versions.squareup-okhttp value ${{ needs.lysine-dev-okhttp.outputs.version }}
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
       - name: "Download internal dependency lysine-dev/retrofit"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-retrofit.outputs.version != '' }}
         with:
           name: lysine-dev-retrofit-snapshot
@@ -211,7 +211,7 @@ jobs:
           this/.github/helper.py patch-toml cashapp-paraphrase versions.kotlin key kotlin
           this/.github/helper.py patch-toml cashapp-paraphrase plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -567,7 +567,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-dependency-watch versions.kotlinx-serialization key kotlinx-serialization
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -621,7 +621,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.kotlinPlugin key kotlin
           this/.github/helper.py patch-toml JakeWharton-diffuse libraries.mavenPublishPlugin key mavenPublish
       - name: "Download internal dependency JakeWharton/dalvik-dx"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-dalvik-dx.outputs.version != '' }}
         with:
           name: JakeWharton-dalvik-dx-snapshot
@@ -630,7 +630,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-diffuse libraries.dalvikDx value ${{ needs.JakeWharton-dalvik-dx.outputs.version }}
         if: ${{ needs.JakeWharton-dalvik-dx.outputs.version != '' }}
       - name: "Download internal dependency lysine-dev/okio"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okio.outputs.version != '' }}
         with:
           name: lysine-dev-okio-snapshot
@@ -817,7 +817,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-gitout versions.kotlinx-serialization key kotlinx-serialization
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -866,7 +866,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlin-gradlePlugin key kotlin
           this/.github/helper.py patch-toml JakeWharton-hardcover-data-sync libraries.kotlinx-serialization-json-okio key kotlinx-serialization
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -914,7 +914,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-jakewharton-com libraries.kotlinGradlePlugin key kotlin
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -1020,7 +1020,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-mosaic versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-mosaic libraries.mavenPublishGradlePlugin key mavenPublish
       - name: "Download internal dependency JakeWharton/cite"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
         with:
           name: JakeWharton-cite-snapshot
@@ -1029,7 +1029,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.citeGradlePlugin value ${{ needs.JakeWharton-cite.outputs.version }}
         if: ${{ needs.JakeWharton-cite.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/finalization-hook"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-finalization-hook.outputs.version != '' }}
         with:
           name: JakeWharton-finalization-hook-snapshot
@@ -1038,7 +1038,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-mosaic libraries.finalizationHook value ${{ needs.JakeWharton-finalization-hook.outputs.version }}
         if: ${{ needs.JakeWharton-finalization-hook.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -1100,7 +1100,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.kotlinPlugin key kotlin
           this/.github/helper.py patch-toml JakeWharton-picnic libraries.publishPlugin key mavenPublish
       - name: "Download internal dependency JakeWharton/crossword"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-crossword.outputs.version != '' }}
         with:
           name: JakeWharton-crossword-snapshot
@@ -1159,7 +1159,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-plex-auto-trash versions.kotlinx-serialization key kotlinx-serialization
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -1248,7 +1248,7 @@ jobs:
           this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.kotlin key kotlin
           this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer libraries.kotlinx-serialization-json key kotlinx-serialization
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -1257,7 +1257,7 @@ jobs:
         run: this/.github/helper.py patch-toml JakeWharton-radarr-folder-fixer versions.okhttp value ${{ needs.lysine-dev-okhttp.outputs.version }}
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
       - name: "Download internal dependency lysine-dev/retrofit"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-retrofit.outputs.version != '' }}
         with:
           name: lysine-dev-retrofit-snapshot
@@ -1603,7 +1603,7 @@ jobs:
           pip install -r this/.github/requirements.txt
           this/.github/helper.py patch-toml JakeWharton-video-swatch versions.kotlin key kotlin
       - name: "Download internal dependency lysine-dev/okio"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okio.outputs.version != '' }}
         with:
           name: lysine-dev-okio-snapshot
@@ -1712,7 +1712,7 @@ jobs:
           this/.github/helper.py patch-toml lysine-dev-okhttp versions.ksp key ksp
           this/.github/helper.py patch-toml lysine-dev-okhttp versions.maven-publish key mavenPublish
       - name: "Download internal dependency lysine-dev/okio"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okio.outputs.version != '' }}
         with:
           name: lysine-dev-okio-snapshot
@@ -1721,7 +1721,7 @@ jobs:
         run: this/.github/helper.py patch-toml lysine-dev-okhttp versions.square-okio value ${{ needs.lysine-dev-okio.outputs.version }}
         if: ${{ needs.lysine-dev-okio.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1782,7 +1782,7 @@ jobs:
           this/.github/helper.py patch-toml lysine-dev-retrofit versions.kotlinx-serialization key kotlinx-serialization
           this/.github/helper.py patch-toml lysine-dev-retrofit libraries.gradleMavenPublishPlugin key mavenPublish
       - name: "Download internal dependency lysine-dev/okhttp"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okhttp.outputs.version != '' }}
         with:
           name: lysine-dev-okhttp-snapshot
@@ -1844,7 +1844,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.kotlinJvm key kotlin
           this/.github/helper.py patch-toml sqldelight-Grammar-Kit-Composer plugins.publish key mavenPublish
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -1906,7 +1906,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sql-psi versions.kotlin key kotlin
           this/.github/helper.py patch-toml sqldelight-sql-psi plugins.mavenPublish key mavenPublish
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -1974,7 +1974,7 @@ jobs:
           this/.github/helper.py patch-toml sqldelight-sqldelight libraries.kotlinx-serialization-json key kotlinx-serialization
           this/.github/helper.py patch-toml sqldelight-sqldelight plugins.publish key mavenPublish
       - name: "Download internal dependency cashapp/turbine"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
         with:
           name: cashapp-turbine-snapshot
@@ -1983,7 +1983,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.turbine value ${{ needs.cashapp-turbine.outputs.version }}
         if: ${{ needs.cashapp-turbine.outputs.version != '' }}
       - name: "Download internal dependency JakeWharton/picnic"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-picnic.outputs.version != '' }}
         with:
           name: JakeWharton-picnic-snapshot
@@ -1992,7 +1992,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight libraries.picnic value ${{ needs.JakeWharton-picnic.outputs.version }}
         if: ${{ needs.JakeWharton-picnic.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/Grammar-Kit-Composer"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
         with:
           name: sqldelight-Grammar-Kit-Composer-snapshot
@@ -2001,7 +2001,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight plugins.grammarKitComposer value ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version }}
         if: ${{ needs.sqldelight-Grammar-Kit-Composer.outputs.version != '' }}
       - name: "Download internal dependency sqldelight/sql-psi"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.sqldelight-sql-psi.outputs.version != '' }}
         with:
           name: sqldelight-sql-psi-snapshot
@@ -2010,7 +2010,7 @@ jobs:
         run: this/.github/helper.py patch-toml sqldelight-sqldelight versions.sqlPsi value ${{ needs.sqldelight-sql-psi.outputs.version }}
         if: ${{ needs.sqldelight-sql-psi.outputs.version != '' }}
       - name: "Download internal dependency square/kotlinpoet"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.square-kotlinpoet.outputs.version != '' }}
         with:
           name: square-kotlinpoet-snapshot
@@ -2127,7 +2127,7 @@ jobs:
           this/.github/helper.py patch-toml square-zstd-kmp versions.kotlin key kotlin
           this/.github/helper.py patch-toml square-zstd-kmp libraries.mavenPublish-gradle-plugin key mavenPublish
       - name: "Download internal dependency JakeWharton/test-distribution-gradle-plugin"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
         with:
           name: JakeWharton-test-distribution-gradle-plugin-snapshot
@@ -2136,7 +2136,7 @@ jobs:
         run: this/.github/helper.py patch-toml square-zstd-kmp libraries.testDistributionGradlePlugin value ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version }}
         if: ${{ needs.JakeWharton-test-distribution-gradle-plugin.outputs.version != '' }}
       - name: "Download internal dependency lysine-dev/okio"
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         if: ${{ needs.lysine-dev-okio.outputs.version != '' }}
         with:
           name: lysine-dev-okio-snapshot

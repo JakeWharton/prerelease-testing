@@ -2144,7 +2144,7 @@ jobs:
       - name: "Patch internal dependency lysine-dev/okio"
         run: this/.github/helper.py patch-toml square-zstd-kmp versions.okio value ${{ needs.lysine-dev-okio.outputs.version }}
         if: ${{ needs.lysine-dev-okio.outputs.version != '' }}
-      - uses: mlugg/setup-zig@v2
+      - uses: mlugg/setup-zig@8d6198c65fb0feaa111df26e6b467fea8345e46f # v2.0.5
         with:
           version: 0.14.0
       - run: zig build -p src/jvmMain/resources/jni

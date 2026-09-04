@@ -1,5 +1,5 @@
 [versions]
-agp = "9.5.0-alpha03"
+agp = "9.5.0-alpha04"
 androidx-compose-runtime = "1.13.0-alpha02"
 dokka = "2.2.0"
 jbCompose = "1.12.0"

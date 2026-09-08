@@ -95,7 +95,7 @@ def generate():
 
 		f.close()
 
-		subprocess.run(['d2', '--layout=elk', f.name, '.github/projects.svg'])
+		subprocess.run(['d2', '--layout=tala', f.name, '.github/projects.svg'])
 
 	with open('.github/workflows/build.yaml', 'w') as f:
 		f.write('''name: build

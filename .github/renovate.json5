@@ -13,10 +13,10 @@
 	prHourlyLimit: 0,
 	packageRules: [
 		// Override parent config's default age.
-    {
-      matchPackageNames: ['*'],
-      minimumReleaseAge: '0 days',
-    }
+		{
+			matchPackageNames: ['*'],
+			minimumReleaseAge: '0 days',
+		},
 		// We do not want prerelease actions.
 		{
 			matchDepTypes: ['actions'],

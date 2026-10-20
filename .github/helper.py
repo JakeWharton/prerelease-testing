@@ -161,7 +161,7 @@ jobs:
 		f.write(setup_python_version)
 		f.write('''
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - run: brew update && brew install d2
       - run: pip install -r .github/requirements.txt
       - run: .github/helper.py generate
@@ -219,7 +219,7 @@ jobs:
 			f.write(setup_python_version)
 			f.write('''
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - name: "Patch external dependencies"
         run: |
           pip install -r this/.github/requirements.txt

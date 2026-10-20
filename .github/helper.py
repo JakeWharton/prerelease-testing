@@ -83,6 +83,39 @@ def generate():
 	with open('projects.yaml', 'r') as y:
 		projects = yaml.safe_load(y)
 
+	artifact_download_version = None
+	artifact_upload_version = None
+	checkout_version = None
+	setup_gradle_version = None
+	setup_java_version = None
+	setup_python_version = None
+	with open('.github/workflows/build.yaml', 'r') as f:
+		for line in f:
+			if not artifact_download_version and 'actions/download-artifact@' in line:
+				artifact_download_version = line.partition('@')[2].rstrip('\n')
+			if not artifact_upload_version and 'actions/upload-artifact@' in line:
+				artifact_upload_version = line.partition('@')[2].rstrip('\n')
+			if not checkout_version and 'actions/checkout@' in line:
+				checkout_version = line.partition('@')[2].rstrip('\n')
+			if not setup_gradle_version and 'gradle/actions/setup-gradle@' in line:
+				setup_gradle_version = line.partition('@')[2].rstrip('\n')
+			if not setup_java_version and 'actions/setup-java@' in line:
+				setup_java_version = line.partition('@')[2].rstrip('\n')
+			if not setup_python_version and 'actions/setup-python@' in line:
+				setup_python_version = line.partition('@')[2].rstrip('\n')
+	if artifact_download_version is None:
+		raise Exception('actions/download-artifact version not found')
+	if artifact_upload_version is None:
+		raise Exception('actions/upload-artifact version not found')
+	if checkout_version is None:
+		raise Exception('actions/checkout version not found')
+	if setup_gradle_version is None:
+		raise Exception('gradle/actions/setup-gradle version not found')
+	if setup_java_version is None:
+		raise Exception('actions/setup-java version not found')
+	if setup_python_version is None:
+		raise Exception('actions/setup-python version not found')
+
 	with tempfile.NamedTemporaryFile(mode = 'w', delete = False) as f:
 		f.write('direction: left\n\n')
 
@@ -121,8 +154,12 @@ jobs:
   workflow-up-to-date:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - uses: actions/checkout@''')
+		f.write(checkout_version)
+		f.write('''
+      - uses: actions/setup-python@''')
+		f.write(setup_python_version)
+		f.write('''
         with:
           python-version: '3.14'
       - run: brew update && brew install d2
@@ -154,23 +191,33 @@ jobs:
 
 			f.write('''    steps:
       - name: "Checkout this repository"
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@''')
+			f.write(checkout_version)
+			f.write('''
         with:
           path: this
       - name: "Checkout ''' + project + ''' repository"
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@''')
+			f.write(checkout_version)
+			f.write('''
         with:
           repository: ''' + project + '''
           submodules: true
           path: ''' + safe_project + '\n')
 			if 'ref' in config:
 				f.write('          ref: ' + config['ref'] + '\n')
-			f.write('''      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+			f.write('''      - uses: actions/setup-java@''')
+			f.write(setup_java_version)
+			f.write('''
         with:
           distribution: 'zulu'
           java-version-file: this/.github/workflows/.java-version
-      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - uses: gradle/actions/setup-gradle@''')
+			f.write(setup_gradle_version)
+			f.write('''
+      - uses: actions/setup-python@''')
+			f.write(setup_python_version)
+			f.write('''
         with:
           python-version: '3.14'
       - name: "Patch external dependencies"
@@ -186,7 +233,9 @@ jobs:
 				for dep, key in config['internal_dependencies'].items():
 					safe_dep = safe_name(dep)
 					f.write('      - name: "Download internal dependency ' + dep + '''"
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@''')
+					f.write(artifact_download_version)
+					f.write('''
         if: ${{ needs.''' + safe_dep + '''.outputs.version != '' }}
         with:
           name: ''' + safe_dep + '''-snapshot
@@ -215,7 +264,9 @@ jobs:
 				if 'pre_build' in config:
 					f.write(config['pre_build'] + ' ')
 				f.write('''publishToMavenLocal
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@''')
+				f.write(artifact_upload_version)
+				f.write('''
         with:
           name: ''' + safe_project + '''-snapshot
           path: ~/.m2/repository
